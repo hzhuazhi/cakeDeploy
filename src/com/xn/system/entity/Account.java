@@ -28,6 +28,8 @@ public class Account {
 	private int yn;//是否有效：0初始化，1失效/删除
 	private String roleName; //所属的角色名称
 
+	private int roleType;// 1表示内部角色，2表示外部角色
+
 	public long getId() {
 		return id;
 	}
@@ -170,5 +172,13 @@ public class Account {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public int getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(int roleType) {
+		this.roleType = roleType;
 	}
 }
