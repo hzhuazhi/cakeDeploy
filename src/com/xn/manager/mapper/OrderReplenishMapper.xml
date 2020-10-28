@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.OrderReplenishDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.OrderReplenishModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+        <result column="order_status" property="orderStatus" jdbcType="BIT" />
+        <result column="handle_people" property="handlePeople" jdbcType="VARCHAR" />
+        <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="curday" property="curday" jdbcType="INTEGER" />
+        <result column="curhour" property="curhour" jdbcType="BIT" />
+        <result column="curminute" property="curminute" jdbcType="BIT" />
+        <result column="run_num" property="runNum" jdbcType="BIT" />
+        <result column="run_status" property="runStatus" jdbcType="BIT" />
+        <result column="send_num" property="sendNum" jdbcType="BIT" />
+        <result column="send_status" property="sendStatus" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.order_no, a.out_trade_no, a.order_status, a.handle_people, a.data_explain, a.remark, a.curday,
+        a.curhour, a.curminute, a.run_num, a.run_status, a.send_num, a.send_status, a.create_time, a.update_time,
+        a.ts_time, a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                and a.out_trade_no = #{outTradeNo}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_order_replenish a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_order_replenish a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_order_replenish a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_order_replenish a
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_order_replenish a
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_order_replenish
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="outTradeNo != null" >
+                out_trade_no,
+            </if>
+            <if test="orderStatus != null" >
+                order_status,
+            </if>
+            <if test="handlePeople != null" >
+                handle_people,
+            </if>
+            <if test="dataExplain != null" >
+                data_explain,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="curday != null" >
+                curday,
+            </if>
+            <if test="curhour != null" >
+                curhour,
+            </if>
+            <if test="curminute != null" >
+                curminute,
+            </if>
+            <if test="runNum != null" >
+                run_num,
+            </if>
+            <if test="runStatus != null" >
+                run_status,
+            </if>
+            <if test="sendNum != null" >
+                send_num,
+            </if>
+            <if test="sendStatus != null" >
+                send_status,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null" >
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null" >
+                #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="handlePeople != null" >
+                #{handlePeople,jdbcType=VARCHAR},
+            </if>
+            <if test="dataExplain != null" >
+                #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="curday != null" >
+                #{curday,jdbcType=INTEGER},
+            </if>
+            <if test="curhour != null" >
+                #{curhour,jdbcType=BIT},
+            </if>
+            <if test="curminute != null" >
+                #{curminute,jdbcType=BIT},
+            </if>
+            <if test="runNum != null" >
+                #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != null" >
+                #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="sendNum != null" >
+                #{sendNum,jdbcType=BIT},
+            </if>
+            <if test="sendStatus != null" >
+                #{sendStatus,jdbcType=BIT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_order_replenish a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null" >
+                out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null" >
+                order_status = #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="handlePeople != null" >
+                handle_people = #{handlePeople,jdbcType=VARCHAR},
+            </if>
+            <if test="dataExplain != null" >
+                data_explain = #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="curday != null" >
+                curday = #{curday,jdbcType=INTEGER},
+            </if>
+            <if test="curhour != null" >
+                curhour = #{curhour,jdbcType=BIT},
+            </if>
+            <if test="curminute != null" >
+                curminute = #{curminute,jdbcType=BIT},
+            </if>
+            <if test="runNum != null" >
+                run_num = #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != null" >
+                run_status = #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="sendNum != null" >
+                send_num = #{sendNum,jdbcType=BIT},
+            </if>
+            <if test="sendStatus != null" >
+                send_status = #{sendStatus,jdbcType=BIT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where  a.id=#{id}
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_order_replenish a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="useStatus != 0 and useStatus >0 " >
+                a.use_status=#{useStatus},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_order_replenish a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+</mapper>

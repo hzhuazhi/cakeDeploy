@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.BankShortMsgDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.BankShortMsgModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="mobile_card_id" property="mobileCardId" jdbcType="BIGINT" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="bank_id" property="bankId" jdbcType="BIGINT" />
+        <result column="bank_type_id" property="bankTypeId" jdbcType="BIGINT" />
+        <result column="sms_num" property="smsNum" jdbcType="VARCHAR" />
+        <result column="sms_content" property="smsContent" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="VARCHAR" />
+        <result column="last_num" property="lastNum" jdbcType="VARCHAR" />
+        <result column="order_status" property="orderStatus" jdbcType="BIT" />
+        <result column="work_type" property="workType" jdbcType="BIT" />
+        <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="curday" property="curday" jdbcType="INTEGER" />
+        <result column="curhour" property="curhour" jdbcType="BIT" />
+        <result column="curminute" property="curminute" jdbcType="BIT" />
+        <result column="run_num" property="runNum" jdbcType="BIT" />
+        <result column="run_status" property="runStatus" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+        <result column="handle_type" property="handleType" jdbcType="BIT" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.order_no, a.mobile_card_id, a.phone_num, a.bank_id, a.bank_type_id, a.sms_num, a.sms_content,
+        a.money, a.last_num, a.order_status, a.work_type, a.data_explain, a.remark, a.curday, a.curhour,
+        a.curminute, a.run_num, a.run_status, a.create_time, a.update_time,a.handle_type, a.ts_time, a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+
+            <if test="workType != 0 and workType >0 " >
+                and a.work_type = #{workType}
+            </if>
+            <if test="handleType != 0 and handleType  >0 " >
+                and a.handle_type = #{handleType}
+            </if>
+            <if test="curday != 0 and curday  >0 " >
+                and a.curday = #{curday}
+            </if>
+
+            <if test="curhour != 0 and curhour  >0 " >
+                and a.curhour &lt;= #{curhour}
+            </if>
+
+            <if test="curminute != 0 and curminute  >0 " >
+                and a.curminute &lt;= #{curminute}
+            </if>
+
+
+            <!--<if test="alias != null and alias != '' " >-->
+                <!--and a.alias = #{alias}-->
+            <!--</if>-->
+
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="bankStrategyList != null and bankStrategyList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="bankStrategyList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_bank_short_msg a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_short_msg a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_short_msg a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_short_msg a
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_short_msg a
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_short_msg a
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_bank_short_msg
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="orderNo != null" >
+                order_no,
+            </if>
+            <if test="mobileCardId != null" >
+                mobile_card_id,
+            </if>
+            <if test="phoneNum != null" >
+                phone_num,
+            </if>
+            <if test="bankId != null" >
+                bank_id,
+            </if>
+            <if test="bankTypeId != null" >
+                bank_type_id,
+            </if>
+            <if test="smsNum != null" >
+                sms_num,
+            </if>
+            <if test="smsContent != null" >
+                sms_content,
+            </if>
+            <if test="money != null" >
+                money,
+            </if>
+            <if test="lastNum != null" >
+                last_num,
+            </if>
+            <if test="orderStatus != null" >
+                order_status,
+            </if>
+            <if test="workType != null" >
+                work_type,
+            </if>
+            <if test="dataExplain != null" >
+                data_explain,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="curday != null" >
+                curday,
+            </if>
+            <if test="curhour != null" >
+                curhour,
+            </if>
+            <if test="curminute != null" >
+                curminute,
+            </if>
+            <if test="runNum != null" >
+                run_num,
+            </if>
+            <if test="runStatus != null" >
+                run_status,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orderNo != null" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileCardId != null" >
+                #{mobileCardId,jdbcType=BIGINT},
+            </if>
+            <if test="phoneNum != null" >
+                #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bankId != null" >
+                #{bankId,jdbcType=BIGINT},
+            </if>
+            <if test="bankTypeId != null" >
+                #{bankTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="smsNum != null" >
+                #{smsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="smsContent != null" >
+                #{smsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null" >
+                #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="lastNum != null" >
+                #{lastNum,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null" >
+                #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="workType != null" >
+                #{workType,jdbcType=BIT},
+            </if>
+            <if test="dataExplain != null" >
+                #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="curday != null" >
+                #{curday,jdbcType=INTEGER},
+            </if>
+            <if test="curhour != null" >
+                #{curhour,jdbcType=BIT},
+            </if>
+            <if test="curminute != null" >
+                #{curminute,jdbcType=BIT},
+            </if>
+            <if test="runNum != null" >
+                #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != null" >
+                #{runStatus,jdbcType=BIT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_bank_short_msg a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileCardId != null" >
+                mobile_card_id = #{mobileCardId,jdbcType=BIGINT},
+            </if>
+            <if test="phoneNum != null" >
+                phone_num = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bankId != null" >
+                bank_id = #{bankId,jdbcType=BIGINT},
+            </if>
+            <if test="bankTypeId != null" >
+                bank_type_id = #{bankTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="smsNum != null" >
+                sms_num = #{smsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="smsContent != null" >
+                sms_content = #{smsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null" >
+                money = #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="lastNum != null" >
+                last_num = #{lastNum,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null" >
+                order_status = #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="workType != null" >
+                work_type = #{workType,jdbcType=BIT},
+            </if>
+            <if test="dataExplain != null" >
+                data_explain = #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="curday != null" >
+                curday = #{curday,jdbcType=INTEGER},
+            </if>
+            <if test="curhour != null" >
+                curhour = #{curhour,jdbcType=BIT},
+            </if>
+            <if test="curminute != null" >
+                curminute = #{curminute,jdbcType=BIT},
+            </if>
+            <if test="runNum != null" >
+                run_num = #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != null" >
+                run_status = #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="handleType != null" >
+                handle_type = #{handleType,jdbcType=BIT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_bank_short_msg a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_bank_short_msg a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause_Sms">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="bankCard != null and bankCard != '' " >
+                and b.bank_card = #{bankCard}
+            </if>
+            <if test="bankName != null and bankName != '' " >
+                and b.bank_name = #{bankName}
+            </if>
+            <if test="accountName != null and accountName != '' " >
+                and b.account_name = #{accountName}
+            </if>
+            <if test="curday != 0 and curday  >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="curhour != 0 and curhour  >0 " >
+                and a.curhour &lt;= #{curhour}
+            </if>
+            <if test="curminute != 0 and curminute  >0 " >
+                and a.curminute &lt;= #{curminute}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <select id="querySmsOrderNo" resultMap="dataMap"  parameterType="Object">
+        select  a.order_no,a.money,a.mobile_card_id,a.phone_num,a.sms_content,a.curday,
+        a.curhour,a.curminute,b.bank_card,b.bank_name,b.account_name,c.alias
+        from  tb_fr_bank_short_msg  a left JOIN tb_fr_bank b on  a.bank_id=b.id
+        left JOIN tb_fr_merchant c  on b.account_id = c.account_id
+        <include refid="Example_Where_Clause_Sms"/>
+    </select>
+
+
+</mapper>

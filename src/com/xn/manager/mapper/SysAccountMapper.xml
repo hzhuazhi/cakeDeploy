@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.SysAccountDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.SysAccountModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="account_num" property="accountNum" jdbcType="VARCHAR" />
+        <result column="pass_wd" property="passWd" jdbcType="VARCHAR" />
+        <result column="role_id" property="roleId" jdbcType="BIGINT" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+        <result column="ac_contacts" property="acContacts" jdbcType="VARCHAR" />
+        <result column="ac_phone" property="acPhone" jdbcType="VARCHAR" />
+        <result column="ac_type" property="acType" jdbcType="BIT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="is_enable" property="isEnable" jdbcType="BIT" />
+        <result column="create_user" property="createUser" jdbcType="BIGINT" />
+        <result column="update_user" property="updateUser" jdbcType="BIGINT" />
+        <result column="create_role" property="createRole" jdbcType="BIGINT" />
+        <result column="update_role" property="updateRole" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="tstime" property="tstime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.account_num, a.pass_wd, a.role_id, a.ac_name, a.ac_contacts, a.ac_phone, a.ac_type, a.remark,
+        a.is_enable, a.create_user, a.update_user, a.create_role, a.update_role, a.create_time, a.update_time,
+        a.tstime, a.yn
+    </sql>
+
+
+<!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="roleId != 0 and roleId >0 " >
+                and a.role_id = #{roleId}
+            </if>
+            <if test="createUser != 0 and createUser >0 " >
+                and a.create_user = #{createUser}
+            </if>
+            <if test="isEnable != 0 and isEnable >0 " >
+                and a.is_enable = #{isEnable}
+            </if>
+            <if test="acName != null and acName != '' " >
+                and a.ac_name = #{acName}
+            </if>
+            <if test="accountNum != null and accountNum != '' " >
+                and a.account_num = #{accountNum}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(a.id)
+        from  tb_hz_sys_account a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_hz_sys_account  a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_hz_sys_account a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_hz_sys_account a
+        where  a.id=#{id}
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_hz_sys_account a
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_hz_sys_account
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="accountNum != null" >
+                account_num,
+            </if>
+            <if test="passWd != null " >
+                pass_wd,
+            </if>
+            <if test="roleId != null" >
+                role_id,
+            </if>
+            <if test="acName != null" >
+                ac_name,
+            </if>
+            <if test="acContacts != null" >
+                ac_contacts,
+            </if>
+            <if test="acPhone != null" >
+                ac_phone,
+            </if>
+            <if test="acType != null" >
+                ac_type,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="isEnable != null" >
+                is_enable,
+            </if>
+            <if test="createUser != null" >
+                create_user,
+            </if>
+            <if test="updateUser != null" >
+                update_user,
+            </if>
+            <if test="createRole != null" >
+                create_role,
+            </if>
+            <if test="updateRole != null" >
+                update_role,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="accountNum != null" >
+                #{accountNum,jdbcType=VARCHAR},
+            </if>
+            <if test="passWd != null " >
+                #{passWd,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="acName != null" >
+                #{acName,jdbcType=VARCHAR},
+            </if>
+            <if test="acContacts != null" >
+                #{acContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="acPhone != null" >
+                #{acPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="acType != null" >
+                #{acType,jdbcType=BIT},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null" >
+                #{isEnable,jdbcType=BIT},
+            </if>
+            <if test="createUser != null" >
+                #{createUser,jdbcType=BIGINT},
+            </if>
+            <if test="updateUser != null" >
+                #{updateUser,jdbcType=BIGINT},
+            </if>
+            <if test="createRole != null" >
+                #{createRole,jdbcType=BIGINT},
+            </if>
+            <if test="updateRole != null" >
+                #{updateRole,jdbcType=BIGINT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_hz_sys_account a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="accountNum != null" >
+                account_num = #{accountNum,jdbcType=VARCHAR},
+            </if>
+            <if test="passWd != null" >
+                pass_wd = #{passWd,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="acName != null" >
+                ac_name = #{acName,jdbcType=VARCHAR},
+            </if>
+            <if test="acContacts != null" >
+                ac_contacts = #{acContacts,jdbcType=VARCHAR},
+            </if>
+            <if test="acPhone != null" >
+                ac_phone = #{acPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="acType != null" >
+                ac_type = #{acType,jdbcType=BIT},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isEnable != null" >
+                is_enable = #{isEnable,jdbcType=BIT},
+            </if>
+            <if test="createUser != null" >
+                create_user = #{createUser,jdbcType=BIGINT},
+            </if>
+            <if test="updateUser != null" >
+                update_user = #{updateUser,jdbcType=BIGINT},
+            </if>
+            <if test="createRole != null" >
+                create_role = #{createRole,jdbcType=BIGINT},
+            </if>
+            <if test="updateRole != null" >
+                update_role = #{updateRole,jdbcType=BIGINT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where  a.id=#{id}
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_hz_sys_account a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="useStatus != 0 and useStatus >0 " >
+                a.use_status=#{useStatus},
+            </if>
+            a.update_time=NOW()
+        </trim>
+        where  a.id=#{id}
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_hz_sys_account a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+
+</mapper>

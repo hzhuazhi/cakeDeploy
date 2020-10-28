@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.CardsBankDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.CardsBankModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+        <result column="subbranch_name" property="subbranchName" jdbcType="VARCHAR" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="in_day_money" property="inDayMoney" jdbcType="VARCHAR" />
+        <result column="in_month_money" property="inMonthMoney" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="supply_type" property="supplyType" jdbcType="SMALLINT" />
+        <result column="is_test" property="isTest" jdbcType="SMALLINT" />
+        <result column="test_money" property="testMoney" jdbcType="VARCHAR" />
+        <result column="yn" property="yn" jdbcType="SMALLINT" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.phone_num, a.merchant_id, a.bank_name, a.bank_card, a.subbranch_name, a.account_name, a.in_day_money,
+        a.in_month_money, a.create_time, a.update_time, a.ts_time, a.supply_type, a.is_test, a.test_money,a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="bankCard != null and bankCard != '' " >
+                and a.bank_card = #{bankCard}
+            </if>
+            <if test="supplyType != null and supplyType != '' " >
+                and a.supply_type = #{supplyType}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_cards_bank a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_cards_bank a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_cards_bank a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+
+
+    <!-- 根据id查询记录 -->
+    <select id="querySupplyType"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_cards_bank a
+        <include refid="Example_Where_Clause_id"/>
+        limit 5
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_cards_bank a
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_cards_bank
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="phoneNum != null" >
+                phone_num,
+            </if>
+            <if test="merchantId != null" >
+                merchant_id,
+            </if>
+            <if test="bankName != null" >
+                bank_name,
+            </if>
+            <if test="bankCard != null" >
+                bank_card,
+            </if>
+            <if test="subbranchName != null" >
+                subbranch_name,
+            </if>
+            <if test="accountName != null" >
+                account_name,
+            </if>
+            <if test="inDayMoney != null" >
+                in_day_money,
+            </if>
+            <if test="inMonthMoney != null" >
+                in_month_money,
+            </if>
+            <if test="supplyType != null" >
+                supply_type,
+            </if>
+            <if test="isTest != null" >
+                is_test,
+            </if>
+            <if test="testMoney != null" >
+                test_money,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="phoneNum != null" >
+                #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="bankName != null" >
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null" >
+                #{bankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="subbranchName != null" >
+                #{subbranchName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null" >
+                #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="inDayMoney != null" >
+                #{inDayMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="inMonthMoney != null" >
+                #{inMonthMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyType != null" >
+                #{supplyType,jdbcType=SMALLINT},
+            </if>
+            <if test="isTest != null" >
+                #{isTest,jdbcType=SMALLINT},
+            </if>
+            <if test="testMoney != null" >
+                #{testMoney,jdbcType=VARCHAR},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_cards_bank a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="phoneNum != null" >
+                phone_num = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantId != null" >
+                merchant_id = #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="bankName != null" >
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null" >
+                bank_card = #{bankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="subbranchName != null" >
+                subbranch_name = #{subbranchName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null" >
+                account_name = #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="inDayMoney != null" >
+                in_day_money = #{inDayMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="inMonthMoney != null" >
+                in_month_money = #{inMonthMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyType != null" >
+                supply_type = #{supplyType,jdbcType=SMALLINT},
+            </if>
+            <if test="isTest != null" >
+                is_test = #{isTest,jdbcType=SMALLINT},
+            </if>
+            <if test="testMoney != null" >
+                test_money = #{testMoney,jdbcType=VARCHAR},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where   a.id=#{id}
+    </update>
+
+
+</mapper>

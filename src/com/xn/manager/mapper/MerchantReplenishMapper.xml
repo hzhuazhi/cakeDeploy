@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.MerchantReplenishDao">
+    <!-- 属性映射 -->
+    <resultMap type="com.xn.manager.model.MerchantReplenishModel" id="dataMap">
+        <id property="id" column="id" />
+        <result property="linkId" column="link_id" />
+        <result property="accountId" column="account_id" />
+        <result property="cardSiteId" column="card_site_id" />
+        <result property="channelId" column="channel_id" />
+        <result property="orderNo" column="order_no" />
+        <result property="outTradeNo" column="out_trade_no" />
+        <result property="orderMoney" column="order_money" />
+        <result property="distributionMoney" column="distribution_money" />
+        <result property="channelMoney" column="channel_money" />
+        <result property="pictureAds" column="picture_ads" />
+        <result property="checkMoney" column="check_money" />
+        <result property="checkPictureAds" column="check_picture_ads" />
+        <result property="checkStatus" column="check_status" />
+        <result property="checkInfo" column="check_info" />
+        <result property="handleType" column="handle_type" />
+        <result property="handlePeople" column="handle_people" />
+        <result property="remark" column="remark" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="yn" column="yn" />
+
+        <result property="merchantName" column="merchant_name" />
+        <result property="cardSiteName" column="card_site_name" />
+        <result property="channelName" column="channel_name" />
+        <result property="handlePeopleName" column="handle_people_name" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id,a.link_id,a.account_id,a.card_site_id,a.channel_id,
+        a.order_no,a.out_trade_no,a.order_money,a.distribution_money,a.distribution_money,a.channel_money,a.picture_ads,
+        a.check_money,a.check_picture_ads,a.check_status,a.check_info,
+        a.handle_type,a.handle_people,a.remark,
+        a.create_time,a.update_time,a.yn,
+        b.ac_name as merchant_name,
+        c.ac_name as card_site_name,
+        d.alias as channel_name,
+        e.ac_name as handle_people_name
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="accountId != 0 and accountId >0 " >
+                and a.account_id = #{accountId}
+            </if>
+            <if test="cardSiteId != 0 and cardSiteId >0 " >
+                and a.card_site_id = #{cardSiteId}
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                and a.channel_id = #{channelId}
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                and a.order_no = #{orderNo}
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                and a.out_trade_no = #{outTradeNo}
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                and a.check_status = #{checkStatus}
+            </if>
+            <if test="handleType != 0 and handleType >0 " >
+                and a.handle_type = #{handleType}
+            </if>
+            <if test="merchantName != null and merchantName != '' " >
+                and b.ac_name = #{merchantName}
+            </if>
+            <if test="cardSiteName != null and cardSiteName != '' " >
+                and c.ac_name = #{cardSiteName}
+            </if>
+            <if test="channelName != null and channelName != '' " >
+                and d.alias = #{channelName}
+            </if>
+            <if test="handlePeopleName != null and handlePeopleName != '' " >
+                and e.ac_name = #{handlePeopleName}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        left join tb_fr_channel d on a.channel_id = d.id
+        left join tb_hz_sys_account e on a.handle_people = e.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        left join tb_fr_channel d on a.channel_id = d.id
+        left join tb_hz_sys_account e on a.handle_people = e.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        left join tb_fr_channel d on a.channel_id = d.id
+        left join tb_hz_sys_account e on a.handle_people = e.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        left join tb_fr_channel d on a.channel_id = d.id
+        left join tb_hz_sys_account e on a.handle_people = e.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.card_site_id = c.id and b.role_id = 3
+        left join tb_fr_channel d on a.channel_id = d.id
+        left join tb_hz_sys_account e on a.handle_people = e.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_merchant_replenish
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="linkId != 0 and linkId >0 " >
+                link_id,
+            </if>
+            <if test="accountId != 0 and accountId >0 " >
+                account_id,
+            </if>
+            <if test="cardSiteId != 0 and cardSiteId >0 " >
+                card_site_id,
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                channel_id,
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                order_no,
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                out_trade_no,
+            </if>
+            <if test="orderMoney != null and orderMoney != '' " >
+                order_money,
+            </if>
+            <if test="distributionMoney != null and distributionMoney != '' " >
+                distribution_money,
+            </if>
+            <if test="channelMoney != null and channelMoney != '' " >
+                channel_money,
+            </if>
+            <if test="pictureAds != null and pictureAds != '' " >
+                picture_ads,
+            </if>
+            <if test="checkMoney != null and checkMoney != '' " >
+                check_money,
+            </if>
+            <if test="checkPictureAds != null and checkPictureAds != '' " >
+                check_picture_ads,
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                check_status,
+            </if>
+            <if test="checkInfo != null and checkInfo != '' " >
+                check_info,
+            </if>
+            <if test="handleType != 0 and handleType >0  " >
+                handle_type,
+            </if>
+            <if test="handlePeople != 0 and handlePeople >0  " >
+                handle_people,
+            </if>
+            <if test="remark != null and remark != '' " >
+                remark,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="linkId != 0 and linkId >0 " >
+                <![CDATA[  #{linkId}, ]]>
+            </if>
+            <if test="accountId != 0 and accountId >0 " >
+                <![CDATA[  #{accountId}, ]]>
+            </if>
+            <if test="cardSiteId != 0 and cardSiteId >0 " >
+                <![CDATA[  #{cardSiteId}, ]]>
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                <![CDATA[  #{channelId}, ]]>
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                <![CDATA[  #{orderNo}, ]]>
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                <![CDATA[  #{outTradeNo}, ]]>
+            </if>
+            <if test="orderMoney != null and orderMoney != '' " >
+                <![CDATA[  #{orderMoney}, ]]>
+            </if>
+            <if test="distributionMoney != null and distributionMoney != '' " >
+                <![CDATA[  #{distributionMoney}, ]]>
+            </if>
+            <if test="channelMoney != null and channelMoney != '' " >
+                <![CDATA[  #{channelMoney}, ]]>
+            </if>
+            <if test="pictureAds != null and pictureAds != '' " >
+                <![CDATA[  #{pictureAds}, ]]>
+            </if>
+            <if test="checkMoney != null and checkMoney != '' " >
+                <![CDATA[  #{checkMoney}, ]]>
+            </if>
+            <if test="checkPictureAds != null and checkPictureAds != '' " >
+                <![CDATA[  #{checkPictureAds}, ]]>
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                <![CDATA[  #{checkStatus}, ]]>
+            </if>
+            <if test="checkInfo != null and checkInfo != '' " >
+                <![CDATA[  #{checkInfo}, ]]>
+            </if>
+            <if test="handleType != 0 and handleType >0 " >
+                <![CDATA[  #{handleType}, ]]>
+            </if>
+            <if test="handlePeople != 0 and handlePeople >0 " >
+                <![CDATA[  #{handlePeople}, ]]>
+            </if>
+            <if test="remark != null and remark != '' " >
+                <![CDATA[  #{remark}, ]]>
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_merchant_replenish a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="linkId != 0 and linkId >0 " >
+                a.link_id = #{linkId},
+            </if>
+            <if test="accountId != 0 and accountId >0 " >
+                a.account_id = #{accountId},
+            </if>
+            <if test="cardSiteId != 0 and cardSiteId >0 " >
+                a.card_site_id = #{cardSiteId},
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                a.channel_id = #{channelId},
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                a.order_no = #{orderNo},
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                a.out_trade_no = #{outTradeNo},
+            </if>
+            <if test="orderMoney != null and orderMoney != '' " >
+                a.order_money = #{orderMoney},
+            </if>
+            <if test="channelMoney != null and channelMoney != '' " >
+                a.channel_money = #{channelMoney},
+            </if>
+            <if test="pictureAds != null and pictureAds != '' " >
+                a.picture_ads = #{pictureAds},
+            </if>
+            <if test="checkMoney != null and checkMoney != '' " >
+                a.check_money = #{checkMoney},
+            </if>
+            <if test="checkPictureAds != null and checkPictureAds != '' " >
+                a.check_picture_ads = #{checkPictureAds},
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                a.check_status = #{checkStatus},
+            </if>
+            <if test="checkInfo != null and checkInfo != '' " >
+                a.check_info = #{checkInfo},
+            </if>
+            <if test="handleType != 0 and handleType >0 " >
+                a.handle_type = #{handleType},
+            </if>
+            <if test="handlePeople != 0 and handlePeople >0 " >
+                a.handle_people = #{handlePeople},
+            </if>
+            a.remark = #{remark},
+            a.update_time = NOW(),
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_merchant_replenish a
+        <trim prefix="set" suffixOverrides=",">
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_merchant_replenish a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+    <!-- 更新审核信息 -->
+    <update id="updateCheck" parameterType="Object">
+        UPDATE tb_fr_merchant_replenish a
+        <trim prefix="set" suffixOverrides=",">
+            a.check_money = #{checkMoney},
+            <if test="checkPictureAds != null and checkPictureAds != '' " >
+                a.check_picture_ads = #{checkPictureAds},
+            </if>
+            a.check_status = #{checkStatus},
+            a.check_info = #{checkInfo},
+            a.handle_type = #{handleType},
+            a.handle_people = #{handlePeople},
+            a.remark = #{remark},
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 更新支付服务中渠道提交的补单信息 -->
+    <update id="updateChannelCheck" parameterType="Object">
+        UPDATE `hz-pay`.tb_hz_channel_replenish a
+        <trim prefix="set" suffixOverrides=",">
+            a.check_money = #{checkMoney},
+            a.check_picture_ads = #{checkPictureAds},
+            a.check_status = #{checkStatus},
+            a.check_info = #{checkInfo},
+            a.check_time = now(),
+        </trim>
+        where 1=1
+        and a.id = #{id}
+    </update>
+
+
+</mapper>

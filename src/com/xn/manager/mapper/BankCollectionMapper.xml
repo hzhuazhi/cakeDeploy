@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.BankCollectionDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.BankCollectionModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="bank_id" property="bankId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="VARCHAR" />
+        <result column="curday" property="curday" jdbcType="INTEGER" />
+        <result column="curhour" property="curhour" jdbcType="BIT" />
+        <result column="curminute" property="curminute" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="curday" property="curday" jdbcType="VARCHAR" />
+        <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+        <result column="card_site_id" property="cardSiteId" jdbcType="VARCHAR" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+       a.id, a.bank_id, a.order_no, a.money, a.curday, a.curhour, a.curminute, a.create_time, a.update_time,
+       a.ts_time, a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="bankCard != null and bankCard != '' " >
+                and a.bank_card = #{bankCard}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="bankStrategyList != null and bankStrategyList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="bankStrategyList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <!--<select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">-->
+        <!--select count(1)-->
+        <!--from tb_fr_bank_collection a  left  join    tb_fr_bank  b-->
+        <!--on   a.bank_id=b.id-->
+        <!--<include refid="Example_Where_Clause"/>-->
+    <!--</select>-->
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+
+
+    <sql id="Base_Column_List_CountInfo">
+       sum(a.money) money,a.bank_id,b.bank_name,b.bank_card,b.account_name,a.curday,b.account_id,b.card_site_id
+    </sql>
+
+
+    <!-- 查询条件 -->
+    <!--<sql id="Example_Where_Clause_CountInfo">-->
+        <!--where 1=1-->
+        <!--<trim  suffixOverrides="," >-->
+            <!--<if test="id != 0 and id >0 " >-->
+                <!--and a.id = #{id}-->
+            <!--</if>-->
+            <!--<if test="bankCard != null and bankCard != '' " >-->
+                <!--and b.bank_card = #{bankCard}-->
+            <!--</if>-->
+            <!--<if test="accountName != null and accountName != '' " >-->
+                <!--and b.account_name = #{accountName}-->
+            <!--</if>-->
+            <!--<if test="accountId != null and accountId != '' " >-->
+                <!--and b.account_id = #{accountId}-->
+            <!--</if>-->
+            <!--<if test="cardSiteId != null and cardSiteId != '' " >-->
+                <!--and b.card_site_id = #{cardSiteId}-->
+            <!--</if>-->
+            <!--&lt;!&ndash;<if test="curday != 0 and curday >0 " >&ndash;&gt;-->
+                <!--&lt;!&ndash;and a.curday = #{curday}&ndash;&gt;-->
+            <!--&lt;!&ndash;</if>&ndash;&gt;-->
+            <!--and a.yn =  0-->
+        <!--</trim>-->
+    <!--</sql>-->
+
+
+
+    <sql id="Having">
+        <trim  suffixOverrides="," >
+            <if test="money != 0 and money >0 " >
+                having  sum(a.money)>= #{money}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 查询汇总数据-->
+    <select id="queryBankCardCountInfo"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List_CountInfo" />
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause_CountInfo"/>
+        group by
+        a.curday desc,
+        b.bank_name,
+        b.bank_card,
+        b.account_name
+        <include refid="Having"/>
+    </select>
+
+
+
+
+
+
+
+
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause_CountInfo">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="bankName != null and bankName != '' " >
+                and b.bank_name = #{bankName}
+            </if>
+            <if test="bankCard != null and bankCard != '' " >
+                and b.bank_card = #{bankCard}
+            </if>
+            <if test="accountName != null and accountName != '' " >
+                and b.account_name = #{accountName}
+            </if>
+            <if test="accountId != null and accountId != '' " >
+                and b.account_id = #{accountId}
+            </if>
+            <if test="cardSiteId != null and cardSiteId != '' " >
+                and b.card_site_id = #{cardSiteId}
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="createTime != null and createTime != '' " >
+                and a.create_time &gt;= #{createTime}
+            </if>
+            <if test="beginTime != null and beginTime != '' " >
+                and a.create_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != '' " >
+                and a.create_time &lt;= #{endTime}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+
+
+
+    <!-- 查询汇总数据-->
+    <select id="queryByCount"  resultMap="dataMap" parameterType="Object">
+        select
+        count(a.bank_id)
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause_CountInfo"/>
+        <include refid="Having"/>
+    </select>
+
+
+
+    <select id="queryCountInfo"  resultMap="dataMap" parameterType="Object">
+        select
+        sum(a.money) as money
+        from tb_fr_bank_collection a  left  join    tb_fr_bank  b
+        on   a.bank_id=b.id
+        <include refid="Example_Where_Clause_CountInfo"/>
+    </select>
+
+
+
+</mapper>
