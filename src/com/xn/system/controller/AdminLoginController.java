@@ -85,6 +85,7 @@ public class AdminLoginController extends BaseController {
 			accountId = adminAccount.getId();
 			// 赋值内部角色还是外部角色，这里是内部角色
 			adminAccount.setRoleType(1);
+			//
 		}
 //		//渠道账号
 //		AccountTpModel accountTpModel = BeanUtils.copy(model, AccountTpModel.class);
