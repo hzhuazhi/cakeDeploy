@@ -128,13 +128,14 @@ public class ModuleController extends BaseController {
 		List<Module> modules = null;
 		Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
 		if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-			if (account.getRoleId() == ManagerEnum.RoleTypeEnum.ADMIN.getRoleType()){
-				//管理员账号
-				modules = moduleService.getAllModule(null, null, null);
-			}else{
-				modules = moduleService.getRoleModule((int) account.getRoleId());
-			}
-//			modules = moduleService.getRoleModule((int) account.getRoleId());
+			// 管理员账号默认全部功能
+//			if (account.getRoleId() == ManagerEnum.RoleTypeEnum.ADMIN.getRoleType()){
+//				//管理员账号
+//				modules = moduleService.getAllModule(null, null, null);
+//			}else{
+//				modules = moduleService.getRoleModule((int) account.getRoleId());
+//			}
+			modules = moduleService.getRoleModule((int) account.getRoleId());
 		}
 		Map<String, Object> map = getRootMap();
 		map.put("menuList", modules);
