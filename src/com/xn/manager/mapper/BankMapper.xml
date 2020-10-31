@@ -7,7 +7,8 @@
         <result column="alias" property="alias" jdbcType="VARCHAR" />
         <result column="mobile_card_id" property="mobileCardId" jdbcType="BIGINT" />
         <result column="bank_type_id" property="bankTypeId" jdbcType="BIGINT" />
-        <result column="account_id" property="accountId" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="merchant_site_id" property="merchantSiteId" jdbcType="BIGINT" />
         <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
         <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
         <result column="subbranch_name" property="subbranchName" jdbcType="VARCHAR" />
@@ -37,10 +38,10 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id, a.alias, a.mobile_card_id,  a.account_id,a.bank_type_id,  a.bank_name, a.bank_card, a.subbranch_name,
+        a.id, a.alias, a.mobile_card_id,  a.merchant_id,a.bank_type_id,  a.bank_name, a.bank_card, a.subbranch_name,
         a.account_name, a.bank_code, a.province, a.city, a.sms_num, a.last_num, a.in_day_money, a.in_month_money,
         a.out_day_money, a.out_month_money, a.is_arrears, a.check_status, a.data_explain, a.is_ok, a.remark,
-        a.use_status, a.create_time, a.update_time, a.ts_time, a.yn, a.phone_num,a.card_site_id,a.account_id
+        a.use_status, a.create_time, a.update_time, a.ts_time, a.yn, a.phone_num,a.merchant_site_id
     </sql>
 
     <!-- 查询条件 -->
@@ -50,11 +51,11 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                and a.account_id = #{accountId}
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                and a.card_site_id = #{cardSiteId}
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                and a.merchant_site_id = #{merchantSiteId}
             </if>
 
             <if test="bankCard != null and bankCard != '' " >
@@ -253,11 +254,11 @@
             <if test="phoneNum != null" >
                 phone_num,
             </if>
-            <if test="accountId != null" >
-                account_id,
+            <if test="merchantId != null" >
+                merchant_id,
             </if>
-            <if test="cardSiteId != null" >
-                card_site_id,
+            <if test="merchantSiteId != null" >
+                merchant_site_id,
             </if>
             create_time,
         </trim>
@@ -336,11 +337,11 @@
             <if test="phoneNum != null" >
                 #{phoneNum,jdbcType=BIT},
             </if>
-            <if test="accountId != null" >
-                #{accountId,jdbcType=BIT},
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIT},
             </if>
-            <if test="cardSiteId != null" >
-                #{cardSiteId,jdbcType=BIT},
+            <if test="merchantSiteId != null" >
+                #{merchantSiteId,jdbcType=BIT},
             </if>
             <![CDATA[  NOW(), ]]>
         </trim>
@@ -354,8 +355,8 @@
             <if test="alias != null" >
                 alias = #{alias,jdbcType=VARCHAR},
             </if>
-            <if test="accountId != null" >
-                account_id = #{accountId,jdbcType=VARCHAR},
+            <if test="merchantId != null" >
+                merchant_id = #{merchantId,jdbcType=VARCHAR},
             </if>
             <if test="mobileCardId != null" >
                 mobile_card_id = #{mobileCardId,jdbcType=BIGINT},

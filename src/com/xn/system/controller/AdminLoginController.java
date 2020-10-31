@@ -5,6 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
+import com.xn.common.util.BeanUtils;
+import com.xn.manager.model.MerchantModel;
+import com.xn.manager.model.MerchantSiteModel;
+import com.xn.manager.service.MerchantService;
+import com.xn.manager.service.MerchantSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +40,11 @@ public class AdminLoginController extends BaseController {
 	@Autowired
 	private AccountService<Account> accountService;//内部账号
 
+	@Autowired
+	private MerchantService<MerchantModel> merchantService;//卡商表
+
+	@Autowired
+	private MerchantSiteService<MerchantSiteModel> merchantSiteService;//子卡商表
 
 
 	@RequestMapping(value = "/login")
@@ -86,6 +96,25 @@ public class AdminLoginController extends BaseController {
 			// 赋值内部角色还是外部角色，这里是内部角色
 			adminAccount.setRoleType(1);
 			//
+		}
+
+		//卡商账号
+		MerchantModel merchantModel = BeanUtils.copy(model, MerchantModel.class);
+		merchantModel = merchantService.queryByCondition(merchantModel);
+		if(merchantModel != null && merchantModel.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+			accountId = merchantModel.getId();
+			adminAccount = BeanUtils.copy(merchantModel, Account.class);
+			adminAccount.setRoleType(2);
+		}
+
+
+		//子卡商账号
+		MerchantSiteModel merchantSiteModel = BeanUtils.copy(model, MerchantSiteModel.class);
+		merchantSiteModel = merchantSiteService.queryByCondition(merchantSiteModel);
+		if(merchantSiteModel != null && merchantSiteModel.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+			accountId = merchantSiteModel.getId();
+			adminAccount = BeanUtils.copy(merchantSiteModel, Account.class);
+			adminAccount.setRoleType(2);
 		}
 //		//渠道账号
 //		AccountTpModel accountTpModel = BeanUtils.copy(model, AccountTpModel.class);

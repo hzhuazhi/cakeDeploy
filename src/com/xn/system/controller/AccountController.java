@@ -140,7 +140,7 @@ public class AccountController extends BaseController{
 				accountService.add(bean);
 				if(bean.getRoleId()==2){
 					MerchantModel merchantModel  = new  MerchantModel();
-					merchantModel.setAccountId(bean.getId());
+//					merchantModel.setAccountId(bean.getId());
 					merchantModel.setAlias(bean.getAcName());
 					merchantModel.setBalance("0");
 					merchantModel.setLeastMoney("0");

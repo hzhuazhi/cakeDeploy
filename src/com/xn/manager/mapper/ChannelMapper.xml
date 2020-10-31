@@ -67,7 +67,6 @@
         <include refid="Base_Column_List" />
         from tb_fr_channel a
         <include refid="Example_Where_Clause"/>
-        order by a.create_time desc
         limit #{startIndex},#{pageSize}
     </select>
 

@@ -3,16 +3,21 @@ package com.xn.manager.model;
 import com.xn.common.page.BasePage;
 
 import java.util.Date;
-import java.util.List;
 
-public class MerchantModel extends BasePage {
-
+public class MerchantSiteModel extends BasePage {
     /**
      * 自增主键ID
      *
      * @mbggenerated
      */
     private long id;
+
+    /**
+     * 归属卡卡商ID：对应表tb_fr_merchant的主键ID
+     *
+     * @mbggenerated
+     */
+    private long merchantId;
 
     /**
      * 名称/别名
@@ -76,68 +81,6 @@ public class MerchantModel extends BasePage {
      * @mbggenerated
      */
     private int acType;
-
-    /**
-     * 总额：总共跑量的金额
-     *
-     * @mbggenerated
-     */
-    private String totalMoney;
-
-    /**
-     * 保底金额：卡商在我放至少要留有多少钱，才放量：保证金
-     *
-     * @mbggenerated
-     */
-    private String leastMoney;
-
-    /**
-     * 余额：跑量的金额累加，渠道提现的金额扣减
-     *
-     * @mbggenerated
-     */
-    private String balance;
-
-    /**
-     * 锁定金额
-     *
-     * @mbggenerated
-     */
-    private String lockMoney;
-
-    /**
-     * 卡商类型：1我方卡商，2第三方卡商
-     *
-     * @mbggenerated
-     */
-    private int merchantType;
-
-    /**
-     * 卡商运营类型/运营性质：1 代付，2代收
-     *
-     * @mbggenerated
-     */
-    private int operateType;
-
-    /**
-     * 总收益金额
-     *
-     * @mbggenerated
-     */
-    private String totalProfit;
-    /**
-     * 手续比例
-     *
-     * @mbggenerated
-     */
-    private String serviceCharge;
-
-    /**
-     * 代付款类型：1手动付款，2API自动付款
-     *
-     * @mbggenerated
-     */
-    private int payType;
 
     /**
      * 备注
@@ -209,18 +152,20 @@ public class MerchantModel extends BasePage {
      */
     private int yn;
 
-    /***
-     * 集合数据id
-     * @mbggenerated
-     */
-    private List<Long> merchantIdList;
-
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(long merchantId) {
+        this.merchantId = merchantId;
     }
 
     public String getAlias() {
@@ -293,70 +238,6 @@ public class MerchantModel extends BasePage {
 
     public void setAcType(int acType) {
         this.acType = acType;
-    }
-
-    public String getTotalMoney() {
-        return totalMoney;
-    }
-
-    public void setTotalMoney(String totalMoney) {
-        this.totalMoney = totalMoney;
-    }
-
-    public String getLeastMoney() {
-        return leastMoney;
-    }
-
-    public void setLeastMoney(String leastMoney) {
-        this.leastMoney = leastMoney;
-    }
-
-    public String getBalance() {
-        return balance;
-    }
-
-    public void setBalance(String balance) {
-        this.balance = balance;
-    }
-
-    public String getLockMoney() {
-        return lockMoney;
-    }
-
-    public void setLockMoney(String lockMoney) {
-        this.lockMoney = lockMoney;
-    }
-
-    public int getMerchantType() {
-        return merchantType;
-    }
-
-    public void setMerchantType(int merchantType) {
-        this.merchantType = merchantType;
-    }
-
-    public int getOperateType() {
-        return operateType;
-    }
-
-    public void setOperateType(int operateType) {
-        this.operateType = operateType;
-    }
-
-    public String getTotalProfit() {
-        return totalProfit;
-    }
-
-    public void setTotalProfit(String totalProfit) {
-        this.totalProfit = totalProfit;
-    }
-
-    public int getPayType() {
-        return payType;
-    }
-
-    public void setPayType(int payType) {
-        this.payType = payType;
     }
 
     public String getRemark() {
@@ -437,21 +318,5 @@ public class MerchantModel extends BasePage {
 
     public void setYn(int yn) {
         this.yn = yn;
-    }
-
-    public String getServiceCharge() {
-        return serviceCharge;
-    }
-
-    public void setServiceCharge(String serviceCharge) {
-        this.serviceCharge = serviceCharge;
-    }
-
-    public List<Long> getMerchantIdList() {
-        return merchantIdList;
-    }
-
-    public void setMerchantIdList(List<Long> merchantIdList) {
-        this.merchantIdList = merchantIdList;
     }
 }

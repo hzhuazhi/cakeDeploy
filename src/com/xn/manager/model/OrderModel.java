@@ -306,6 +306,20 @@ public class OrderModel extends BasePage {
      * @mbggenerated
      */
     private Integer numMoney;
+
+
+    /**
+     * 卡商id
+     *
+     * @mbggenerated
+     */
+    private Long merchantId;
+    /**
+     * 子卡商id
+     *
+     * @mbggenerated
+     */
+    private Long merchantSiteId;
     /**
      * 任务成功率
      *
@@ -703,5 +717,21 @@ public class OrderModel extends BasePage {
 
     public void setAcName(String acName) {
         this.acName = acName;
+    }
+
+    public Long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public Long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(Long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 }

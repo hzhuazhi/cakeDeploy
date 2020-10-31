@@ -3,10 +3,13 @@ package com.xn.manager.service.impl;
 import com.xn.common.dao.BaseDao;
 import com.xn.common.service.impl.BaseServiceImpl;
 import com.xn.manager.dao.MerchantDao;
+import com.xn.manager.model.MerchantModel;
 import com.xn.manager.service.MerchantService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Description:卡商扩充数据表的Service层的实现层
@@ -22,5 +25,10 @@ public class MerchantServiceImpl<T> extends BaseServiceImpl<T> implements Mercha
     public BaseDao<T> getDao() {
         // TODO Auto-generated method stub
         return merchantDao;
+    }
+
+    @Override
+    public List<MerchantModel> queryNotAllList(MerchantModel merchantModel) {
+        return merchantDao.queryNotAllList(merchantModel);
     }
 }

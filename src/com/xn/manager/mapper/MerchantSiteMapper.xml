@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xn.manager.dao.MerchantDao">
+<mapper namespace="com.xn.manager.dao.MerchantSiteDao">
     <!-- 属性映射 -->
-    <resultMap id="dataMap" type="com.xn.manager.model.MerchantModel" >
+    <resultMap id="dataMap" type="com.xn.manager.model.MerchantSiteModel" >
         <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
         <result column="alias" property="alias" jdbcType="VARCHAR" />
         <result column="account_num" property="accountNum" jdbcType="VARCHAR" />
         <result column="pass_wd" property="passWd" jdbcType="VARCHAR" />
@@ -13,14 +14,6 @@
         <result column="ac_contacts" property="acContacts" jdbcType="VARCHAR" />
         <result column="ac_phone" property="acPhone" jdbcType="VARCHAR" />
         <result column="ac_type" property="acType" jdbcType="BIT" />
-        <result column="total_money" property="totalMoney" jdbcType="VARCHAR" />
-        <result column="least_money" property="leastMoney" jdbcType="VARCHAR" />
-        <result column="balance" property="balance" jdbcType="VARCHAR" />
-        <result column="lock_money" property="lockMoney" jdbcType="VARCHAR" />
-        <result column="merchant_type" property="merchantType" jdbcType="BIT" />
-        <result column="operate_type" property="operateType" jdbcType="BIT" />
-        <result column="total_profit" property="totalProfit" jdbcType="VARCHAR" />
-        <result column="pay_type" property="payType" jdbcType="BIT" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="use_status" property="useStatus" jdbcType="BIT" />
         <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
@@ -30,15 +23,13 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
-        <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR" />
         <result column="yn" property="yn" jdbcType="BIT" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id, a.alias, a.account_num, a.pass_wd, a.withdraw_pass_wd, a.role_id, a.ac_name, a.ac_contacts,
-        a.ac_phone, a.ac_type, a.total_money, a.least_money, a.balance, a.lock_money, a.merchant_type,
-        a.operate_type, a.total_profit, a.pay_type, a.remark, a.use_status, a.create_user_id, a.create_role_id,
-        a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time, a.yn, a.service_charge
+        a.id, a.merchant_id, a.alias, a.account_num, a.pass_wd, a.withdraw_pass_wd, a.role_id, a.ac_name,
+        a.ac_contacts, a.ac_phone, a.ac_type, a.remark, a.use_status, a.create_user_id, a.create_role_id,
+        a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time, a.yn
     </sql>
 
     <!-- 查询条件 -->
@@ -50,6 +41,9 @@
             </if>
             <if test="alias != null and alias != ''" >
                 and a.alias = #{alias}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
             </if>
             <if test="accountNum != null and  accountNum != ''" >
                 and a.account_num = #{accountNum}
@@ -82,7 +76,7 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_merchant a
+        from tb_fr_merchant_site a
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -90,7 +84,7 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant a
+        from tb_fr_merchant_site a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -100,35 +94,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant a
+        from tb_fr_merchant_site a
         <include refid="Example_Where_Clause"/>
-        order by a.create_time desc
-    </select>
-
-
-
-
-    <sql id="Example_Where_Clause_Not_Id">
-        where 1=1
-        <trim  suffixOverrides="," >
-            <if test="merchantIdList != null and merchantIdList.size()>0">
-                and a.id not in
-                <foreach item="item" index="index" collection="merchantIdList" open="(" separator="," close=")">
-                    #{item}
-                </foreach>
-            </if>
-            and operate_type=2
-            and a.yn =  0
-        </trim>
-    </sql>
-
-
-    <!-- 查询列表-无分页-有条件/有条件 -->
-    <select id="queryNotAllList" resultMap="dataMap"  parameterType="Object">
-        select
-        <include refid="Base_Column_List" />
-        from tb_fr_merchant a
-        <include refid="Example_Where_Clause_Not_Id"/>
         order by a.create_time desc
     </select>
 
@@ -137,7 +104,7 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant a
+        from tb_fr_merchant_site a
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -145,7 +112,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant a
+        from tb_fr_merchant_site a
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>
@@ -155,13 +122,13 @@
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() as id
         </selectKey>
-        insert into tb_fr_merchant
+        insert into tb_fr_merchant_site
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="serviceCharge != null" >
-                service_charge,
-            </if>
             <if test="id != null" >
                 id,
+            </if>
+            <if test="merchantId != null" >
+                merchant_id,
             </if>
             <if test="alias != null" >
                 alias,
@@ -190,30 +157,6 @@
             <if test="acType != null" >
                 ac_type,
             </if>
-            <if test="totalMoney != null" >
-                total_money,
-            </if>
-            <if test="leastMoney != null" >
-                least_money,
-            </if>
-            <if test="balance != null" >
-                balance,
-            </if>
-            <if test="lockMoney != null" >
-                lock_money,
-            </if>
-            <if test="merchantType != null" >
-                merchant_type,
-            </if>
-            <if test="operateType != null" >
-                operate_type,
-            </if>
-            <if test="totalProfit != null" >
-                total_profit,
-            </if>
-            <if test="payType != null" >
-                pay_type,
-            </if>
             <if test="remark != null" >
                 remark,
             </if>
@@ -236,22 +179,22 @@
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="serviceCharge != null" >
-                #{serviceCharge,jdbcType=BIGINT},
-            </if>
             <if test="id != null" >
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="alias != null and alias != '' " >
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=CHAR},
+            </if>
+            <if test="alias != null" >
                 #{alias,jdbcType=VARCHAR},
             </if>
-            <if test="accountNum != null and accountNum != ''" >
+            <if test="accountNum != null" >
                 #{accountNum,jdbcType=VARCHAR},
             </if>
-            <if test="passWd != null and passWd != '' " >
+            <if test="passWd != null" >
                 #{passWd,jdbcType=VARCHAR},
             </if>
-            <if test="withdrawPassWd != null and withdrawPassWd != '' "  >
+            <if test="withdrawPassWd != null" >
                 #{withdrawPassWd,jdbcType=VARCHAR},
             </if>
             <if test="roleId != null" >
@@ -268,30 +211,6 @@
             </if>
             <if test="acType != null" >
                 #{acType,jdbcType=BIT},
-            </if>
-            <if test="totalMoney != null" >
-                #{totalMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="leastMoney != null" >
-                #{leastMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="balance != null" >
-                #{balance,jdbcType=VARCHAR},
-            </if>
-            <if test="lockMoney != null" >
-                #{lockMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="merchantType != null" >
-                #{merchantType,jdbcType=BIT},
-            </if>
-            <if test="operateType != null" >
-                #{operateType,jdbcType=BIT},
-            </if>
-            <if test="totalProfit != null" >
-                #{totalProfit,jdbcType=VARCHAR},
-            </if>
-            <if test="payType != null" >
-                #{payType,jdbcType=BIT},
             </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
@@ -318,10 +237,10 @@
 
     <!-- 更新记录 -->
     <update id="update" parameterType="Object">
-        UPDATE tb_fr_merchant a
+        UPDATE tb_fr_merchant_site a
         <trim prefix="set" suffixOverrides=",">
-            <if test="serviceCharge != null" >
-                service_charge = #{serviceCharge,jdbcType=VARCHAR},
+            <if test="merchantId !=0 and merchantId >0 " >
+                merchant_id = #{merchantId,jdbcType=VARCHAR},
             </if>
             <if test="alias != null and alias != '' " >
                 alias = #{alias,jdbcType=VARCHAR},
@@ -350,30 +269,6 @@
             <if test="acType !=0 and acType >0 " >
                 ac_type = #{acType,jdbcType=BIT},
             </if>
-            <if test="totalMoney != null and totalMoney != '' " >
-                total_money = #{totalMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="leastMoney != null and leastMoney != '' " >
-                least_money = #{leastMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="balance != null and balance != '' " >
-                balance = #{balance,jdbcType=VARCHAR},
-            </if>
-            <if test="lockMoney != null and lockMoney != ''" >
-                lock_money = #{lockMoney,jdbcType=VARCHAR},
-            </if>
-            <if test="merchantType !=0 and  merchantType >0 " >
-                merchant_type = #{merchantType,jdbcType=BIT},
-            </if>
-            <if test="operateType !=0 and  operateType >0 " >
-                operate_type = #{operateType,jdbcType=BIT},
-            </if>
-            <if test="totalProfit != null and totalProfit != ''" >
-                total_profit = #{totalProfit,jdbcType=VARCHAR},
-            </if>
-            <if test="payType != 0 and  payType >0" >
-                pay_type = #{payType,jdbcType=BIT},
-            </if>
             <if test="remark != null and remark != ''" >
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
@@ -400,7 +295,7 @@
 
     <!-- 主要作用1.逻辑删除，2更新状态 -->
     <update id="manyOperation" parameterType="Object">
-        update tb_fr_merchant a
+        update tb_fr_merchant_site a
         <trim prefix="set" suffixOverrides=",">
             <if test="useStatus != 0 and useStatus >0 " >
                 a.use_status=#{useStatus},
@@ -413,7 +308,7 @@
 
     <!--逻辑删除数据 -->
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE tb_fr_merchant a set a.yn = 1,
+        UPDATE tb_fr_merchant_site a set a.yn = 1,
         a.update_time = now()
         where 1=1
         and a.id =#{id}

@@ -4,7 +4,7 @@ import com.xn.common.page.BasePage;
 
 import java.util.Date;
 
-public class ChannelModel extends BasePage {
+public class MerchantChannelModel extends BasePage {
     /**
      * 自增主键ID
      *
@@ -13,18 +13,32 @@ public class ChannelModel extends BasePage {
     private Long id;
 
     /**
-     * 商户名称/别名
+     * 名称/别名
      *
      * @mbggenerated
      */
     private String alias;
 
     /**
-     * 商户秘钥
+     * 卡商账户ID：对应表tb_fr_merchant的主键ID
      *
      * @mbggenerated
      */
-    private String secretKey;
+    private Long merchantId;
+
+    /**
+     * 银行卡归属卡站点ID：对应表tb_fr_merchant_site的主键ID
+     *
+     * @mbggenerated
+     */
+    private Long merchantSiteId;
+
+    /**
+     * 商户ID：对应表tb_fr_channel的主键ID
+     *
+     * @mbggenerated
+     */
+    private Long channelId;
 
     /**
      * 备注
@@ -32,12 +46,13 @@ public class ChannelModel extends BasePage {
      * @mbggenerated
      */
     private String remark;
+    private String accountNum;
     /**
-     * merchantid 字符串
-     *
-     * @mbggenerated
+     * 绑定的卡商
      */
     private String merchantStr;
+
+
 
     /**
      * 使用状态:1初始化有效正常使用，2无效暂停使用
@@ -45,6 +60,34 @@ public class ChannelModel extends BasePage {
      * @mbggenerated
      */
     private Integer useStatus;
+
+    /**
+     * 创建人ID
+     *
+     * @mbggenerated
+     */
+    private Long createUserId;
+
+    /**
+     * 创建人归属角色ID
+     *
+     * @mbggenerated
+     */
+    private Long createRoleId;
+
+    /**
+     * 更新人ID
+     *
+     * @mbggenerated
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人归属角色ID
+     *
+     * @mbggenerated
+     */
+    private Long updateRoleId;
 
     /**
      * 创建时间
@@ -73,12 +116,6 @@ public class ChannelModel extends BasePage {
      * @mbggenerated
      */
     private Integer yn;
-    /**
-     * 银行卡绑定类型：1无需绑定银行卡，2需要绑定银行卡
-     *
-     * @mbggenerated
-     */
-    private Integer bankBindingType;
 
     public Long getId() {
         return id;
@@ -96,12 +133,28 @@ public class ChannelModel extends BasePage {
         this.alias = alias;
     }
 
-    public String getSecretKey() {
-        return secretKey;
+    public Long getMerchantId() {
+        return merchantId;
     }
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public Long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(Long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
+    }
+
+    public Long getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(Long channelId) {
+        this.channelId = channelId;
     }
 
     public String getRemark() {
@@ -112,6 +165,38 @@ public class ChannelModel extends BasePage {
         this.remark = remark;
     }
 
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Long getCreateRoleId() {
+        return createRoleId;
+    }
+
+    public void setCreateRoleId(Long createRoleId) {
+        this.createRoleId = createRoleId;
+    }
+
+    public Long getUpdateUserId() {
+        return updateUserId;
+    }
+
+    public void setUpdateUserId(Long updateUserId) {
+        this.updateUserId = updateUserId;
+    }
+
+    public Long getUpdateRoleId() {
+        return updateRoleId;
+    }
+
+    public void setUpdateRoleId(Long updateRoleId) {
+        this.updateRoleId = updateRoleId;
+    }
 
     public Date getCreateTime() {
         return createTime;
@@ -153,12 +238,12 @@ public class ChannelModel extends BasePage {
         this.yn = yn;
     }
 
-    public Integer getBankBindingType() {
-        return bankBindingType;
+    public String getAccountNum() {
+        return accountNum;
     }
 
-    public void setBankBindingType(Integer bankBindingType) {
-        this.bankBindingType = bankBindingType;
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 
     public String getMerchantStr() {

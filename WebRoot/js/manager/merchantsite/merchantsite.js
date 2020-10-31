@@ -3,58 +3,19 @@ var datatable;
 var account = {
     //地址
     url:{
-        list_url : ctx + '/merchant/list.do',
-        dataList_url : ctx + "/merchant/dataList.do",
-        add_url : ctx+ "/merchant/add.do",
-        update_url : ctx+ "/merchant/update.do",
-        queryId_url: ctx+ "/merchant/getId.do",
-        delete_url: ctx+ "/merchant/delete.do",
-        manyOperation_url: ctx+ "/merchant/manyOperation.do"
+        list_url : ctx + '/merchantsite/list.do',
+        dataList_url : ctx + "/merchantsite/dataList.do",
+        add_url : ctx+ "/merchantsite/add.do",
+        update_url : ctx+ "/merchantsite/update.do",
+        queryId_url: ctx+ "/merchantsite/getId.do",
+        delete_url: ctx+ "/merchantsite/delete.do",
+        manyOperation_url: ctx+ "/merchantsite/manyOperation.do"
     },
     //列表显示参数
     list:[
         {"data":"alias",},
         {"data":"accountNum",},
         {"data":"roleId",},
-        {"data":"totalMoney",},
-        {"data":"leastMoney",},
-        {"data":"serviceCharge",},
-        {"data":"balance",},
-        {"data":"lockMoney",},
-        {"data":"totalProfit",},
-        {"data":"merchantType",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                if(oData.merchantType==1){
-                    html+= '<span >卡商类型</span>';
-                }else if(oData.merchantType==2){
-                    html+= '<span >第三方卡商</span>';
-                }
-                $(nTd).html(html);
-            }
-        },
-        {"data":"operateType",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                if(oData.merchantType==1){
-                    html+= '<span >代收</span>';
-                }else if(oData.merchantType==2){
-                    html+= '<span >代付</span>';
-                }
-                $(nTd).html(html);
-            }
-        },
-        {"data":"payType",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                if(oData.payType==1){
-                    html+= '<span >手动付款</span>';
-                }else if(oData.payType==2){
-                    html+= '<span >API自动付款</span>';
-                }
-                $(nTd).html(html);
-            }
-        },
         {"data":"useStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
@@ -71,7 +32,12 @@ var account = {
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
-                html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchant/jumpUpdate.do?op=1&id='+oData.id+'"> 编辑 </a>'
+                if(oData.useStatus==1){
+                    html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchantsite/manyOperation.do?useStatus=2&id='+oData.id+'" > 禁用 </a>';
+                }else if(oData.useStatus==2){
+                    html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchantsite/manyOperation.do?useStatus=1&id='+oData.id+'" >  启用 </a>';
+                }
+                html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchantsite/jumpUpdate.do?op=1&id='+oData.id+'"> 编辑 </a>'
                 html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
                 $(nTd).html(html);
             }
@@ -88,7 +54,7 @@ var account = {
         common.updateUrl(this.url);
         //添加
         $(".addbtn").live("click",function(){
-            window.location.href = ctx + "/merchant/jumpAdd.do";
+            window.location.href = ctx + "/merchantsite/jumpAdd.do";
         });
 
         // 初始化列表数据
@@ -108,6 +74,8 @@ var account = {
             $("#accountNum").val("");
             common.showDatas(account.condJsonData,account.list);
         });
+
+
         //删除
         $(".dataTableResetBtn").live("click",function(){
             var id = $(this).attr('directkey');
@@ -133,7 +101,7 @@ var account = {
     //下拉框数据填充
     //查询所有代理-无分页-下拉框选项:
     queryBankAll:function(){
-        var url = basePath + "merchantrecharge/dataAllList.do";
+        var url = basePath + "merchantsite/dataAllList.do";
         var data = {
         };
         common.ajax(url,data,function(data){
@@ -157,7 +125,7 @@ function  orderHandle(id){
             "id":id,
             "op":1
         };
-        var url = ctx + "/merchantrecharge/chechData.do";
+        var url = ctx + "/merchantsite/chechData.do";
         common.ajax(url,data,function(data){
             if(data.type==1){
                 window.location.href = ctx +data.rs;

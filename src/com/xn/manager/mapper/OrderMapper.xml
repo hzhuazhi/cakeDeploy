@@ -23,8 +23,8 @@
         <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
         <result column="account_id" property="accountId" jdbcType="BIGINT" />
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
-        <result column="card_site_id" property="cardSiteId" jdbcType="BIGINT" />
-        <result column="channel_id" property="channelId" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="merchant_site_id" property="merchantSiteId" jdbcType="BIGINT" />
         <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
         <result column="replenish_type" property="replenishType" jdbcType="BIT" />
         <result column="work_type" property="workType" jdbcType="BIT" />
@@ -51,7 +51,7 @@
     <sql id="Base_Column_List">
         a.id, a.bank_id, a.order_no, a.order_type, a.order_money, a.qr_code, a.out_trade_no, a.order_status,
         a.invalid_time, a.notify_url, a.bank_name, a.bank_card, a.subbranch_name, a.account_name, a.bank_code,
-        a.mobile_card_id, a.phone_num, a.account_id, a.merchant_name, a.card_site_id, a.channel_id, a.channel_name, a.replenish_type,
+        a.mobile_card_id, a.phone_num, a.merchant_id, a.merchant_name, a.merchant_site_id, a.channel_id, a.channel_name, a.replenish_type,
         a.work_type, a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_num, a.run_status,
         a.send_num, a.send_status, a.create_time, a.update_time, a.ts_time, a.yn,a.distribution_money
     </sql>
@@ -90,8 +90,8 @@
             <if test="orderStatus != 0 and orderStatus >0 " >
                 and a.order_status = #{orderStatus}
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                and a.account_id = #{accountId}
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
             </if>
 
 
@@ -231,8 +231,8 @@
             <if test="phoneNum != null" >
                 phone_num,
             </if>
-            <if test="accountId != null" >
-                account_id,
+            <if test="merchantId != null" >
+                merchant_id,
             </if>
             <if test="merchantName != null" >
                 merchant_name,
@@ -331,8 +331,8 @@
             <if test="phoneNum != null" >
                 #{phoneNum,jdbcType=VARCHAR},
             </if>
-            <if test="accountId != null" >
-                #{accountId,jdbcType=BIGINT},
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIGINT},
             </if>
             <if test="merchantName != null" >
                 #{merchantName,jdbcType=VARCHAR},
@@ -433,8 +433,8 @@
             <if test="phoneNum != null" >
                 phone_num = #{phoneNum,jdbcType=VARCHAR},
             </if>
-            <if test="accountId != null" >
-                account_id = #{accountId,jdbcType=BIGINT},
+            <if test="merchantId != null" >
+                merchant_id = #{merchantId,jdbcType=BIGINT},
             </if>
             <if test="merchantName != null" >
                 merchant_name = #{merchantName,jdbcType=VARCHAR},
@@ -519,8 +519,8 @@
             <if test="accountId != 0 and accountId >0 " >
                 and a.account_id = #{accountId}
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                and a.card_site_id = #{cardSiteId}
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                and a.merchant_site_id = #{merchantSiteId}
             </if>
             <if test="curday != 0 and curday >0 " >
                 and a.curday = #{curday}

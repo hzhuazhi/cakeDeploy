@@ -49,18 +49,19 @@ public class BankModel extends BasePage {
      */
     private Long bankTypeId;
 
-    /**
-     * 归属卡商ID：对应表tb_hz_sys_account的主键ID，并且角色是卡商
-     *
-     * @mbggenerated
-     */
-    private Long merchantId;
+
     /**
      * 卡站点id
      *
      * @mbggenerated
      */
     private Long cardSiteId;
+    /**
+     * 卡站点id
+     *
+     * @mbggenerated
+     */
+    private Long merchantSiteId;
 
     /**
      * 银行名称/归属开户行
@@ -222,6 +223,12 @@ public class BankModel extends BasePage {
      * @mbggenerated
      */
     private Integer yn;
+    /**
+     * 是否有效：0有效，1无效/删除
+     *
+     * @mbggenerated
+     */
+    private long merchantId;
 
     /**
      * bankStrategy 放量表已有的id
@@ -262,11 +269,11 @@ public class BankModel extends BasePage {
         this.bankTypeId = bankTypeId;
     }
 
-    public Long getMerchantId() {
+    public long getMerchantId() {
         return merchantId;
     }
 
-    public void setMerchantId(Long merchantId) {
+    public void setMerchantId(long merchantId) {
         this.merchantId = merchantId;
     }
 
@@ -489,5 +496,13 @@ public class BankModel extends BasePage {
 
     public void setCardSiteId(Long cardSiteId) {
         this.cardSiteId = cardSiteId;
+    }
+
+    public Long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(Long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 }
