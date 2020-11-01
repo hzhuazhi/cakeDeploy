@@ -56,11 +56,11 @@ public class BankCollectionServiceImpl<T> extends BaseServiceImpl<T> implements 
             BankCollectionModel  bankCollectionModel2 = new BankCollectionModel();
             BeanUtils.copy(bankCollectionModel1,bankCollectionModel2);
             for (Account account1:accountsList){
-                if(account1.getId()==bankCollectionModel1.getAccountId().longValue()){
+                if(account1.getId()==bankCollectionModel1.getMerchantId().longValue()){
                     bankCollectionModel2.setAccountIdName(account1.getAcName());
                     continue;
                 }
-                if(account1.getId()==bankCollectionModel1.getCardSiteId().longValue()){
+                if(account1.getId()==bankCollectionModel1.getMerchantSiteId().longValue()){
                     bankCollectionModel2.setCardSiteIdName(account1.getAcName());
                     continue;
                 }

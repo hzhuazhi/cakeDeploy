@@ -217,6 +217,9 @@ public class MerchantRechargeModel extends BasePage {
      */
     private Integer yn;
 
+    private long merchantId;
+    private long merchantSiteId;
+
     public Long getId() {
         return id;
     }
@@ -455,5 +458,21 @@ public class MerchantRechargeModel extends BasePage {
 
     public void setYn(Integer yn) {
         this.yn = yn;
+    }
+
+    public long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 }

@@ -516,8 +516,8 @@
             <if test="accountName != null and accountName != ''  " >
                 and a.account_name = #{accountName}
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                and a.account_id = #{accountId}
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
             </if>
             <if test="merchantSiteId != 0 and merchantSiteId >0 " >
                 and a.merchant_site_id = #{merchantSiteId}
@@ -545,7 +545,7 @@
         IFNULL(( SELECT sum(money) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  num_money
         FROM
             tb_fr_order a  left JOIN tb_hz_sys_account b   on
-        a.account_id= b.id
+        a.merchant_id= b.id
             <include refid="Example_Where_Clause_Release"/>
             GROUP BY a.bank_id
             limit #{startIndex},#{pageSize}
@@ -560,7 +560,7 @@
         count( a.id ) task_num
         FROM
         tb_fr_order a  left JOIN tb_hz_sys_account b   on
-        a.account_id= b.id
+        a.merchant_id= b.id
         <include refid="Example_Where_Clause_Release"/>
         GROUP BY a.bank_id
     </select>

@@ -37,7 +37,7 @@ var account = {
         // common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
-            account.condJsonData['accountId'] = $("#accountId").val();
+            account.condJsonData['merchantId'] = $("#merchantId").val();
             account.condJsonData['bankCard'] = $("#bankCard").val();
             account.condJsonData['accountName'] = $("#accountName").val();
             account.condJsonData['curday'] = $("#curday").val();
@@ -46,7 +46,7 @@ var account = {
 
         // 重置
         $("#butReset").click(function(){
-            account.condJsonData['accountId'] = "";
+            account.condJsonData['merchantId'] = "";
             account.condJsonData['bankCard'] = "";
             account.condJsonData['accountName'] = "";
             account.condJsonData['curday'] = "";
@@ -119,7 +119,7 @@ function queryAccountAll(){
     common.ajax(url,data,function(data){
         var dataList=data;
         var shtml="";
-        shtml += "<select id='accountId' name='accountId'  class='text-input medium-input'>";
+        shtml += "<select id='merchantId' name='merchantId'  class='text-input medium-input'>";
         shtml +="<option value=''>===请选择===</option>";
         for (var i=0;i<dataList.length>0;i++) {
             shtml +="<option value="+dataList[i].id+">"+dataList[i].acName+"</option>";

@@ -108,6 +108,8 @@ public class BankCollectionModel extends BasePage {
      * @mbggenerated
      */
     private Long accountId;
+    private Long merchantId;
+    private Long merchantSiteId;
     /**
      * 卡站点id
      *
@@ -314,5 +316,21 @@ public class BankCollectionModel extends BasePage {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public Long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public Long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(Long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 }

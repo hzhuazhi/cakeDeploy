@@ -96,10 +96,10 @@ public class OrderController extends BaseController {
 
             if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
                 //不是管理员，只能查询自己的数据
-                model.setAccountId(account.getId());
+                model.setMerchantId(account.getId());
             }
             else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setCardSiteId(account.getId());
+                model.setMerchantSiteId(account.getId());
             }
             System.out.println("==========:"+model.getPage().getStartIndex());
             dataList = orderService.queryByListRelease(model);
@@ -129,10 +129,10 @@ public class OrderController extends BaseController {
 
             if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
                 //不是管理员，只能查询自己的数据
-                model.setAccountId(account.getId());
+                model.setMerchantId(account.getId());
             }
             else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setCardSiteId(account.getId());
+                model.setMerchantSiteId(account.getId());
             }
             dataList = orderService.queryByListReleaseByCount(model);
         }

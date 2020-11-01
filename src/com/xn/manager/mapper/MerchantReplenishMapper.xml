@@ -7,6 +7,8 @@
         <result property="linkId" column="link_id" />
         <result property="accountId" column="account_id" />
         <result property="cardSiteId" column="card_site_id" />
+        <result property="merchantId" column="merchantId" />
+        <result property="merchantSiteId" column="merchantSiteId" />
         <result property="channelId" column="channel_id" />
         <result property="orderNo" column="order_no" />
         <result property="outTradeNo" column="out_trade_no" />
@@ -32,7 +34,7 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id,a.link_id,a.account_id,a.card_site_id,a.channel_id,
+        a.id,a.link_id,a.merchant_id,a.merchant_site_id,a.channel_id,
         a.order_no,a.out_trade_no,a.order_money,a.distribution_money,a.distribution_money,a.channel_money,a.picture_ads,
         a.check_money,a.check_picture_ads,a.check_status,a.check_info,
         a.handle_type,a.handle_people,a.remark,
@@ -50,11 +52,11 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                and a.account_id = #{accountId}
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                and a.card_site_id = #{cardSiteId}
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                and a.merchant_site_id = #{merchantSiteId}
             </if>
             <if test="channelId != 0 and channelId >0 " >
                 and a.channel_id = #{channelId}
@@ -102,8 +104,8 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -113,8 +115,8 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -126,8 +128,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -138,8 +140,8 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause_id"/>
@@ -149,8 +151,8 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.account_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.card_site_id = c.id and b.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and b.role_id = 3
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -168,11 +170,11 @@
             <if test="linkId != 0 and linkId >0 " >
                 link_id,
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                account_id,
+            <if test="merchantId != 0 and merchantId >0 " >
+                merchant_id,
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                card_site_id,
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                merchant_site_id,
             </if>
             <if test="channelId != 0 and channelId >0 " >
                 channel_id,
@@ -224,10 +226,10 @@
                 <![CDATA[  #{linkId}, ]]>
             </if>
             <if test="accountId != 0 and accountId >0 " >
-                <![CDATA[  #{accountId}, ]]>
+                <![CDATA[  #{merchantId}, ]]>
             </if>
             <if test="cardSiteId != 0 and cardSiteId >0 " >
-                <![CDATA[  #{cardSiteId}, ]]>
+                <![CDATA[  #{merchantSiteId}, ]]>
             </if>
             <if test="channelId != 0 and channelId >0 " >
                 <![CDATA[  #{channelId}, ]]>
@@ -283,11 +285,11 @@
             <if test="linkId != 0 and linkId >0 " >
                 a.link_id = #{linkId},
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                a.account_id = #{accountId},
+            <if test="merchantId != 0 and merchantId >0 " >
+                a.merchant_id = #{merchantId},
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                a.card_site_id = #{cardSiteId},
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                a.merchant_site_id = #{merchantSiteId},
             </if>
             <if test="channelId != 0 and channelId >0 " >
                 a.channel_id = #{channelId},

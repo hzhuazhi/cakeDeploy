@@ -6,6 +6,8 @@
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="account_id" property="accountId" jdbcType="BIGINT" />
         <result column="card_site_id" property="cardSiteId" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="merchant_site_id" property="merchantSiteId" jdbcType="BIGINT" />
         <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
         <result column="order_type" property="orderType" jdbcType="BIT" />
         <result column="issue_order_no" property="issueOrderNo" jdbcType="VARCHAR" />
@@ -36,7 +38,7 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id, a.account_id, a.card_site_id, a.order_no, a.order_type, a.issue_order_no, a.order_money,
+        a.id, a.merchant_id, a.merchant_site_id, a.order_no, a.order_type, a.issue_order_no, a.order_money,
         a.order_status, a.bank_name, a.bank_card, a.account_name, a.picture_ads, a.operate_status, a.is_synchro,
         a.check_status, a.check_info, a.invalid_time, a.data_explain, a.remark, a.curday, a.curhour, a.curminute,
         a.run_num, a.run_status, a.send_num, a.send_status, a.create_time, a.update_time, a.ts_time, a.yn
@@ -49,11 +51,11 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                and a.account_id != #{accountId}
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id != #{merchantId}
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                and a.card_site_id != #{cardSiteId}
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                and a.merchant_site_id != #{merchantSiteId}
             </if>
             <if test="orderStatus != 0 and orderStatus >0 " >
                 and a.order_status != #{orderStatus}
@@ -81,7 +83,7 @@
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
         from tb_fr_merchant_recharge a  left JOIN tb_hz_sys_account  b
-        on  a.account_id=b.id
+        on  a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -90,7 +92,7 @@
         select
         <include refid="Base_Column_List" />
         from tb_fr_merchant_recharge a left JOIN tb_hz_sys_account  b
-        on  a.account_id=b.id
+        on  a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -101,7 +103,7 @@
         select
         <include refid="Base_Column_List" />
         from tb_fr_merchant_recharge a left JOIN tb_hz_sys_account  b
-        on  a.account_id=b.id
+        on  a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -112,7 +114,7 @@
         select
         <include refid="Base_Column_List" />
         from tb_fr_merchant_recharge a left JOIN tb_hz_sys_account  b
-        on  a.account_id=b.id
+        on  a.merchant_id=b.id
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -121,7 +123,7 @@
         select
         <include refid="Base_Column_List" />
         from tb_fr_merchant_recharge a left JOIN tb_hz_sys_account  b
-        on  a.account_id = b.id
+        on  a.merchant_id = b.id
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>
@@ -136,11 +138,11 @@
             <if test="id != null" >
                 id,
             </if>
-            <if test="accountId != null" >
-                account_id,
+            <if test="merchantId != null" >
+                merchant_id,
             </if>
-            <if test="cardSiteId != null" >
-                card_site_id,
+            <if test="merchantSiteId != null" >
+                merchant_site_id,
             </if>
             <if test="orderNo != null" >
                 order_no,
@@ -218,11 +220,11 @@
             <if test="id != null" >
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="accountId != null" >
-                #{accountId,jdbcType=BIGINT},
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIGINT},
             </if>
-            <if test="cardSiteId != null" >
-                #{cardSiteId,jdbcType=BIGINT},
+            <if test="merchantSiteId != null" >
+                #{merchantSiteId,jdbcType=BIGINT},
             </if>
             <if test="orderNo != null" >
                 #{orderNo,jdbcType=VARCHAR},
@@ -302,11 +304,11 @@
     <update id="update" parameterType="Object">
         UPDATE tb_fr_merchant_recharge a
         <trim prefix="set" suffixOverrides=",">
-            <if test="accountId != null" >
-                account_id = #{accountId,jdbcType=BIGINT},
+            <if test="merchantId != null" >
+                merchant_id = #{merchantId,jdbcType=BIGINT},
             </if>
-            <if test="cardSiteId != null" >
-                card_site_id = #{cardSiteId,jdbcType=BIGINT},
+            <if test="merchantSiteId != null" >
+                merchant_site_id = #{merchantSiteId,jdbcType=BIGINT},
             </if>
             <if test="orderNo != null" >
                 order_no = #{orderNo,jdbcType=VARCHAR},

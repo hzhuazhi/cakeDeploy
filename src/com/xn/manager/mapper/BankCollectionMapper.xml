@@ -20,6 +20,8 @@
         <result column="curday" property="curday" jdbcType="VARCHAR" />
         <result column="account_id" property="accountId" jdbcType="VARCHAR" />
         <result column="card_site_id" property="cardSiteId" jdbcType="VARCHAR" />
+        <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+        <result column="merchant_site_id" property="merchantSiteId" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -118,7 +120,7 @@
 
 
     <sql id="Base_Column_List_CountInfo">
-       sum(a.money) money,a.bank_id,b.bank_name,b.bank_card,b.account_name,a.curday,b.account_id,b.card_site_id
+       sum(a.money) money,a.bank_id,b.bank_name,b.bank_card,b.account_name,a.curday,b.merchant_id,b.merchant_site_id
     </sql>
 
 
@@ -198,11 +200,11 @@
             <if test="accountName != null and accountName != '' " >
                 and b.account_name = #{accountName}
             </if>
-            <if test="accountId != null and accountId != '' " >
-                and b.account_id = #{accountId}
+            <if test="merchantId != null and merchantId != '' " >
+                and b.merchant_id = #{merchantId}
             </if>
-            <if test="cardSiteId != null and cardSiteId != '' " >
-                and b.card_site_id = #{cardSiteId}
+            <if test="merchantSiteId != null and merchantSiteId != '' " >
+                and b.merchant_site_id = #{merchantSiteId}
             </if>
             <if test="curday != 0 and curday >0 " >
                 and a.curday = #{curday}

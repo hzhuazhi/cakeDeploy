@@ -47,8 +47,8 @@ var account = {
             account.condJsonData['bankCard'] = $("#bankCard").val();
             account.condJsonData['accountName'] = $("#accountName").val();
             account.condJsonData['money'] = $("#money").val();
-            account.condJsonData['cardSiteId'] = $("#cardSiteId").val();
-            account.condJsonData['accountId'] = $("#accountId").val();
+            account.condJsonData['merchantSiteId'] = $("#merchantSiteId").val();
+            account.condJsonData['merchantId'] = $("#merchantId").val();
             account.condJsonData['createTime'] = $("#createTime").val();
             common.showDatas(account.condJsonData,account.list);
         });
@@ -59,16 +59,16 @@ var account = {
             account.condJsonData['bankCard'] = "";
             account.condJsonData['accountName'] = "";
             account.condJsonData['money'] = "";
-            account.condJsonData['cardSiteId'] = "";
-            account.condJsonData['accountId'] = "";
+            account.condJsonData['merchantId'] = "";
+            account.condJsonData['merchantSiteId'] = "";
             // account.condJsonData['curday'] = "";
             account.condJsonData['createTime'] = "";
             $("#bankName").val("");
             $("#bankCard").val("");
             $("#accountName").val("");
             $("#money").val("");
-            $("#cardSiteId").val("0");
-            $("#accountId").val("0");
+            $("#merchantSiteId").val("0");
+            $("#merchantId").val("0");
             // $("#curday").val("");
             $("#createTime").val("");
             common.showDatas(account.condJsonData,account.list);
@@ -108,7 +108,7 @@ function queryCardSiteAll(){
     common.ajax(url,data,function(data){
         var dataList=data;
         var shtml="";
-        shtml += "<select id='cardSiteId' name='cardSiteId'  class='text-input medium-input'>";
+        shtml += "<select id='merchantSiteId' name='merchantSiteId'  class='text-input medium-input'>";
         shtml +="<option value=''>===请选择===</option>";
         for (var i=0;i<dataList.length>0;i++) {
             shtml +="<option value="+dataList[i].id+">"+dataList[i].acName+"</option>";
@@ -127,7 +127,7 @@ function queryAccountAll(){
     common.ajax(url,data,function(data){
         var dataList=data;
         var shtml="";
-        shtml += "<select id='accountId' name='accountId'  class='text-input medium-input'>";
+        shtml += "<select id='merchantId' name='merchantId'  class='text-input medium-input'>";
         shtml +="<option value=''>===请选择===</option>";
         for (var i=0;i<dataList.length>0;i++) {
             shtml +="<option value="+dataList[i].id+">"+dataList[i].acName+"</option>";

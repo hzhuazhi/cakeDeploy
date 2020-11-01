@@ -24,6 +24,8 @@
         <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
         <result column="yn" property="yn" jdbcType="BIT" />
         <result column="account_id" property="accountId" jdbcType="VARCHAR" />
+        <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+        <result column="merchant_site_id" property="merchantSiteId" jdbcType="VARCHAR" />
         <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
         <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
         <result column="account_name" property="accountName" jdbcType="VARCHAR" />
@@ -33,7 +35,7 @@
          a.id, a.bank_id, a.alias, a.priority, a.open_time_slot, a.wx_in_day_money, a.wx_in_month_money,
          a.wx_in_day_num, a.zfb_in_day_money, a.zfb_in_month_money, a.zfb_in_day_num, a.card_in_day_money,
          a.card_in_month_money, a.card_in_day_num, a.remark, a.use_status, a.create_time, a.update_time,
-         a.ts_time, a.yn,b.account_id,b.bank_card,b.account_name,b.bank_name
+         a.ts_time, a.yn,b.merchant_id,b.merchant_site_id,b.bank_card,b.account_name,b.bank_name
     </sql>
 
     <!-- 查询条件 -->

@@ -148,6 +148,8 @@ public class BankStrategyModel extends BasePage {
 
 
     private Long accountId;
+    private Long merchantId;
+    private Long merchantSiteId;
     private String bankCard;
     private String bankName;
     private String accountName;
@@ -383,5 +385,21 @@ public class BankStrategyModel extends BasePage {
 
     public void setIds(String ids) {
         this.ids = ids;
+    }
+
+    public Long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public Long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(Long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 }

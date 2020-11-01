@@ -37,6 +37,19 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
      */
     private long cardSiteId;
 
+
+
+
+    /**
+     * 归属卡商的账号ID：对应表tb_hz_sys_account的主键ID，并且角色类型是卡商
+     */
+    private long merchantId;
+
+    /**
+     * 银行卡归属卡站点ID：对应表tb_hz_sys_account的主键ID，并且角色是卡站点
+     */
+    private long merchantSiteId;
+
     /**
      * 请求的商户ID：对应表tb_fr_channel的主键ID
      */
@@ -333,6 +346,22 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
 
     public void setChannelId(long channelId) {
         this.channelId = channelId;
+    }
+
+    public long getMerchantId() {
+        return merchantId;
+    }
+
+    public void setMerchantId(long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 
     public String getDistributionMoney() {

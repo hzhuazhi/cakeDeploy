@@ -34,6 +34,16 @@ public class RechargeModel extends BasePage implements Serializable {
     private long cardSiteId;
 
     /**
+     * 归属的账号ID：对应表tb_hz_sys_account的主键ID，并且角色类型是卡商
+     */
+    private long merchantId;
+
+    /**
+     * 银行卡归属卡站点ID：对应表tb_hz_sys_account的主键ID，并且角色是卡站点
+     */
+    private long merchantSiteId;
+
+    /**
      * 订单号
      */
     private String orderNo;
@@ -555,6 +565,18 @@ public class RechargeModel extends BasePage implements Serializable {
 
     public void setLockAccountName(String lockAccountName) {
         this.lockAccountName = lockAccountName;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 
     public String getCheckStatusStr() {

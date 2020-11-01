@@ -6,6 +6,8 @@
         <id property="id" column="id" />
         <result property="accountId" column="account_id" />
         <result property="cardSiteId" column="card_site_id" />
+        <result property="merchantSiteId" column="cardSiteId" />
+        <result property="merchant_id" column="merchantId" />
         <result property="orderNo" column="order_no" />
         <result property="orderType" column="order_type" />
         <result property="issueOrderNo" column="issue_order_no" />
@@ -43,7 +45,7 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id,a.account_id,a.card_site_id,a.order_no,a.order_type,a.issue_order_no,a.order_money,a.order_status,
+        a.id,a.merchant_id,a.merchant_site_id,a.order_no,a.order_type,a.issue_order_no,a.order_money,a.order_status,
         a.bank_name,a.bank_card,a.account_name,a.picture_ads,a.operate_status,a.is_synchro,
         a.check_status,a.check_info,a.lock_account_id,a.data_explain,
         a.remark,a.curday,a.curhour,a.curminute,a.run_num,a.run_status,a.send_num,a.send_status,a.invalid_num,a.invalid_status,a.create_time,a.update_time,
@@ -60,11 +62,11 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
-            <if test="accountId != 0 and accountId >0 " >
-                and a.account_id = #{accountId}
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                and a.card_site_id = #{cardSiteId}
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                and a.merchant_site_id = #{merchantSiteId}
             </if>
             <if test="orderNo != null and orderNo != '' " >
                 and a.order_no = #{orderNo}
@@ -138,8 +140,8 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.account_id = b.id and b.yn = 0
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.yn = 0
+        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.merchant_id = b.id and b.yn = 0
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.yn = 0
         left join tb_hz_sys_account d on a.lock_account_id = d.id and d.yn = 0
         <include refid="Example_Where_Clause"/>
     </select>
@@ -148,8 +150,8 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.account_id = b.id and b.yn = 0
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.yn = 0
+        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.merchant_id = b.id and b.yn = 0
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.yn = 0
         left join tb_hz_sys_account d on a.lock_account_id = d.id and d.yn = 0
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
@@ -160,8 +162,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.account_id = b.id and b.yn = 0
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.yn = 0
+        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.merchant_id = b.id and b.yn = 0
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.yn = 0
         left join tb_hz_sys_account d on a.lock_account_id = d.id and d.yn = 0
         <include refid="Example_Where_Clause"/>
         order by a.my_bank_info desc
@@ -171,8 +173,8 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.account_id = b.id and b.yn = 0
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.yn = 0
+        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.merchant_id = b.id and b.yn = 0
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.yn = 0
         left join tb_hz_sys_account d on a.lock_account_id = d.id and d.yn = 0
         <include refid="Example_Where_Clause_id"/>
     </select>
@@ -181,8 +183,8 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.account_id = b.id and b.yn = 0
-        left join tb_hz_sys_account c on a.card_site_id = c.id and c.yn = 0
+        from tb_fr_merchant_recharge a left join tb_hz_sys_account b on a.merchant_id = b.id and b.yn = 0
+        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.yn = 0
         left join tb_hz_sys_account d on a.lock_account_id = d.id and d.yn = 0
         <include refid="Example_Where_Clause"/>
         limit 1
@@ -195,11 +197,11 @@
         </selectKey>
         insert into tb_fr_merchant_recharge
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="accountId != 0 and accountId >0 " >
-                account_id,
+            <if test="merchantId != 0 and merchant_id >0 " >
+                merchant_id,
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                card_site_id,
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                merchant_site_id,
             </if>
             <if test="orderNo != null and orderNo != '' " >
                 order_no,
@@ -284,10 +286,10 @@
         values
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="accountId != 0 and accountId >0 " >
-                <![CDATA[  #{accountId}, ]]>
+                <![CDATA[  #{merchantId}, ]]>
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
-                <![CDATA[  #{cardSiteId}, ]]>
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                <![CDATA[  #{merchantSiteId}, ]]>
             </if>
             <if test="orderNo != null and orderNo != '' " >
                 <![CDATA[  #{orderNo}, ]]>
@@ -377,13 +379,13 @@
     <update id="update" parameterType="Object">
         UPDATE tb_fr_merchant_recharge a
         <trim prefix="set" suffixOverrides=",">
-            <if test="accountId != 0 and accountId >0 " >
-                a.account_id = #{accountId},
+            <if test="merchantId != 0 and merchantId >0 " >
+                a.merchant_id = #{merchantId},
             </if>
             <!--<if test="cardSiteId != 0 and cardSiteId >0 " >-->
                 <!--a.card_site_id = #{cardSiteId},-->
             <!--</if>-->
-            a.card_site_id = #{cardSiteId},
+            a.merchant_site_id = #{merchantSiteId},
             <if test="orderNo != null and orderNo != '' " >
                 a.order_no = #{orderNo},
             </if>
