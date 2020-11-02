@@ -8,7 +8,7 @@ package com.xn.common.constant;
  */
 public enum SystemKeysEnum {
 
-    FRUIT("FR", "水果"),
+    CAKE("CK", "蛋糕"),
 
 
     ;
