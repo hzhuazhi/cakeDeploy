@@ -41,7 +41,7 @@
                             <span class="require" ><font color="red">*</font>付款银行名称 </span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="outBankName" name="outBankName" value="${dl.outBankName}"	disabled maxlength="240" />
+                            <input type="text" class="formInput" id="inBankName" name="inBankName" value="${dl.outBankName}"	disabled maxlength="240" />
                         </div>
                     </li>
 
@@ -50,7 +50,7 @@
                             <span class="require" ><font color="red">*</font>付款银行卡账号 </span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="outBankCard" name="outBankCard" value="${dl.outBankCard}" disabled	maxlength="240" />
+                            <input type="text" class="formInput" id="inBankCard" name="inBankCard" value="${dl.outBankCard}" disabled	maxlength="240" />
                         </div>
                     </li>
 
@@ -59,7 +59,7 @@
                             <span class="require" ><font color="red">*</font>付款开户名 </span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="outAccountName" name="outAccountName" value="${dl.outAccountName}" disabled	maxlength="240" />
+                            <input type="text" class="formInput" id="inAccountName" name="inAccountName" value="${dl.outAccountName}" disabled	maxlength="240" />
                         </div>
                     </li>
 
@@ -97,26 +97,26 @@
                             <select id="orderStatus" name="orderStatus">
                                 <c:if test="${dl.orderStatus == 1}">
                                     <option value="1" selected="selected">初始化</option>
-                                    <option value="2">超时</option>
-                                    <option value="3">质疑</option>
+                                    <option value="2">失败</option>
+                                    <%--<option value="3">质疑</option>--%>
                                     <option value="4">成功</option>
                                 </c:if>
                                 <c:if test="${dl.orderStatus == 2}">
                                     <option value="1" >初始化</option>
-                                    <option value="2" selected="selected">超时</option>
-                                    <option value="3">质疑</option>
+                                    <option value="2" selected="selected">失败</option>
+                                    <%--<option value="3">质疑</option>--%>
                                     <option value="4">成功</option>
                                 </c:if>
-                                <c:if test="${dl.orderStatus == 3}">
-                                    <option value="1" >初始化</option>
-                                    <option value="2" >超时</option>
-                                    <option value="3" selected="selected">质疑</option>
-                                    <option value="4">成功</option>
-                                </c:if>
+                                <%--<c:if test="${dl.orderStatus == 3}">--%>
+                                    <%--<option value="1" >初始化</option>--%>
+                                    <%--<option value="2" >失败</option>--%>
+                                    <%--<option value="3" selected="selected">质疑</option>--%>
+                                    <%--<option value="4">成功</option>--%>
+                                <%--</c:if>--%>
                                 <c:if test="${dl.orderStatus == 4}">
                                     <option value="1" >初始化</option>
-                                    <option value="2" >超时</option>
-                                    <option value="3" >质疑</option>
+                                    <option value="2" >失败</option>
+                                    <%--<option value="3" >质疑</option>--%>
                                     <option value="4" selected="selected">成功</option>
                                 </c:if>
                             </select>
@@ -128,7 +128,7 @@
                             <span class="require" >数据说明</span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="dataExplain" name="dataExplain"	value="${dl.dataExplain}" maxlength="240" />
+                            <input type="text" class="formInput" id="failInfo" name="failInfo"	value="${dl.dataExplain}" maxlength="240" />
                         </div>
                     </li>
 

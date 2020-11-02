@@ -3,6 +3,9 @@ package com.xn.manager.util;
 
 import org.apache.log4j.Logger;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -44,7 +47,25 @@ public class PublicMethod{
 
 
 
+
+
     public static void main(String[] args) throws Exception {
+//        File  file =new File("D:\\tomcatyhk.txt");
+//        String  str1 ="您尾号7032卡11月2日00:24工商银行收入(支付宝)1999.99元，余)19.99元，余额1,132.22元，对方户名：李冠朝";
+//        System.out.println(str1.split("元").length);
+
+        BufferedReader in = new BufferedReader(new FileReader("D:\\yhk4.txt"));
+        String str;
+        int  i=0;
+        while ((str = in.readLine()) != null) {
+            String []  dd=str.split("\\)");
+            if(dd.length>=3){
+                System.out.println(i+"==========="+str);
+            }
+            i++;
+
+        }
+        System.out.println(str);
 //        List<Long> idList = list.stream().map(ChannelModel::getId).collect(Collectors.toList());// 获取某集合的某属性的集合
     }
 }

@@ -33,6 +33,11 @@ public class OrderOutModel extends BasePage {
      */
     private String orderMoney;
 
+    /**、
+     * 失败原因
+     */
+    private String failInfo;
+
     /**
      * 中转站订单号
      *
@@ -654,5 +659,13 @@ public class OrderOutModel extends BasePage {
 
     public void setYn(Integer yn) {
         this.yn = yn;
+    }
+
+    public String getFailInfo() {
+        return failInfo;
+    }
+
+    public void setFailInfo(String failInfo) {
+        this.failInfo = failInfo;
     }
 }

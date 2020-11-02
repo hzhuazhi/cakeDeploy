@@ -216,7 +216,7 @@ public class OrderOutController extends BaseController {
                 if(pictureAds!=""){
                     orderOutModel.setPictureAds(pictureAds);
                 }else{
-                    sendFailureMessage(response, "为成功状态的必须需要上传，转账凭证！");
+//                    sendFailureMessage(response, "为成功状态的必须需要上传，转账凭证！");
                 }
             }
 

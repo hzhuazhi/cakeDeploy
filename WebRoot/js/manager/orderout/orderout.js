@@ -14,9 +14,9 @@ var account = {
     //列表显示参数
     list:[
         {"data":"orderNo",},
-        {"data":"outBankName",},
-        {"data":"outBankCard",},
-        {"data":"outAccountName",},
+        {"data":"inBankName",},
+        {"data":"inBankCard",},
+        {"data":"inAccountName",},
         {"data":"orderMoney",},
         {"data":"orderStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -24,9 +24,9 @@ var account = {
                 if(oData.orderStatus==1){
                     html='<span>初始化</span>';
                 }else if(oData.orderStatus==2){
-                    html='<span>超时</span>';
+                    html='<span>失败</span>';
                 }else if(oData.orderStatus==3){
-                    html='<span>质疑</span>';
+                    html='<span>失败</span>';
                 }else if(oData.orderStatus==4){
                     html='<span style="color: #bb0000">成功</span>';
                 }
@@ -51,12 +51,12 @@ var account = {
                 if(oData.operateStatus==1){
                     html='<span>初始化</span>';
                 }else if(oData.operateStatus==2){
-                    html='<span style="color: #2f9833">锁定</span>';
+                    html='<span style="color: #2f9833">成功</span>';
                 }
                 $(nTd).html(html);
             }
         },
-        {"data":"dataExplain",},
+        {"data":"failInfo",},
         {"data":"createTime",},
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -161,6 +161,33 @@ function  orderHandle(id){
         });
     }
 }
+
+function  repeat(id){
+    let  data={
+        "id":id
+    }
+
+    $.ajax({
+        url : ctx+ "/orderOut/manyOperation.do",
+        type : 'post',
+        dataType : 'json',
+        data :data,
+        success : function(data) {
+            if (data.success) {
+                alert("修改成功！");
+                window.location.href = ctx + "/bankstrategy/list.do";
+            } else {
+                alert(data.msg);
+            }
+        },
+        error : function(data) {
+            alert(data.info);
+        }
+    });
+
+}
+
+
 
 $(function(){
     account.indexInit();
