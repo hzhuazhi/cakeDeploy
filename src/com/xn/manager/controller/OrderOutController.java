@@ -220,7 +220,7 @@ public class OrderOutController extends BaseController {
                 }
             }
 
-            orderOutModel.setDataExplain(bean.getDataExplain());
+            orderOutModel.setFailInfo(bean.getFailInfo());
             orderOutModel.setOrderStatus(bean.getOrderStatus());
             orderOutModel.setUpdateUserId(account.getId());
             orderOutModel.setUpdateRoleId(account.getRoleId());

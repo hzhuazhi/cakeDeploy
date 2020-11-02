@@ -128,7 +128,7 @@
                             <span class="require" >数据说明</span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="failInfo" name="failInfo"	value="${dl.dataExplain}" maxlength="240" />
+                            <input type="text" class="formInput" id="failInfo" name="failInfo"	value="${dl.failInfo}" maxlength="240" />
                         </div>
                     </li>
 
