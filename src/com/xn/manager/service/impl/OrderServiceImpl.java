@@ -44,9 +44,9 @@ public class OrderServiceImpl<T> extends BaseServiceImpl<T> implements OrderServ
 
 
         for(OrderModel orderModel1:list){
-            String  successRateTask =PublicMethod.accuracy(orderModel1.getTaskNum()*1.0,orderModel1.getSuccessNum()*1.0,0);
+            String  successRateTask =PublicMethod.accuracy(orderModel1.getSuccessNum()*1.0,orderModel1.getTaskNum()*1.0,2);
             orderModel1.setSuccessRateTask(successRateTask);
-            String  successRateMoney =PublicMethod.accuracy(orderModel1.getTaskMoney()*1.0,orderModel1.getNumMoney()*1.0,0);
+            String  successRateMoney =PublicMethod.accuracy(orderModel1.getNumMoney()*1.0,orderModel1.getTaskMoney()*1.0,2);
             orderModel1.setSuccessRateMoney(successRateMoney);
             listRs.add(orderModel1);
         }

@@ -26,7 +26,7 @@
                 </div>
                 <div class = "condQueryLabelDiv">日期：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="curday" name ="curday">
+                    <input type ="text" class ="inputCommonSty" id="curday" name ="curday" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" >
                 </div>
             </div>
 
