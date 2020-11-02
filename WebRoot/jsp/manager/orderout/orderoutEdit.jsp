@@ -41,7 +41,7 @@
                             <span class="require" ><font color="red">*</font>付款银行名称 </span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="inBankName" name="inBankName" value="${dl.outBankName}"	disabled maxlength="240" />
+                            <input type="text" class="formInput" id="inBankName" name="inBankName" value="${dl.inBankName}"	disabled maxlength="240" />
                         </div>
                     </li>
 
@@ -50,7 +50,7 @@
                             <span class="require" ><font color="red">*</font>付款银行卡账号 </span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="inBankCard" name="inBankCard" value="${dl.outBankCard}" disabled	maxlength="240" />
+                            <input type="text" class="formInput" id="inBankCard" name="inBankCard" value="${dl.inBankCard}" disabled	maxlength="240" />
                         </div>
                     </li>
 
@@ -59,7 +59,7 @@
                             <span class="require" ><font color="red">*</font>付款开户名 </span>
                         </div>
                         <div class="formCtrlDiv">
-                            <input type="text" class="formInput" id="inAccountName" name="inAccountName" value="${dl.outAccountName}" disabled	maxlength="240" />
+                            <input type="text" class="formInput" id="inAccountName" name="inAccountName" value="${dl.inAccountName}" disabled	maxlength="240" />
                         </div>
                     </li>
 
