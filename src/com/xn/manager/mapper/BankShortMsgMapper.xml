@@ -402,9 +402,9 @@
 
     <select id="querySmsOrderNo" resultMap="dataMap"  parameterType="Object">
         select  a.order_no,a.money,a.mobile_card_id,a.phone_num,a.sms_content,a.curday,
-        a.curhour,a.curminute,b.bank_card,b.bank_name,b.account_name,c.alias
+        a.curhour,a.curminute,b.bank_card,b.bank_name,b.account_name,c.alias,a.handle_type
         from  tb_fr_bank_short_msg  a left JOIN tb_fr_bank b on  a.bank_id=b.id
-        left JOIN tb_fr_merchant c  on b.account_id = c.account_id
+        left JOIN tb_fr_merchant c  on  b.merchant_id=c.id
         <include refid="Example_Where_Clause_Sms"/>
     </select>
 

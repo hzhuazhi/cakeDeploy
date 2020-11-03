@@ -62,6 +62,8 @@
             <th width="150">日期</th>
             <th width="150">小时</th>
             <th width="150">分钟</th>
+            <th width="150">处理状态</th>
+            <th width="150">操作</th>
         </tr>
         </thead>
         <tbody>

@@ -17,7 +17,27 @@ var account = {
         {"data":"money",},
         {"data":"curday",},
         {"data":"curhour",},
-        {"data":"curminute", }
+        {"data":"curminute", },
+        {"data":"handleType",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.handleType==1){
+                    html+= '<span>未处理</span>'
+                }else if(oData.handleType==2){
+                    html+= '<span style="color: #fffc4a">已处理</span>'
+                }
+                $(nTd).html(html);
+            }
+        },
+        {"data":"id",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.handleType==1&&oData.orderNo==""){
+                    html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="javascript:void(0);" onclick="orderHandle('+oData.id+')" > 已处理 </a>'
+                }
+                $(nTd).html(html);
+            }
+        }
     ],
     // 查询条件，aoData是必要的。其他的就是对应的实体类字段名，因为条件查询是把数据封装在实体类中的。
     condJsonData : {
@@ -125,6 +145,25 @@ function  repairOrder(id,outTradeNo){
     }
 }
 
+
+function orderHandle(id){
+    if(confirm("确定该订单已经处理了！")){
+        var condJsonData={
+            "id":id,
+            "handleType":2
+        }
+        let  table='';
+        $.ajax({
+            url: ctx+ '/bankshortmsg/updateHandleType.do',
+            type: 'post',
+            data:condJsonData,
+            // 成功执行
+            success (data) {
+                alert(data.msg);
+            }
+        })
+    }
+}
 
 $(function(){
     account.indexInit();
