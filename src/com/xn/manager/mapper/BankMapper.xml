@@ -193,7 +193,6 @@
             <if test="bankTypeId != null" >
                 bank_type_id,
             </if>
-
             <if test="bankName != null" >
                 bank_name,
             </if>
@@ -354,12 +353,6 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="alias != null" >
                 alias = #{alias,jdbcType=VARCHAR},
-            </if>
-            <if test="merchantId != null" >
-                merchant_id = #{merchantId,jdbcType=VARCHAR},
-            </if>
-            <if test="mobileCardId != null" >
-                mobile_card_id = #{mobileCardId,jdbcType=BIGINT},
             </if>
             <if test="bankTypeId != null" >
                 bank_type_id = #{bankTypeId,jdbcType=BIGINT},
