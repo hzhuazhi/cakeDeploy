@@ -58,10 +58,10 @@ public class MobileCardController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                model.setAccountId(account.getId());
+                model.setMerchantId(account.getId());
             }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setAccountId(account.getCreateUser());
-                model.setCardSiteId(account.getId());
+                model.setMerchantId(account.getCreateUser());
+                model.setMerchantSiteId(account.getId());
             }
             dataList = mobileCardService.queryByList(model);
         }
@@ -79,10 +79,10 @@ public class MobileCardController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                model.setAccountId(account.getId());
+                model.setMerchantId(account.getId());
             }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setAccountId(account.getCreateUser());
-                model.setCardSiteId(account.getId());
+                model.setMerchantId(account.getCreateUser());
+                model.setMerchantSiteId(account.getId());
             }
             dataList = mobileCardService.queryAllList(model);
         }
@@ -118,10 +118,12 @@ public class MobileCardController extends BaseController {
             MobileCardModel mobileCardModel = new MobileCardModel();
             mobileCardModel.setPhoneNum(bean.getPhoneNum());
             if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                bean.setAccountId(account.getId());
+                bean.setMerchantId(account.getId());
             }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                bean.setAccountId(account.getCreateUser());
-                bean.setCardSiteId(account.getId());
+                bean.setMerchantId(account.getCreateUser());
+                bean.setMerchantSiteId(account.getId());
+            }else{
+                bean.setMerchantId(account.getId());
             }
             MobileCardModel queryBean = mobileCardService.queryByCondition(mobileCardModel);
             if (queryBean != null && queryBean.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
@@ -157,10 +159,10 @@ public class MobileCardController extends BaseController {
             MobileCardModel mobileCardModel = new MobileCardModel();
             mobileCardModel.setPhoneNum(bean.getPhoneNum());
             if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                bean.setAccountId(account.getId());
+                bean.setMerchantId(account.getId());
             }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                bean.setAccountId(account.getCreateUser());
-                bean.setCardSiteId(account.getId());
+                bean.setMerchantId(account.getCreateUser());
+                bean.setMerchantSiteId(account.getId());
             }
             MobileCardModel queryBean = mobileCardService.queryByCondition(mobileCardModel);
 

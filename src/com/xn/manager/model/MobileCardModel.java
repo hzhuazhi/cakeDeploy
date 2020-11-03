@@ -144,6 +144,7 @@ public class MobileCardModel extends BasePage {
      * @mbggenerated
      */
     private Long cardSiteId;
+    private Long merchantSiteId;
 
     public Long getId() {
         return id;
@@ -305,5 +306,14 @@ public class MobileCardModel extends BasePage {
 
     public void setCardSiteId(Long cardSiteId) {
         this.cardSiteId = cardSiteId;
+    }
+
+
+    public Long getMerchantSiteId() {
+        return merchantSiteId;
+    }
+
+    public void setMerchantSiteId(Long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
     }
 }

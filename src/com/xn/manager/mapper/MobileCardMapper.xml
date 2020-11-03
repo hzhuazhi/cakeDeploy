@@ -41,11 +41,11 @@
             <if test="phoneNum != null and phoneNum != '' " >
                 and a.phone_num = #{phoneNum}
             </if>
-            <if test="accountId != null and accountId != '' " >
-                and a.account_id = #{accountId}
+            <if test="merchantId != 0 and merchantId >0  " >
+                and a.merchant_id = #{merchantId}
             </if>
-            <if test="cardSiteId != null and cardSiteId != '' " >
-                and a.card_site_id = #{cardSiteId}
+            <if test="merchantSiteId != 0 and merchantSiteId >0  " >
+                and a.merchant_site_id = #{merchantSiteId}
             </if>
 
             <if test="heartbeatStatus != 0 and heartbeatStatus >0 " >
@@ -155,11 +155,11 @@
             <if test="useStatus != null" >
                 use_status,
             </if>
-            <if test="accountId != null" >
-                account_id,
+            <if test="merchantId != null" >
+                merchant_id,
             </if>
-            <if test="cardSiteId != null" >
-                card_site_id,
+            <if test="merchantSiteId != null" >
+                merchant_site_id,
             </if>
             create_time,
         </trim>
@@ -204,11 +204,11 @@
             <if test="useStatus != null" >
                 #{useStatus,jdbcType=BIT},
             </if>
-            <if test="accountId != null" >
-                #{accountId,jdbcType=BIT},
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIT},
             </if>
-            <if test="cardSiteId != null" >
-                #{cardSiteId,jdbcType=BIT},
+            <if test="merchantSiteId != null" >
+                #{merchantSiteId,jdbcType=BIT},
             </if>
             <![CDATA[  NOW(), ]]>
         </trim>
