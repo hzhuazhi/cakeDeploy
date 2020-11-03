@@ -111,9 +111,9 @@ public class BankController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel  mobileCardModel = new  MobileCardModel();
             if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                mobileCardModel.setAccountId(account.getId());
+                mobileCardModel.setMerchantId(account.getId());
             }else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE) {
-                mobileCardModel.setCardSiteId(account.getId());
+                mobileCardModel.setMerchantSiteId(account.getId());
             }
             model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
             model.addAttribute("type",bankTypeService.queryAllList());
@@ -131,10 +131,10 @@ public class BankController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                bean.setAccountId(account.getId());
+                bean.setMerchantId(account.getId());
             }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                bean.setAccountId(account.getCreateUser());
-                bean.setCardSiteId(account.getId());
+                bean.setMerchantId(account.getCreateUser());
+                bean.setMerchantSiteId(account.getId());
             }
             Map<String, Object>   bankMap= bankService.isCheckCardsBank(bean,account);
             if(bankMap.get("type").equals("0")){
@@ -163,9 +163,9 @@ public class BankController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel  mobileCardModel = new  MobileCardModel();
             if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                mobileCardModel.setAccountId(account.getId());
+                mobileCardModel.setMerchantId(account.getId());
             }else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE) {
-                mobileCardModel.setCardSiteId(account.getId());
+                mobileCardModel.setMerchantSiteId(account.getId());
             }
             model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
             model.addAttribute("account", bankService.queryById(atModel));
