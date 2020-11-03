@@ -226,7 +226,7 @@ public class ChannelBankController extends BaseController {
     /**
      * 根据 条件查询 该条件下的银行卡信息
      */
-    @RequestMapping("/query")
+    @RequestMapping("/queryIdList")
     public void queryIdList(HttpServletRequest request, HttpServletResponse response, ChannelBankModel model) throws Exception {
         List<ChannelBankModel> dataList = new ArrayList<ChannelBankModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);

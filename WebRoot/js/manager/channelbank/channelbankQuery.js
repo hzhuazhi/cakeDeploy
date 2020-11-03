@@ -63,7 +63,7 @@ var account = {
                 if(i!=0&&i%6===0){
                     shtml +="<br>";
                 }
-                shtml += "<input type='checkbox' name='bankId' id='bankId' value="+dataList.rows[i].bankId+"> "+dataList.rows[i].bankName+"=="+ dataList.rows[i].accountName +"=="+ dataList.rows[i].bankCard+"&nbsp;&nbsp;&nbsp;&nbsp;";
+                shtml += "<input type='checkbox' name='bankId' id='bankId' value="+dataList.rows[i].bankId+"> "+dataList.rows[i].bankName+"="+ dataList.rows[i].accountName +"&nbsp;&nbsp;";
             }
             $("#cardId").html(shtml);
         });
