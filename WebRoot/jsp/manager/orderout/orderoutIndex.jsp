@@ -66,6 +66,16 @@
                         <option value="2">锁定</option>
                     </select>
                 </div>
+
+                <div class = "condQueryLabelDiv">开始日期：</div>
+                <div class="formCtrlDiv">
+                    <input type="text" class ="inputCommonSty" name="curdayStart" id="curdayStart" size="10" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" value="${model.curdayStart}"/>
+                </div>
+                <div class = "condQueryLabelDiv">截止日期：</div>
+                <div class="formCtrlDiv">
+                    <input type="text" class ="inputCommonSty" name="curdayEnd" id="curdayEnd" size="10" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" value="${model.curdayEnd}" />
+                </div>
+
                 <div class="searchdiv">
                     <input type = "button" id = "btnQuery" class = "buttonClass imginput" value = "搜索" />
                 </div>

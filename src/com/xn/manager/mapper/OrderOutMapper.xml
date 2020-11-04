@@ -91,6 +91,12 @@
             <if test="operateStatus != 0 and operateStatus >0 " >
                 and a.operate_status = #{operateStatus}
             </if>
+            <if test="curday != 0 and curday >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="curdayStart != 0 and curdayStart >0 and curdayEnd != 0 and curdayEnd >0 " >
+                and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
+            </if>
             and a.yn =  0
         </trim>
     </sql>

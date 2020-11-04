@@ -99,6 +99,8 @@ var account = {
             account.condJsonData['orderStatus'] = $("#orderStatus").val();
             account.condJsonData['orderType'] = $("#orderType").val();
             account.condJsonData['operateStatus'] = $("#operateStatus").val();
+            account.condJsonData['curdayStart'] = $("#curdayStart").val();
+            account.condJsonData['curdayEnd'] = $("#curdayEnd").val();
             common.showDatas(account.condJsonData,account.list);
         });
 
@@ -112,6 +114,8 @@ var account = {
             account.condJsonData['orderStatus'] = "0";
             account.condJsonData['orderType'] = "0";
             account.condJsonData['operateStatus'] = "0";
+            account.condJsonData['curdayStart'] = "0";
+            account.condJsonData['curdayEnd'] = "0";
             $("#orderNo").val("");
             $("#outBankName").val("");
             $("#outBankCard").val("");
@@ -120,6 +124,8 @@ var account = {
             $("#orderStatus").val("0");
             $("#orderType").val("0");
             $("#operateStatus").val("0");
+            $("#curdayStart").val("0");
+            $("#curdayEnd").val("0");
             common.showDatas(account.condJsonData,account.list);
         });
 

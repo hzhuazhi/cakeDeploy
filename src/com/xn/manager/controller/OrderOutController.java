@@ -2,6 +2,7 @@ package com.xn.manager.controller;
 
 import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
+import com.xn.common.util.DateUtil;
 import com.xn.common.util.HtmlUtil;
 import com.xn.common.util.OssUploadUtil;
 import com.xn.manager.model.MerchantModel;
@@ -62,6 +63,10 @@ public class OrderOutController extends BaseController {
     @RequestMapping("/dataList")
     public void dataList(HttpServletRequest request, HttpServletResponse response, OrderOutModel model) throws Exception {
         List<OrderOutModel> dataList = new ArrayList<OrderOutModel>();
+        if (model.getCurdayStart() ==0 || model.getCurdayEnd() == 0){
+            model.setCurdayStart(DateUtil.getDayNumber(new Date()));
+            model.setCurdayEnd(DateUtil.getDayNumber(new Date()));
+        }
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
