@@ -98,15 +98,14 @@ public class AdminLoginController extends BaseController {
 			//
 		}
 
-		//卡商账号
-		MerchantModel merchantModel = BeanUtils.copy(model, MerchantModel.class);
-		merchantModel = merchantService.queryByCondition(merchantModel);
-		if(merchantModel != null && merchantModel.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-			accountId = merchantModel.getId();
-			adminAccount = BeanUtils.copy(merchantModel, Account.class);
-			adminAccount.setRoleType(2);
-		}
-
+//		//卡商账号
+//		MerchantModel merchantModel = BeanUtils.copy(model, MerchantModel.class);
+//		merchantModel = merchantService.queryByCondition(merchantModel);
+//		if(merchantModel != null && merchantModel.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+//			accountId = merchantModel.getId();
+//			adminAccount = BeanUtils.copy(merchantModel, Account.class);
+//			adminAccount.setRoleType(2);
+//		}
 
 		//子卡商账号
 		MerchantSiteModel merchantSiteModel = BeanUtils.copy(model, MerchantSiteModel.class);
@@ -116,6 +115,7 @@ public class AdminLoginController extends BaseController {
 			adminAccount = BeanUtils.copy(merchantSiteModel, Account.class);
 			adminAccount.setRoleType(2);
 		}
+
 //		//渠道账号
 //		AccountTpModel accountTpModel = BeanUtils.copy(model, AccountTpModel.class);
 //		accountTpModel = accountTpService.queryByCondition(accountTpModel);

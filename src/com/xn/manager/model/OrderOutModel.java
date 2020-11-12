@@ -32,6 +32,12 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private String orderMoney;
+    /**
+     * 账号
+     *
+     * @mbggenerated
+     */
+    private String accountNum;
 
     /**、
      * 失败原因
@@ -310,9 +316,6 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private Integer yn;
-
-    private int curdayStart;
-    private int curdayEnd;
 
     public Long getId() {
         return id;
@@ -670,21 +673,5 @@ public class OrderOutModel extends BasePage {
 
     public void setFailInfo(String failInfo) {
         this.failInfo = failInfo;
-    }
-
-    public int getCurdayStart() {
-        return curdayStart;
-    }
-
-    public void setCurdayStart(int curdayStart) {
-        this.curdayStart = curdayStart;
-    }
-
-    public int getCurdayEnd() {
-        return curdayEnd;
-    }
-
-    public void setCurdayEnd(int curdayEnd) {
-        this.curdayEnd = curdayEnd;
     }
 }

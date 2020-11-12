@@ -39,12 +39,9 @@ public class MerchantChannelServiceImpl<T> extends BaseServiceImpl<T> implements
         if(list.size()==0){
             return rsString;
         }else{
-//            List<Long>     idList = new ArrayList<>();
             for(MerchantChannelModel merchantChannelModel:list){
-//                idList.add(channelBankModel1.getBankId());
-                rsString+=merchantChannelModel.getAlias()+"#";
+                rsString+=merchantChannelModel.getAcName()+"#";
             }
-//
         }
         return rsString;
     }

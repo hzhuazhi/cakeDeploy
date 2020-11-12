@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.InterestMerchantDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.InterestMerchantModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="interest_id" property="interestId" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="use_status" property="useStatus" jdbcType="BIT" />
+        <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+        <result column="create_role_id" property="createRoleId" jdbcType="BIGINT" />
+        <result column="update_user_id" property="updateUserId" jdbcType="BIGINT" />
+        <result column="update_role_id" property="updateRoleId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.alias, a.interest_id, a.merchant_id, a.service_charge, a.remark, a.use_status, a.create_user_id,
+        a.create_role_id, a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time,
+        a.yn,b.ac_name
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="interestId != 0 and interestId >0 " >
+                and a.interest_id = #{interestId}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="bankStrategyList != null and bankStrategyList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="bankStrategyList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_interest_merchant a   left  join   tb_fr_merchant b
+        on   a.merchant_id=b.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_interest_merchant a   left  join   tb_fr_merchant b
+        on   a.merchant_id=b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_interest_merchant a left  join   tb_fr_merchant b
+        on   a.merchant_id=b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_interest_merchant a left  join   tb_fr_merchant b
+        on   a.merchant_id=b.id
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_interest_merchant a left  join   tb_fr_merchant b
+        on   a.merchant_id=b.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_interest_merchant a left  join   tb_fr_merchant b
+        on   a.merchant_id=b.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_interest_merchant
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                id,
+            </if>
+            <if test="alias !=  null and alias != ''" >
+                alias,
+            </if>
+            <if test="interestId != 0 and interestId >0" >
+                interest_id,
+            </if>
+            <if test="merchantId != 0 and merchantId >0" >
+                merchant_id,
+            </if>
+            <if test="serviceCharge != null and serviceCharge != ''" >
+                service_charge,
+            </if>
+            <if test="remark != null and remark != ''" >
+                remark,
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                use_status,
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                create_user_id,
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                create_role_id,
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                update_user_id,
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                update_role_id,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="alias !=  null and alias != ''" >
+                #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="interestId != 0 and interestId >0" >
+                #{interestId,jdbcType=BIGINT},
+            </if>
+            <if test="merchantId != 0 and merchantId >0" >
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="serviceCharge != null and serviceCharge != ''" >
+                #{serviceCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark != ''" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                #{useStatus,jdbcType=BIT},
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                #{createRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_interest_merchant a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="alias !=  null and alias != ''" >
+                alias = #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="interestId != 0 and interestId >0" >
+                interest_id = #{interestId,jdbcType=BIGINT},
+            </if>
+            <if test="merchantId != 0 and merchantId >0" >
+                merchant_id = #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="serviceCharge != null and serviceCharge != ''" >
+                service_charge = #{serviceCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark != ''" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                use_status = #{useStatus,jdbcType=BIT},
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                create_user_id = #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                create_role_id = #{createRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                update_user_id = #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                update_role_id = #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where  id=#{id}
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_interest_merchant a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_interest_merchant a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+</mapper>

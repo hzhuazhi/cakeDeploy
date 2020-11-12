@@ -11,4 +11,12 @@ import java.util.List;
  **/
 public interface MerchantService<T> extends BaseService<T> {
    List<MerchantModel> queryNotAllList(MerchantModel  merchantModel);
+
+   /**
+    * 处理金额
+    * @param dateList
+    * @return
+    */
+   List<MerchantModel> queryListInfo(List<MerchantModel> dateList);
+
 }

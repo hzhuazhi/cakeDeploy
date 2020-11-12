@@ -40,6 +40,7 @@
         <thead>
         <tr>
             <%--<th width="150">名称/别名</th>--%>
+            <th width="150">卡商名称</th>
             <th width="150">银行名称</th>
             <th width="150">银行卡号</th>
             <th width="150">开户人</th>

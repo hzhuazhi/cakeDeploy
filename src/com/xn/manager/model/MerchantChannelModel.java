@@ -47,6 +47,7 @@ public class MerchantChannelModel extends BasePage {
      */
     private String remark;
     private String accountNum;
+    private String acName;
     /**
      * 绑定的卡商
      */
@@ -252,5 +253,13 @@ public class MerchantChannelModel extends BasePage {
 
     public void setMerchantStr(String merchantStr) {
         this.merchantStr = merchantStr;
+    }
+
+    public String getAcName() {
+        return acName;
+    }
+
+    public void setAcName(String acName) {
+        this.acName = acName;
     }
 }

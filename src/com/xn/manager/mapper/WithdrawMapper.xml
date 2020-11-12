@@ -23,6 +23,7 @@
         <result column="check_status" property="checkStatus" jdbcType="BIT" />
         <result column="check_info" property="checkInfo" jdbcType="VARCHAR" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="curday" property="curday" jdbcType="INTEGER" />
         <result column="curhour" property="curhour" jdbcType="BIT" />
@@ -45,8 +46,8 @@
         a.id, a.alias, a.order_no, a.order_money, a.out_trade_no, a.order_status, a.withdraw_type, a.ascription_id,
         a.out_type, a.merchant_id, a.in_bank_card, a.in_bank_name, a.in_account_name, a.out_bank_name,
         a.out_bank_card, a.out_account_name, a.picture_ads, a.check_status, a.check_info, a.data_explain,
-        a.remark, a.curday, a.curhour, a.curminute, a.run_num, a.run_status, a.send_num, a.send_status, create_user_id,
-        a.create_role_id, a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time,
+        a.remark, a.curday, a.curhour, a.curminute, a.run_num, a.run_status, a.send_num, a.send_status, a.create_user_id,
+        a.create_role_id, a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time,b.ac_name,
         a.yn
     </sql>
 
@@ -59,6 +60,24 @@
             </if>
             <if test="alias != null and alias != ''" >
                 and a.alias = #{alias}
+            </if>
+            <if test="merchantId != 0 and merchantId >0" >
+                and a.merchant_id = #{merchantId}
+            </if>
+            <if test="acName  != null and acName != ''" >
+                and b.ac_name = #{acName}
+            </if>
+            <if test="orderMoney  != null  and  orderMoney != ''" >
+                and a.order_money = #{orderMoney}
+            </if>
+            <if test="orderMoney  != null  and  orderMoney != ''" >
+                and a.order_money = #{orderMoney}
+            </if>
+            <if test="beginCurday  != 0 and beginCurday >0" >
+                and a.curday >= #{beginCurday}
+            </if>
+            <if test="endCurday  != 0 and endCurday >0" >
+                and a.curday  &lt;= #{endCurday}
             </if>
             and a.yn =  0
         </trim>
@@ -83,6 +102,8 @@
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
         from tb_fr_withdraw a
+        left join  tb_fr_merchant  b
+        on a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -90,7 +111,8 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_withdraw a
+        from tb_fr_withdraw a  left join  tb_fr_merchant  b
+        on a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -100,7 +122,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_withdraw a
+        from tb_fr_withdraw a  left join  tb_fr_merchant  b
+        on a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -110,7 +133,8 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_withdraw a
+        from tb_fr_withdraw a left join  tb_fr_merchant  b
+        on a.merchant_id=b.id
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -118,7 +142,8 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_withdraw a
+        from tb_fr_withdraw a left join  tb_fr_merchant  b
+        on a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

@@ -22,6 +22,13 @@ var account = {
         {"data":"balance",},
         {"data":"lockMoney",},
         {"data":"totalProfit",},
+        {"data":"availableMoney",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                    html+= '<span style="color: #bb0000">'+oData.availableMoney+'</span>';
+                $(nTd).html(html);
+            }
+        },
         {"data":"merchantType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
@@ -71,8 +78,11 @@ var account = {
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
-                html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchant/jumpUpdate.do?op=1&id='+oData.id+'"> 编辑 </a>'
-                html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
+                html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpAdd.do?id='+oData.id+'"> 提现 </a>'
+                if($('#roleId').val()==1){
+                    html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchant/jumpUpdate.do?op=1&id='+oData.id+'"> 编辑 </a>'
+                    html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
+                }
                 $(nTd).html(html);
             }
         }

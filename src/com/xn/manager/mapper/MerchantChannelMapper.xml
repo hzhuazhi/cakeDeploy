@@ -19,6 +19,7 @@
         <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
         <result column="yn" property="yn" jdbcType="BIT" />
         <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
         <result column="account_num" property="accountNum" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
@@ -37,7 +38,7 @@
 
 
     <sql id="Base_Column_List_All">
-        b.alias,b.account_num,a.id
+        b.alias,b.ac_name,b.account_num,a.id
     </sql>
 
     <!-- 查询条件 -->

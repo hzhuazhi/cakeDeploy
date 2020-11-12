@@ -64,6 +64,13 @@ public class MerchantModel extends BasePage {
     private String acContacts;
 
     /**
+     * 收益金额：加减都要
+     *
+     * @mbggenerated
+     */
+    private String profit;
+
+    /**
      * 联系电话
      *
      * @mbggenerated
@@ -83,6 +90,13 @@ public class MerchantModel extends BasePage {
      * @mbggenerated
      */
     private String totalMoney;
+
+    /**
+     * 可用余额
+     *
+     * @mbggenerated
+     */
+    private String availableMoney;
 
     /**
      * 保底金额：卡商在我放至少要留有多少钱，才放量：保证金
@@ -453,5 +467,21 @@ public class MerchantModel extends BasePage {
 
     public void setMerchantIdList(List<Long> merchantIdList) {
         this.merchantIdList = merchantIdList;
+    }
+
+    public String getAvailableMoney() {
+        return availableMoney;
+    }
+
+    public void setAvailableMoney(String availableMoney) {
+        this.availableMoney = availableMoney;
+    }
+
+    public String getProfit() {
+        return profit;
+    }
+
+    public void setProfit(String profit) {
+        this.profit = profit;
     }
 }

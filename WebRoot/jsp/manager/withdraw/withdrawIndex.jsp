@@ -11,37 +11,31 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl" style="width: 100%">
-                <div class = "condQueryLabelDiv">商家订单号：</div>
-                <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="outTradeNo" name ="outTradeNo">
-                </div>
                 <div class = "condQueryLabelDiv">订单号：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="orderNo" name ="orderNo">
                 </div>
-                <div class = "condQueryLabelDiv">银行名称：</div>
+                <div class = "condQueryLabelDiv">付款银行名称：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="bankName" name ="bankName">
+                    <input type ="text" class ="inputCommonSty" id="outBankName" name ="outBankName">
                 </div>
-                <div class = "condQueryLabelDiv">银行卡账号：</div>
+                <div class = "condQueryLabelDiv">付款银行卡账号：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="bankCard" name ="bankCard">
+                    <input type ="text" class ="inputCommonSty" id="outBankCard" name ="outBankCard">
                 </div>
-                <div class = "condQueryLabelDiv">开户名：</div>
+                <div class = "condQueryLabelDiv">付款开户名：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="accountName" name ="accountName">
+                    <input type ="text" class ="inputCommonSty" id="outAccountName" name ="outAccountName">
+                </div>
+                <div class = "condQueryLabelDiv">订单金额：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="orderMoney" name ="orderMoney">
                 </div>
             </div>
-
             <div class = "condQueryCtrl" style="width: 100%">
-                <div class = "condQueryLabelDiv">派发金额：</div>
-                <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="distributionMoney" name ="distributionMoney">
-                </div>
-
                 <div class = "condQueryLabelDiv">卡商名称：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="merchantName" name ="merchantName">
+                    <input type ="text" class ="inputCommonSty" id="acName" name ="acName">
                 </div>
 
                 <div class = "condQueryLabelDiv">开始日期：</div>
@@ -54,46 +48,6 @@
                     <input type="text" class ="inputCommonSty" name="endCurday" id="endCurday" size="10" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})"  />
                 </div>
 
-                <div class = "condQueryLabelDiv">订单类型：</div>
-                <div class="formCtrlDiv">
-                    <select id="orderType" name="orderType">
-                        <option value="0">===请选择===</option>
-                        <option value="1">支付宝转卡</option>
-                        <option value="2">卡转卡</option>
-                    </select>
-                </div>
-
-                <div class = "condQueryLabelDiv">订单状态：</div>
-                <div class="formCtrlDiv">
-                    <select id="orderStatus" name="orderStatus">
-                        <option value="0">===请选择===</option>
-                        <option value="1">初始化</option>
-                        <option value="2">超时/失败</option>
-                        <option value="3">有质疑</option>
-                        <option value="4">成功</option>
-                    </select>
-                </div>
-
-            </div>
-            <div class = "condQueryCtrl">
-                <div class = "condQueryLabelDiv">补单状态：</div>
-                <div class="formCtrlDiv">
-                    <select id="replenishType" name="replenishType">
-                        <option value="0">===请选择===</option>
-                        <option value="1">不是补单</option>
-                        <option value="2">补单</option>
-                    </select>
-                </div>
-
-                <div class = "condQueryLabelDiv">补单类型：</div>
-                <div class="formCtrlDiv">
-                    <select id="workType" name="workType">
-                        <option value="0">===请选择===</option>
-                        <option value="1">初始化</option>
-                        <option value="2">补充失败</option>
-                        <option value="3">补充成功</option>
-                    </select>
-                </div>
                 <div class = "searchdiv">
                     <input type="button" class = "buttonClass imginput addbtn" value="新增" style="margin-left: 30px;" >
                 </div>
@@ -117,7 +71,7 @@
             <th width="150">提现类型</th>
             <th width="150">提现归属人账户ID</th>
             <th width="150">指派类型</th>
-            <th width="150">下发卡商id</th>
+            <th width="150">卡商名称</th>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
             <th width="150">付款开户名</th>

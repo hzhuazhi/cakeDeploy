@@ -81,5 +81,11 @@ public class ManagerConstant {
          */
         public static final int CARD_SITE_VALUE = 3;
 
+        /***
+         * 用于权限
+         * 代付卡商
+         */
+        public static final int DF_CARD_SITE_VALUE = 4;
+
     }
 }

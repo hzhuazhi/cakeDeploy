@@ -40,7 +40,7 @@ public class ChannelBankServiceImpl<T> extends BaseServiceImpl<T> implements Cha
 //            List<Long>     idList = new ArrayList<>();
             for(ChannelBankModel channelBankModel1:list){
 //                idList.add(channelBankModel1.getBankId());
-                rsString+=channelBankModel1.getBankCard()+"#";
+                rsString+=" ("+channelBankModel1.getAcName()+"--"+channelBankModel1.getBankName()+"--"+channelBankModel1.getAccountName()+") "+"#";
             }
 //            channelBankModel.setBankIdList(idList);
 //            List<ChannelBankModel> rsList=channelBankDao.byBankIdQueryBankCard(channelBankModel);

@@ -8,7 +8,9 @@ import com.xn.common.util.MD5;
 import com.xn.manager.model.ChannelModel;
 import com.xn.manager.model.MerchantModel;
 import com.xn.manager.model.MerchantRechargeModel;
+import com.xn.manager.model.MerchantWithdrawModel;
 import com.xn.manager.service.MerchantService;
+import com.xn.manager.service.MerchantWithdrawService;
 import com.xn.system.entity.Account;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class MerchantController extends BaseController {
     @Autowired
     private MerchantService<MerchantModel> merchantService;
 
+    @Autowired
+    private MerchantWithdrawService<MerchantWithdrawModel> merchantWithdrawService;
 
     /**
      * 获取页面
@@ -59,14 +63,15 @@ public class MerchantController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-//                model.setAccountId(account.getId());
             }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                model.setId(account.getId());
+                model.setAccountNum(account.getAccountNum());
+            }else if (account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+                sendFailureMessage(response,"你没有权限查看数据！");
+            }else if (account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.DF_CARD_SITE_VALUE){
+                model.setAccountNum(account.getAccountNum());
             }
-//            else if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-//                model.getAccountId(account.getId());
-//            }
             dataList = merchantService.queryByList(model);
+            dataList = merchantService.queryListInfo(dataList);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);
     }
@@ -98,11 +103,6 @@ public class MerchantController extends BaseController {
     public String jumpAdd(HttpServletRequest request, HttpServletResponse response, Model model) {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-//            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.ROLE_SYS){
-//                sendFailureMessage(response,"只允许管理员操作!");
-//            }else {
-//                model.addAttribute("agent", agentService.queryAllList());
-//            }
             model.addAttribute("op", account);
         }else {
             sendFailureMessage(response,"登录超时,请重新登录在操作!");
@@ -156,23 +156,16 @@ public class MerchantController extends BaseController {
     public void update(HttpServletRequest request, HttpServletResponse response,MerchantModel bean, String op) throws Exception {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-//            MerchantModel queryBean = new MerchantModel();
-//            queryBean.setAccountNum(bean.getAccountNum());
-//            MerchantModel queryBean1 = merchantService.queryByCondition(queryBean);
-//            if (queryBean1 != null && queryBean1.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-//                sendFailureMessage(response,"有重复账户了，请重新填写！");
-//            }else{
-                if(bean.getPassWd()!=null&&!bean.getPassWd().equals("")){
-                    bean.setPassWd(MD5.parseMD5(bean.getPassWd()));
-                }
-                if(bean.getWithdrawPassWd()!=null&&!bean.getWithdrawPassWd().equals("")){
-                    bean.setWithdrawPassWd(MD5.parseMD5(bean.getPassWd()));
-                }
-                bean.setUpdateUserId(account.getId());
-                bean.setUpdateRoleId(account.getRoleId());
-                merchantService.update(bean);
-                sendSuccessMessage(response, "修改成功~");
-//            }
+            if(bean.getPassWd()!=null&&!bean.getPassWd().equals("")){
+                bean.setPassWd(MD5.parseMD5(bean.getPassWd()));
+            }
+            if(bean.getWithdrawPassWd()!=null&&!bean.getWithdrawPassWd().equals("")){
+                bean.setWithdrawPassWd(MD5.parseMD5(bean.getWithdrawPassWd()));
+            }
+            bean.setUpdateUserId(account.getId());
+            bean.setUpdateRoleId(account.getRoleId());
+            merchantService.update(bean);
+            sendSuccessMessage(response, "修改成功~");
         }else {
             sendFailureMessage(response, "登录超时,请重新登录在操作!");
         }

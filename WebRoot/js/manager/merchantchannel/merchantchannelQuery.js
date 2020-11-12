@@ -13,7 +13,7 @@ var account = {
     },
     //列表显示参数
     list:[
-        {"data":"alias",},
+        {"data":"acName",},
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
@@ -61,7 +61,7 @@ var account = {
                 if(i!=0&&i%9===0){
                     shtml +="<br>";
                 }
-                shtml += "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='merchantId' id='merchantId' value="+dataList.rows[i].id+"> "+dataList.rows[i].alias+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                shtml += "&nbsp;&nbsp;&nbsp;<input type='checkbox' name='merchantId' id='merchantId' value="+dataList.rows[i].id+"> "+dataList.rows[i].acName+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
             }
             $("#cardId").html(shtml);
         });

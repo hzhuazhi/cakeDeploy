@@ -27,6 +27,7 @@ public class Account {
 	private String updateTime;//更新时间
 	private int yn;//是否有效：0初始化，1失效/删除
 	private String roleName; //所属的角色名称
+	private String withdrawPassWd; //提现密码
 
 	private int roleType;// 1表示内部角色，2表示外部角色
 
@@ -180,5 +181,13 @@ public class Account {
 
 	public void setRoleType(int roleType) {
 		this.roleType = roleType;
+	}
+
+	public String getWithdrawPassWd() {
+		return withdrawPassWd;
+	}
+
+	public void setWithdrawPassWd(String withdrawPassWd) {
+		this.withdrawPassWd = withdrawPassWd;
 	}
 }

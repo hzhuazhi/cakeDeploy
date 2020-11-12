@@ -155,7 +155,7 @@ public class MerchantSiteController extends BaseController {
                 bean.setPassWd(MD5.parseMD5(bean.getPassWd()));
             }
             if(bean.getWithdrawPassWd()!=null&&!bean.getWithdrawPassWd().equals("")){
-                bean.setWithdrawPassWd(MD5.parseMD5(bean.getPassWd()));
+                bean.setWithdrawPassWd(MD5.parseMD5(bean.getWithdrawPassWd()));
             }
             bean.setUpdateUserId(account.getId());
             bean.setUpdateRoleId(account.getRoleId());

@@ -139,17 +139,7 @@ public class ChannelBankController extends BaseController {
             }
 
             sendSuccessMessage(response, "保存成功~");
-//            queryBean.setSecretKey(bean.getSecretKey());
-//            ChannelModel queryBean1 = channelService.queryByCondition(queryBean);
-//            if (queryBean1 != null && queryBean1.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-//                sendFailureMessage(response,"有重复的商户秘钥,请重新输入商户秘钥!");
-//            }else{
-////                bean.setPassWd(MD5.parseMD5(bean.getPassWd()));
-////                bean.setRoleId(ManagerEnum.RoleTypeEnum.TP.getRoleType());
-////                bean.setSecretKey(MD5.parseMD5(bean.getAccountNum()));
-//                channelService.add(bean);
-//                sendSuccessMessage(response, "保存成功~");
-//            }
+
         }else {
             sendFailureMessage(response,"登录超时,请重新登录在操作!");
         }

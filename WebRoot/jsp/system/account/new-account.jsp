@@ -42,6 +42,14 @@
 				</li>
 				<li style="border-top: none;">
 					<div class="formTextDiv">
+						<span class="require" ><font color="red">*</font>支付密码</span>
+					</div>
+					<div class="formCtrlDiv">
+						<input type="text" class="formInput" id="withdrawPassWd" name="withdrawPassWd"	maxlength="240" />
+					</div>
+				</li>
+				<li style="border-top: none;">
+					<div class="formTextDiv">
 						<span class="require" ><font color="red">*</font>账号类型</span>
 					</div>
 					<div class="formCtrlDiv">

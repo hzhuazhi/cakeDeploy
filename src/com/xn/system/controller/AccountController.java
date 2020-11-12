@@ -8,8 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xn.common.constant.ManagerConstant;
 
+import com.xn.manager.model.InterestModel;
+import com.xn.manager.model.MerchantChannelModel;
 import com.xn.manager.model.MerchantModel;
+import com.xn.manager.model.MerchantSiteModel;
+import com.xn.manager.service.InterestService;
+import com.xn.manager.service.MerchantChannelService;
 import com.xn.manager.service.MerchantService;
+import com.xn.manager.service.MerchantSiteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +43,6 @@ import org.springframework.web.util.WebUtils;
 @Controller
 @RequestMapping("/system/account")
 public class AccountController extends BaseController{
-
 	private static Logger log = Logger.getLogger(RoleController.class);
 
 	@Autowired
@@ -47,9 +52,26 @@ public class AccountController extends BaseController{
 	@Autowired
 	private RoleService<Role> roleService;
 
+	/**
+	 * 卡商代收
+	 */
 	@Autowired
 	private MerchantService<MerchantModel> merchantService;
-	
+	/**
+	 * 子卡商
+	 */
+	@Autowired
+	private MerchantSiteService<MerchantSiteModel> merchantSiteService;
+
+	/**
+	 * 分润
+	 */
+	@Autowired
+	private InterestService<InterestModel> interestService;
+
+
+
+
 	/**
 	 * 获取页面
 	 */
@@ -135,32 +157,60 @@ public class AccountController extends BaseController{
 				sendFailureMessage(response,"有重复的账号,请重新输入其它账号!");
 			}else {
 				bean.setPassWd(MD5.parseMD5(bean.getPassWd()));
+				bean.setWithdrawPassWd(MD5.parseMD5(bean.getWithdrawPassWd()));
 				bean.setCreateUser(account.getId());
 				bean.setCreateRole(account.getRoleId());
 				accountService.add(bean);
+//				if(bean.getRoleId()==2){
+//					MerchantModel merchantModel  = new  MerchantModel();
+////					merchantModel.setAccountId(bean.getId());
+//					merchantModel.setAlias(bean.getAcName());
+//					merchantModel.setBalance("0");
+//					merchantModel.setLeastMoney("0");
+//					merchantModel.setUseStatus(1);
+//					merchantService.add(merchantModel);
+//				}
+
+
+
 				if(bean.getRoleId()==2){
 					MerchantModel merchantModel  = new  MerchantModel();
-//					merchantModel.setAccountId(bean.getId());
-					merchantModel.setAlias(bean.getAcName());
-					merchantModel.setBalance("0");
-					merchantModel.setLeastMoney("0");
+					merchantModel.setAcName(bean.getAcName());
+					merchantModel.setAccountNum(bean.getAccountNum());
+					merchantModel.setPassWd(bean.getPassWd());
+					merchantModel.setWithdrawPassWd(bean.getWithdrawPassWd());
+					merchantModel.setRoleId(2);
+					merchantModel.setOperateType(1);
 					merchantModel.setUseStatus(1);
+					merchantModel.setCreateUserId(account.getId());
+					merchantModel.setCreateRoleId(account.getRoleId());
 					merchantService.add(merchantModel);
+				}else if(bean.getRoleId()==4){
+					MerchantModel merchantModel  = new  MerchantModel();
+//					merchantSiteModel.setAlias(bean.geta);
+					merchantModel.setAcName(bean.getAcName());
+					merchantModel.setAccountNum(bean.getAccountNum());
+					merchantModel.setPassWd(bean.getPassWd());
+					merchantModel.setWithdrawPassWd(bean.getWithdrawPassWd());
+					merchantModel.setRoleId(2);
+					merchantModel.setOperateType(2);
+					merchantModel.setUseStatus(1);
+					merchantModel.setCreateUserId(account.getId());
+					merchantModel.setCreateRoleId(account.getRoleId());
+					merchantService.add(merchantModel);
+				}else if(bean.getRoleId()==5){
+					InterestModel interestModel  = new  InterestModel();
+					interestModel.setAcName(bean.getAcName());
+					interestModel.setAccountNum(bean.getAccountNum());
+					interestModel.setPassWd(bean.getPassWd());
+					interestModel.setWithdrawPassWd(bean.getWithdrawPassWd());
+					interestModel.setRoleId(2L);
+					interestModel.setUseStatus(1);
+					interestModel.setCreateUserId(account.getId());
+					interestModel.setCreateRoleId(account.getRoleId());
+					interestService.add(interestModel);
 				}
 			}
-//			else if (bean.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.ROLE_TP){
-//				//渠道账号
-//				AccountTpModel queryBean = new AccountTpModel();
-//				queryBean.setAccountNum(bean.getAccountNum());
-//				queryBean = accountTpService.queryByCondition(queryBean);
-//				if (queryBean != null && queryBean.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-//					sendFailureMessage(response,"有重复的账号,请重新输入其它账号!");
-//				}else{
-//					AccountTpModel dataModel = BeanUtils.copy(bean, AccountTpModel.class);
-//					dataModel.setPassWd(MD5.parseMD5(bean.getPassWd()));
-//					accountTpService.add(dataModel);
-//				}
-//			}
 			sendSuccessMessage(response, "保存成功~");
 		}else {
 			sendFailureMessage(response,"登入超时，请重新登入!");

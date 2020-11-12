@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import sun.misc.BASE64Decoder;
@@ -978,7 +980,7 @@ public class StringUtil {
 	}
 
 	public static void main(String[] args) {
-
+		System.out.println(StringUtil.getBigDecimalSubtract("2000","500"));
 	}
 
 	/**
@@ -1096,5 +1098,17 @@ public class StringUtil {
 		String res=new String(resByte);
 		return res;
 	}
+
+	public static boolean isNumerics(String str){
+		Pattern pattern = Pattern.compile("-?[0-9]+(.[0-9]+)?");
+		Matcher isNum = pattern.matcher(str);
+		if( !isNum.matches() ){
+			return false;
+		}
+		return true;
+	}
+
+
+
 
 }

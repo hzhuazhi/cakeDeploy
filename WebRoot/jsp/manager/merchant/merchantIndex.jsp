@@ -10,7 +10,9 @@
 <div class="col_main">
     <c:if test="${ACCOUNT.roleId==1}">
     <div class = "condQueryDiv">
+        <input type="hidden" value="${ACCOUNT.roleId}" name="roleId" id="roleId">
         <form id = "condForm">
+
             <div class = "condQueryCtrl">
                 <div class = "condQueryLabelDiv">名称/别名：</div>
                 <div class="formCtrlDiv">
@@ -49,6 +51,7 @@
             <th width="150">余额</th>
             <th width="150">锁定金额</th>
             <th width="150">总收益金额</th>
+            <th width="150">可提现金额</th>
             <th width="150">卡商类型</th>
             <th width="150">卡商运营类型</th>
             <th width="150">代付款类型</th>

@@ -19,6 +19,12 @@ public class ChannelBankModel extends BasePage {
      * @mbggenerated
      */
     private String alias;
+    /**
+     * 卡商/别名
+     *
+     * @mbggenerated
+     */
+    private String acName;
 
     /**
      * 添加银行卡id
@@ -243,5 +249,13 @@ public class ChannelBankModel extends BasePage {
 
     public void setAccountName(String accountName) {
         this.accountName = accountName;
+    }
+
+    public String getAcName() {
+        return acName;
+    }
+
+    public void setAcName(String acName) {
+        this.acName = acName;
     }
 }

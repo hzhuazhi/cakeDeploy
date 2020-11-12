@@ -20,6 +20,7 @@
         <result column="merchant_type" property="merchantType" jdbcType="BIT" />
         <result column="operate_type" property="operateType" jdbcType="BIT" />
         <result column="total_profit" property="totalProfit" jdbcType="VARCHAR" />
+        <result column="profit" property="profit" jdbcType="VARCHAR" />
         <result column="pay_type" property="payType" jdbcType="BIT" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="use_status" property="useStatus" jdbcType="BIT" />
@@ -38,7 +39,7 @@
         a.id, a.alias, a.account_num, a.pass_wd, a.withdraw_pass_wd, a.role_id, a.ac_name, a.ac_contacts,
         a.ac_phone, a.ac_type, a.total_money, a.least_money, a.balance, a.lock_money, a.merchant_type,
         a.operate_type, a.total_profit, a.pay_type, a.remark, a.use_status, a.create_user_id, a.create_role_id,
-        a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time, a.yn, a.service_charge
+        a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time, a.yn, a.service_charge,IFNULL(a.profit,0) profit
     </sql>
 
     <!-- 查询条件 -->

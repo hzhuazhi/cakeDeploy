@@ -62,21 +62,7 @@ var account = {
                 $(nTd).html(html);
             }
         },
-        {"data":"merchantId",
-            // "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            //     var html="";
-            //     if(oData.checkStatus==1){
-            //         html='<span>初始化</span>';
-            //     }else if(oData.checkStatus==2){
-            //         // html='<span>失败</span>';
-            //         html='<span><font color="red">失败</font></span>';
-            //     }else if(oData.checkStatus==3){
-            //         html='<span>成功</span>';
-            //     }
-            //     $(nTd).html(html);
-            // }
-        },
-
+        {"data":"acName",},
         {"data":"outBankName",},
         {"data":"outBankCard",},
         {"data":"outAccountName",},
@@ -124,14 +110,34 @@ var account = {
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
             account.condJsonData['orderNo'] = $("#orderNo").val();
-
+            account.condJsonData['acName'] = $("#acName").val();
+            account.condJsonData['outBankName'] = $("#outBankName").val();
+            account.condJsonData['outBankCard'] = $("#outBankCard").val();
+            account.condJsonData['outAccountName'] = $("#outAccountName").val();
+            account.condJsonData['orderMoney'] = $("#orderNo").val();
+            account.condJsonData['beginCurday'] = $("#beginCurday").val();
+            account.condJsonData['endCurday'] = $("#endCurday").val();
             common.showDatas(account.condJsonData,account.list);
         });
 
         // 重置
         $("#butReset").click(function(){
             account.condJsonData['orderNo'] = "";
+            account.condJsonData['acName'] = "";
+            account.condJsonData['outBankName'] = "";
+            account.condJsonData['outBankCard'] = "";
+            account.condJsonData['outAccountName'] = "";
+            account.condJsonData['orderMoney'] = "";
+            account.condJsonData['beginCurday'] = 0;
+            account.condJsonData['endCurday'] = 0;
             $("#orderNo").val("");
+            $("#acName").val("");
+            $("#outBankName").val("");
+            $("#outBankCard").val("");
+            $("#outAccountName").val("");
+            $("#orderMoney").val("");
+            $("#beginCurday").val("0");
+            $("#endCurday").val("0");
             common.showDatas(account.condJsonData,account.list);
         });
         //删除

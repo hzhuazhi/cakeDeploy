@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.MerchantWithdrawDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.MerchantWithdrawModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="VARCHAR" />
+        <result column="withdraw_service_charge" property="withdrawServiceCharge" jdbcType="VARCHAR" />
+        <result column="order_status" property="orderStatus" jdbcType="BIT" />
+        <result column="in_bank_card" property="inBankCard" jdbcType="VARCHAR" />
+        <result column="in_bank_name" property="inBankName" jdbcType="VARCHAR" />
+        <result column="in_account_name" property="inAccountName" jdbcType="VARCHAR" />
+        <result column="out_bank_name" property="outBankName" jdbcType="VARCHAR" />
+        <result column="out_bank_card" property="outBankCard" jdbcType="VARCHAR" />
+        <result column="out_account_name" property="outAccountName" jdbcType="VARCHAR" />
+        <result column="picture_ads" property="pictureAds" jdbcType="VARCHAR" />
+        <result column="check_status" property="checkStatus" jdbcType="BIT" />
+        <result column="check_info" property="checkInfo" jdbcType="VARCHAR" />
+        <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="curday" property="curday" jdbcType="INTEGER" />
+        <result column="curhour" property="curhour" jdbcType="BIT" />
+        <result column="curminute" property="curminute" jdbcType="BIT" />
+        <result column="run_num" property="runNum" jdbcType="BIT" />
+        <result column="run_status" property="runStatus" jdbcType="BIT" />
+        <result column="send_num" property="sendNum" jdbcType="BIT" />
+        <result column="send_status" property="sendStatus" jdbcType="BIT" />
+        <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+        <result column="create_role_id" property="createRoleId" jdbcType="BIGINT" />
+        <result column="update_user_id" property="updateUserId" jdbcType="BIGINT" />
+        <result column="update_role_id" property="updateRoleId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.merchant_id, a.alias, a.order_no, a.money, a.withdraw_service_charge, a.order_status, a.in_bank_card,
+        a.in_bank_name, a.in_account_name, a.out_bank_name, a.out_bank_card, a.out_account_name, a.picture_ads,
+        a.check_status, a.check_info, a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_num,
+        a.run_status, a.send_num, a.send_status, a.create_user_id, a.create_role_id, a.update_user_id,
+        a.update_role_id, a.create_time, a.update_time, a.ts_time, a.yn,b.ac_name
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="alias != 0 and alias >0 " >
+                and a.alias = #{alias}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
+            </if>
+            <if test="accountNum != null and accountNum !='' " >
+                and b.account_num = #{accountNum}
+            </if>
+
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="bankStrategyList != null and bankStrategyList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="bankStrategyList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_merchant_withdraw a left  join   tb_fr_merchant b
+        on  a.merchant_id  =b.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+
+    <select id="queryByCountMoney" resultMap="dataMap"  parameterType="Object">
+        select  IFNULL(sum(money),0)  as money
+        from tb_fr_merchant_withdraw a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_withdraw a  left  join   tb_fr_merchant b
+        on  a.merchant_id  =b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_withdraw a left  join   tb_fr_merchant b
+        on  a.merchant_id  =b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_withdraw a left  join   tb_fr_merchant b
+        on  a.merchant_id  =b.id
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_withdraw a left  join   tb_fr_merchant b
+        on  a.merchant_id  =b.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_withdraw a left  join   tb_fr_merchant b
+        on  a.merchant_id  =b.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_merchant_withdraw
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                id,
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                merchant_id,
+            </if>
+            <if test="alias != null and alias != ''" >
+                alias,
+            </if>
+            <if test="orderNo != null and orderNo != ''" >
+                order_no,
+            </if>
+            <if test="money != null and money != ''" >
+                money,
+            </if>
+            <if test="withdrawServiceCharge != null and withdrawServiceCharge != ''" >
+                withdraw_service_charge,
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                order_status,
+            </if>
+            <if test="inBankCard != null and inBankCard != ''" >
+                in_bank_card,
+            </if>
+            <if test="inBankName != null and inBankName != ''" >
+                in_bank_name,
+            </if>
+            <if test="inAccountName != null and inAccountName != ''" >
+                in_account_name,
+            </if>
+            <if test="outBankName != null and outBankName != ''" >
+                out_bank_name,
+            </if>
+            <if test="outBankCard != null and outBankCard != ''" >
+                out_bank_card,
+            </if>
+            <if test="outAccountName != null and outAccountName != ''" >
+                out_account_name,
+            </if>
+            <if test="pictureAds != null and pictureAds != ''" >
+                picture_ads,
+            </if>
+            <if test="checkStatus != null and checkStatus != ''" >
+                check_status,
+            </if>
+            <if test="checkInfo != null and checkInfo != ''" >
+                check_info,
+            </if>
+            <if test="dataExplain != null and dataExplain != ''" >
+                data_explain,
+            </if>
+            <if test="remark != null and remark != ''" >
+                remark,
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                curday,
+            </if>
+            <if test="curhour != 0 and curhour >0 " >
+                curhour,
+            </if>
+            <if test="curminute != 0 and curminute >0 " >
+                curminute,
+            </if>
+            <if test="runNum != 0 and runNum >0 " >
+                run_num,
+            </if>
+            <if test="runStatus != 0 and runStatus >0 " >
+                run_status,
+            </if>
+            <if test="sendNum != 0 and sendNum >0 " >
+                send_num,
+            </if>
+            <if test="sendStatus != 0 and sendStatus >0 " >
+                send_status,
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                create_user_id,
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                create_role_id,
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                update_user_id,
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                update_role_id,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="alias != null and alias != ''" >
+                #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null and orderNo != ''" >
+                #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null and money != ''" >
+                #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="withdrawServiceCharge != null and withdrawServiceCharge != ''" >
+                #{withdrawServiceCharge,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="inBankCard != null and inBankCard != ''" >
+                #{inBankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="inBankName != null and inBankName != ''" >
+                #{inBankName,jdbcType=VARCHAR},
+            </if>
+            <if test="inAccountName != null and inAccountName != ''" >
+                #{inAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="outBankName != null and outBankName != ''" >
+                #{outBankName,jdbcType=VARCHAR},
+            </if>
+            <if test="outBankCard != null and outBankCard != ''" >
+                #{outBankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="outAccountName != null and outAccountName != ''" >
+                #{outAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="pictureAds != null and pictureAds != ''" >
+                #{pictureAds,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null and checkStatus != ''" >
+                #{checkStatus,jdbcType=BIT},
+            </if>
+            <if test="checkInfo != null and checkInfo != ''" >
+                #{checkInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="dataExplain != null and dataExplain != ''" >
+                #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark != ''" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                #{curday,jdbcType=INTEGER},
+            </if>
+            <if test="curhour != 0 and curhour >0 " >
+                #{curhour,jdbcType=BIT},
+            </if>
+            <if test="curminute != 0 and curminute >0 " >
+                #{curminute,jdbcType=BIT},
+            </if>
+            <if test="runNum != 0 and runNum >0 " >
+                #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != 0 and runStatus >0 " >
+                #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="sendNum != 0 and sendNum >0 " >
+                #{sendNum,jdbcType=BIT},
+            </if>
+            <if test="sendStatus != 0 and sendStatus >0 " >
+                #{sendStatus,jdbcType=BIT},
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                #{createRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_merchant_withdraw a
+        <trim prefix="set" suffixOverrides=",">
+
+            <if test="alias != null and alias != ''" >
+                alias = #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                order_status = #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="pictureAds != null and pictureAds != ''" >
+                picture_ads = #{pictureAds,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null and checkStatus != ''" >
+                check_status = #{checkStatus,jdbcType=BIT},
+            </if>
+            <if test="checkInfo != null and checkInfo != ''" >
+                check_info = #{checkInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="dataExplain != null and dataExplain != ''" >
+                data_explain = #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark != ''" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="runNum != 0 and runNum >0 " >
+                run_num = #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != 0 and runStatus >0 " >
+                run_status = #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="sendNum != 0 and sendNum >0 " >
+                send_num = #{sendNum,jdbcType=BIT},
+            </if>
+            <if test="sendStatus != 0 and sendStatus >0 " >
+                send_status = #{sendStatus,jdbcType=BIT},
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                update_user_id = #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                update_role_id = #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+         where  id =#{id}
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_merchant_withdraw a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_merchant_withdraw a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+</mapper>

@@ -69,13 +69,14 @@ public class OrderOutController extends BaseController {
         }
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setMerchantId(account.getId());
-            }
-            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                //不是管理员，只能查询自己的数据
-                model.setMerchantSiteId(account.getId());
+            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+                model.setAccountNum(account.getAccountNum());
+            }else if (account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+                sendFailureMessage(response,"你没有权限查看数据！");
+            }else if (account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.DF_CARD_SITE_VALUE){
+                model.setAccountNum(account.getAccountNum());
             }
             dataList = orderOutService.queryByList(model);
         }

@@ -32,6 +32,12 @@ public class WithdrawModel extends BasePage{
      * @mbggenerated
      */
     private String orderMoney;
+    /**
+     * 卡商名称
+     *
+     * @mbggenerated
+     */
+    private String acName;
 
     /**
      * 中转站订单号
@@ -158,6 +164,19 @@ public class WithdrawModel extends BasePage{
      * @mbggenerated
      */
     private Integer curday;
+
+    /**
+     * 开始时间：存的日期格式20160530
+     *
+     * @mbggenerated
+     */
+    private Integer beginCurday;
+    /**
+     * 结束时间：存的日期格式20160530
+     *
+     * @mbggenerated
+     */
+    private Integer endCurday;
 
     /**
      * 创建所属小时：24小时制
@@ -543,5 +562,29 @@ public class WithdrawModel extends BasePage{
 
     public void setYn(Integer yn) {
         this.yn = yn;
+    }
+
+    public String getAcName() {
+        return acName;
+    }
+
+    public void setAcName(String acName) {
+        this.acName = acName;
+    }
+
+    public Integer getBeginCurday() {
+        return beginCurday;
+    }
+
+    public void setBeginCurday(Integer beginCurday) {
+        this.beginCurday = beginCurday;
+    }
+
+    public Integer getEndCurday() {
+        return endCurday;
+    }
+
+    public void setEndCurday(Integer endCurday) {
+        this.endCurday = endCurday;
     }
 }

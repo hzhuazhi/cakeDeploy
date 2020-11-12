@@ -15,7 +15,8 @@
         <result column="yn" property="yn" jdbcType="BIT" />
         <result column="bank_card" property="bankCard" jdbcType="BIT" />
         <result column="bank_name" property="bankName" jdbcType="BIT" />
-        <result column="account_name" property="accountName" jdbcType="BIT" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -29,7 +30,7 @@
 
 
     <sql id="Base_Column_List_All">
-        b.bank_card,b.id as bank_id, b.bank_name, b.account_name
+        b.bank_card,b.id as bank_id, b.bank_name, b.account_name,c.ac_name
     </sql>
 
 <!-- 查询条件 -->
@@ -88,6 +89,8 @@
         <include refid="Base_Column_List_All"/>
         from tb_fr_channel_bank a inner JOIN  tb_fr_bank b
         on  a.bank_id = b.id
+        left join  tb_fr_merchant  c
+        on  b.merchant_id = c.id
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -96,7 +99,8 @@
     <select id="queryNotChannelBankAll" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List_All"/>
-        from  tb_fr_bank b
+        from  tb_fr_bank b left join  tb_fr_merchant  c
+        on  b.merchant_id = c.id
         <include refid="Example_Where_Clause_Not_Id"/>
     </select>
 
@@ -250,9 +254,11 @@
 
     <!-- 通过id 查询那些银行卡 -->
     <select id="byIdQueryBank" resultMap="dataMap"  parameterType="java.lang.Long">
-        select  a.id,a.bank_id,b.bank_name,b.bank_card,b.account_name
+        select  a.id,c.ac_name,a.bank_id,b.bank_name,b.bank_card,b.account_name
          from tb_fr_channel_bank a left JOIN  tb_fr_bank b
-				on  a.bank_id =b.id
+         on  a.bank_id =b.id
+         left join  tb_fr_merchant  c
+		  on  b.merchant_id = c.id
        where  a.channel_id=#{channelId}
        and a.yn=0
     </select>
