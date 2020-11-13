@@ -218,6 +218,8 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private Integer curday;
+    private Integer curdayStart;
+    private Integer curdayEnd;
 
     /**
      * 创建所属小时：24小时制
@@ -673,5 +675,29 @@ public class OrderOutModel extends BasePage {
 
     public void setFailInfo(String failInfo) {
         this.failInfo = failInfo;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
+    }
+
+    public Integer getCurdayStart() {
+        return curdayStart;
+    }
+
+    public void setCurdayStart(Integer curdayStart) {
+        this.curdayStart = curdayStart;
+    }
+
+    public Integer getCurdayEnd() {
+        return curdayEnd;
+    }
+
+    public void setCurdayEnd(Integer curdayEnd) {
+        this.curdayEnd = curdayEnd;
     }
 }

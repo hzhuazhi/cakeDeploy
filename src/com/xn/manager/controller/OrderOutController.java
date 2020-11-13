@@ -63,7 +63,7 @@ public class OrderOutController extends BaseController {
     @RequestMapping("/dataList")
     public void dataList(HttpServletRequest request, HttpServletResponse response, OrderOutModel model) throws Exception {
         List<OrderOutModel> dataList = new ArrayList<OrderOutModel>();
-        if (model.getCurdayStart() ==0 || model.getCurdayEnd() == 0){
+        if (model.getCurdayStart()==null||model.getCurdayEnd()==null||model.getCurdayStart() ==0 || model.getCurdayEnd() == 0){
             model.setCurdayStart(DateUtil.getDayNumber(new Date()));
             model.setCurdayEnd(DateUtil.getDayNumber(new Date()));
         }
