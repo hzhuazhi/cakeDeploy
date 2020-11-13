@@ -95,6 +95,7 @@
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
             <th width="150">付款开户名</th>
+            <th width="150">卡商名字</th>
             <th width="150">订单金额</th>
             <th width="150">订单状态</th>
             <th width="150">订单类型</th>

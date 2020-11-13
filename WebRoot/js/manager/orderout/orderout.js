@@ -17,6 +17,7 @@ var account = {
         {"data":"inBankName",},
         {"data":"inBankCard",},
         {"data":"inAccountName",},
+        {"data":"merchantName",},
         {"data":"orderMoney",},
         {"data":"orderStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

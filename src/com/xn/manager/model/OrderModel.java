@@ -25,6 +25,12 @@ public class OrderModel extends BasePage {
      * @mbggenerated
      */
     private String orderNo;
+    /**
+     * 卡商账号
+     *
+     * @mbggenerated
+     */
+    private String accountNum;
 
     /**
      * 订单类型：1微信转卡，2支付宝转卡，3卡转卡
@@ -733,5 +739,13 @@ public class OrderModel extends BasePage {
 
     public void setMerchantSiteId(Long merchantSiteId) {
         this.merchantSiteId = merchantSiteId;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }

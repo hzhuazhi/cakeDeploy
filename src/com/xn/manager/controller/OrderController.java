@@ -64,16 +64,10 @@ public class OrderController extends BaseController {
 //        model.setIsEnable(ManagerConstant.PUBLIC_CONSTANT.IS_ENABLE_ZC);
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-
-            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setMerchantId(account.getId());
+                model.setAccountName(account.getAccountNum());
             }
-            else if(account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setMerchantSiteId(account.getId());
-            }
-
-
             dataList = orderService.queryByList(model);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);

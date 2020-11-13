@@ -110,6 +110,9 @@
             <if test="endCurday != 0 and endCurday >0 " >
                 and a.curday &lt;= #{endCurday}
             </if>
+            <if test="accountNum  != null and  accountNum != '' " >
+                and b.account_num = #{accountNum}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -125,6 +128,9 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
+            <if test="accountNum  != null and  accountNum != '' " >
+                and b.account_num = #{accountNum}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -132,7 +138,8 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_order a
+        from tb_fr_order a  left join  tb_fr_merchant b
+        on a.merchant_id =b.id
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -140,7 +147,8 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from tb_fr_order a left join  tb_fr_merchant b
+        on a.merchant_id =b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -150,7 +158,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from tb_fr_order a left join  tb_fr_merchant b
+        on a.merchant_id =b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -160,7 +169,8 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from tb_fr_order a left join  tb_fr_merchant b
+        on a.merchant_id =b.id
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -168,7 +178,8 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from tb_fr_order a left join  tb_fr_merchant b
+        on a.merchant_id =b.id
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

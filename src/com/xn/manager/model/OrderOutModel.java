@@ -700,4 +700,6 @@ public class OrderOutModel extends BasePage {
     public void setCurdayEnd(Integer curdayEnd) {
         this.curdayEnd = curdayEnd;
     }
+
+
 }
