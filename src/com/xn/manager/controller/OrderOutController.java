@@ -145,7 +145,7 @@ public class OrderOutController extends BaseController {
      */
     @RequestMapping("/jumpUpdate")
     public String jumpUpdate(Model model, long id, Integer op) {
-        MerchantRechargeModel atModel = new MerchantRechargeModel();
+        OrderOutModel atModel = new OrderOutModel();
         atModel.setId(id);
         model.addAttribute("account", orderOutService.queryById(atModel));
         model.addAttribute("op", op);
