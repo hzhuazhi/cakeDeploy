@@ -73,6 +73,9 @@
             <if test="bankName != null and bankName != '' " >
                 and a.bank_name = #{bankName}
             </if>
+            <if test="accountName != null and accountName != '' " >
+                and a.account_name = #{accountName}
+            </if>
             <if test="isArrears != 0 and isArrears >0 " >
                 and a.is_arrears = #{isArrears}
             </if>
