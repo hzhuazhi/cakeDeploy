@@ -41,6 +41,7 @@ public class BankModel extends BasePage {
      * @mbggenerated
      */
     private String phoneNum;
+    private String accountNum;
 
     /**
      * 银行卡归属类型：对应表tb_fr_bank_type的主键ID
@@ -504,5 +505,13 @@ public class BankModel extends BasePage {
 
     public void setMerchantSiteId(Long merchantSiteId) {
         this.merchantSiteId = merchantSiteId;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }

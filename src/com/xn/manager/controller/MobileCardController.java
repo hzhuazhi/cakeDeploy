@@ -57,12 +57,16 @@ public class MobileCardController extends BaseController {
 //        model.setIsEnable(ManagerConstant.PUBLIC_CONSTANT.IS_ENABLE_ZC);
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                model.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setMerchantId(account.getCreateUser());
-                model.setMerchantSiteId(account.getId());
+//            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+//                model.setMerchantId(account.getId());
+//            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+//                model.setMerchantId(account.getCreateUser());
+//                model.setMerchantSiteId(account.getId());
+//            }
+            if(account.getRoleId()!=ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                model.setAccountNum(account.getAccountNum());
             }
+
             dataList = mobileCardService.queryByList(model);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);
@@ -78,11 +82,14 @@ public class MobileCardController extends BaseController {
         List<MobileCardModel> dataList = new ArrayList<MobileCardModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                model.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setMerchantId(account.getCreateUser());
-                model.setMerchantSiteId(account.getId());
+//            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+//                model.setMerchantId(account.getId());
+//            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+//                model.setMerchantId(account.getCreateUser());
+//                model.setMerchantSiteId(account.getId());
+//            }
+            if(account.getRoleId()!=ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                model.setAccountNum(account.getAccountNum());
             }
             dataList = mobileCardService.queryAllList(model);
         }

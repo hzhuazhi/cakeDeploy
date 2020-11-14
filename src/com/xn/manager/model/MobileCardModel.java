@@ -25,6 +25,7 @@ public class MobileCardModel extends BasePage {
      * @mbggenerated
      */
     private String cardName;
+    private String accountNum;
 
     /**
      * 使用了哪个归属人的名字：这张卡身份证上面的那个人办理的
@@ -315,5 +316,13 @@ public class MobileCardModel extends BasePage {
 
     public void setMerchantSiteId(Long merchantSiteId) {
         this.merchantSiteId = merchantSiteId;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }
