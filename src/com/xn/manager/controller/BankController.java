@@ -71,7 +71,7 @@ public class BankController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                model.setAccountName(account.getAccountNum());
+                model.setAccountNum(account.getAccountNum());
             }
             dataList = bankService.queryByList(model);
         }
