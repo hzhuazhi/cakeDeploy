@@ -114,6 +114,10 @@ public class MerchantChannelController extends BaseController {
                 MerchantChannelModel  merchantChannelModel  = new MerchantChannelModel();
                 merchantChannelModel.setMerchantId(Long.parseLong(merchantId));
                 merchantChannelModel.setChannelId(bean.getChannelId());
+                List<MerchantChannelModel>   list =merchantChannelService.queryByAll(merchantChannelModel);
+                if(list.size()>0){
+                    continue;
+                }
                 merchantChannelModel.setCreateRoleId(account.getRoleId());
                 merchantChannelModel.setCreateUserId(account.getId());
                 merchantChannelService.add(merchantChannelModel);
@@ -241,7 +245,7 @@ public class MerchantChannelController extends BaseController {
             }
 
             MerchantModel  merchantModel  = new  MerchantModel();
-            merchantModel.setMerchantIdList(merchantIdList);
+//            merchantModel.setMerchantIdList(merchantIdList);
             //去除查询出来的卡商显示
             rsList  = merchantlService.queryNotAllList(merchantModel);
 
