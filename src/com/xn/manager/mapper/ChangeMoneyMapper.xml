@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.ChangeMoneyDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.ChangeMoneyModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="money" property="money" jdbcType="VARCHAR" />
+        <result column="ascription_id" property="ascriptionId" jdbcType="BIGINT" />
+        <result column="ascription_type" property="ascriptionType" jdbcType="BIT" />
+        <result column="change_field" property="changeField" jdbcType="BIT" />
+        <result column="change_type" property="changeType" jdbcType="BIT" />
+        <result column="picture_ads" property="pictureAds" jdbcType="VARCHAR" />
+        <result column="is_show" property="isShow" jdbcType="BIT" />
+        <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="run_num" property="runNum" jdbcType="BIT" />
+        <result column="run_status" property="runStatus" jdbcType="BIT" />
+        <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+        <result column="create_role_id" property="createRoleId" jdbcType="BIGINT" />
+        <result column="update_user_id" property="updateUserId" jdbcType="BIGINT" />
+        <result column="update_role_id" property="updateRoleId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id, a.alias, a.money, a.ascription_id, a.ascription_type, a.change_field, a.change_type, a.picture_ads,
+        a.is_show, a.data_explain, a.remark, a.run_num, a.run_status, a.create_user_id, a.create_role_id,
+        a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time, a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+
+
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="bankStrategyList != null and bankStrategyList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="bankStrategyList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_change_money a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_change_money a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_change_money a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_change_money a
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_change_money a
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_change_money a
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_change_money
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="alias != null" >
+                alias,
+            </if>
+            <if test="money != null" >
+                money,
+            </if>
+            <if test="ascriptionId != null" >
+                ascription_id,
+            </if>
+            <if test="ascriptionType != null" >
+                ascription_type,
+            </if>
+            <if test="changeField != null" >
+                change_field,
+            </if>
+            <if test="changeType != null" >
+                change_type,
+            </if>
+            <if test="pictureAds != null" >
+                picture_ads,
+            </if>
+            <if test="isShow != null" >
+                is_show,
+            </if>
+            <if test="dataExplain != null" >
+                data_explain,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="runNum != null" >
+                run_num,
+            </if>
+            <if test="runStatus != null" >
+                run_status,
+            </if>
+            <if test="createUserId != null" >
+                create_user_id,
+            </if>
+            <if test="createRoleId != null" >
+                create_role_id,
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id,
+            </if>
+            <if test="updateRoleId != null" >
+                update_role_id,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="alias != null" >
+                #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null" >
+                #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="ascriptionId != null" >
+                #{ascriptionId,jdbcType=BIGINT},
+            </if>
+            <if test="ascriptionType != null" >
+                #{ascriptionType,jdbcType=BIT},
+            </if>
+            <if test="changeField != null" >
+                #{changeField,jdbcType=BIT},
+            </if>
+            <if test="changeType != null" >
+                #{changeType,jdbcType=BIT},
+            </if>
+            <if test="pictureAds != null" >
+                #{pictureAds,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null" >
+                #{isShow,jdbcType=BIT},
+            </if>
+            <if test="dataExplain != null" >
+                #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="runNum != null" >
+                #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != null" >
+                #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="createUserId != null" >
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createRoleId != null" >
+                #{createRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUserId != null" >
+                #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateRoleId != null" >
+                #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_change_money a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="alias != null" >
+                alias = #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null" >
+                money = #{money,jdbcType=VARCHAR},
+            </if>
+            <if test="ascriptionId != null" >
+                ascription_id = #{ascriptionId,jdbcType=BIGINT},
+            </if>
+            <if test="ascriptionType != null" >
+                ascription_type = #{ascriptionType,jdbcType=BIT},
+            </if>
+            <if test="changeField != null" >
+                change_field = #{changeField,jdbcType=BIT},
+            </if>
+            <if test="changeType != null" >
+                change_type = #{changeType,jdbcType=BIT},
+            </if>
+            <if test="pictureAds != null" >
+                picture_ads = #{pictureAds,jdbcType=VARCHAR},
+            </if>
+            <if test="isShow != null" >
+                is_show = #{isShow,jdbcType=BIT},
+            </if>
+            <if test="dataExplain != null" >
+                data_explain = #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="runNum != null" >
+                run_num = #{runNum,jdbcType=BIT},
+            </if>
+            <if test="runStatus != null" >
+                run_status = #{runStatus,jdbcType=BIT},
+            </if>
+            <if test="createUserId != null" >
+                create_user_id = #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createRoleId != null" >
+                create_role_id = #{createRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id = #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateRoleId != null" >
+                update_role_id = #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_change_money a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_change_money a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+</mapper>
