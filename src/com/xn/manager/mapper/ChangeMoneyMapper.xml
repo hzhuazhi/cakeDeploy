@@ -40,7 +40,9 @@
                 and a.id = #{id}
             </if>
 
-
+            <if test="money != '' and money !=null " >
+                and a.money = #{money}
+            </if>
             and a.yn =  0
         </trim>
     </sql>

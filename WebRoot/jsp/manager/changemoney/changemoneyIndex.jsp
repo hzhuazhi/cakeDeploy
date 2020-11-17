@@ -11,9 +11,9 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl">
-                <div class = "condQueryLabelDiv">手机卡别名：</div>
+                <div class = "condQueryLabelDiv">金额：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="alias" name ="alias">
+                    <input type ="text" class ="inputCommonSty" id="money" name ="money">
                 </div>
 
                 <div class="searchdiv">
@@ -41,7 +41,8 @@
             <th width="150">名称/别名</th>
             <th width="150">要变更的金额</th>
             <th width="150">归属人账户</th>
-            <th width="150">变更人的类型</th>
+            <th width="150">变更人类型</th>
+            <th width="150">变更字段类型</th>
             <th width="150">变更金额类型</th>
             <th width="150">数据说明</th>
             <th width="150">创建时间</th>

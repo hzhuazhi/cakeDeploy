@@ -41,6 +41,17 @@ var account = {
                 $(nTd).html(html);
             }
         },
+        {"data":"changeField",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.changeField==1){
+                    html+= '<span style="color: #2f9833">加金额</span>';
+                }else if(oData.changeField==2){
+                    html+= '<span style="color: #ff3710">减金额</span>';
+                }
+                $(nTd).html(html);
+            }
+        },
         {"data":"dataExplain",},
         {"data":"createTime",}
 
@@ -61,20 +72,14 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
-            account.condJsonData['alias'] = $("#alias").val();
-            account.condJsonData['secretKey'] = $("#secretKey").val();
-            account.condJsonData['useStatus'] = $("#useStatus").val();
+            account.condJsonData['money'] = $("#money").val();
             common.showDatas(account.condJsonData,account.list);
         });
 
         // 重置
         $("#butReset").click(function(){
-            account.condJsonData['alias'] = "";
-            account.condJsonData['secretKey'] = "";
-            account.condJsonData['useStatus'] = "";
-            $("#alias").val("");
-            $("#secretKey").val("");
-            $("#useStatus").val("0");
+            account.condJsonData['money'] = "";
+            $("#money").val("");
             common.showDatas(account.condJsonData,account.list);
         });
         //删除

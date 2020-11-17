@@ -43,7 +43,7 @@
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
-                        <span class="require" >变更金额类型</span>
+                        <span class="require" >变更人类型</span>
                     </div>
                     <div class="formCtrlDiv">
                         <div class="formCtrlDiv">
@@ -51,6 +51,34 @@
                                 <option value="1" selected>卡商</option>
                                 <option value="2">中转站</option>
                                 <option value="3">利益人</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" >变更字段类型</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <div class="formCtrlDiv">
+                            <select id="changeField" name="changeField" onchange="queryBankAll()">
+                                <option value="1" selected>余额变更</option>
+                                <option value="2">收益变更</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" >变更金额类型</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <div class="formCtrlDiv">
+                            <select id="changeType" name="changeType" onchange="queryBankAll()">
+                                <option value="1" selected>加金额</option>
+                                <option value="2">减金额</option>
                             </select>
                         </div>
                     </div>
