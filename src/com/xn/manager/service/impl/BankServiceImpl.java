@@ -90,9 +90,9 @@ public class BankServiceImpl<T> extends BaseServiceImpl<T> implements BankServic
                     bankModel.setMobileCardId(queryMobileBean.getId());
 
                     if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                        bankModel.setMerchantId(account.getId());
+                        bankModel.setMerchantId(bean.getMerchantId());
                     }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                        bankModel.setMerchantId(account.getCreateUser());
+                        bankModel.setMerchantId(bean.getMerchantId());
                         bankModel.setMerchantSiteId(account.getId());
                     }
 //                    bankModel.setAccountId(account.getId());

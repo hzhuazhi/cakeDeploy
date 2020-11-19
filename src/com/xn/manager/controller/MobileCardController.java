@@ -4,8 +4,10 @@ import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
 import com.xn.common.util.HtmlUtil;
 import com.xn.manager.model.BankModel;
+import com.xn.manager.model.MerchantModel;
 import com.xn.manager.model.MobileCardModel;
 import com.xn.manager.service.BankService;
+import com.xn.manager.service.MerchantService;
 import com.xn.manager.service.MobileCardService;
 import com.xn.system.entity.Account;
 import org.apache.log4j.Logger;
@@ -34,6 +36,9 @@ public class MobileCardController extends BaseController {
 
     @Autowired
     private MobileCardService<MobileCardModel> mobileCardService;
+
+    @Autowired
+    private MerchantService<MerchantModel> merchantService;
 
     @Autowired
     private BankService<BankModel> bankService;
@@ -122,20 +127,30 @@ public class MobileCardController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             //check是否有重复的账号
+
             MobileCardModel mobileCardModel = new MobileCardModel();
             mobileCardModel.setPhoneNum(bean.getPhoneNum());
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                bean.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                bean.setMerchantId(account.getCreateUser());
-                bean.setMerchantSiteId(account.getId());
-            }else{
-                bean.setMerchantId(account.getId());
-            }
+//            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+//                bean.setMerchantId(account.getId());
+//            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+//                bean.setMerchantId(account.getCreateUser());
+//                bean.setMerchantSiteId(account.getId());
+//            }else{
+//                bean.setMerchantId(account.getId());
+//            }
             MobileCardModel queryBean = mobileCardService.queryByCondition(mobileCardModel);
             if (queryBean != null && queryBean.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
                 sendFailureMessage(response,"有重复的手机号了,请重新输入其它手机号!");
             }else{
+                MerchantModel  queryModel = new MerchantModel();
+                queryModel.setAccountNum(account.getAccountNum());
+
+                MerchantModel beans = merchantService.queryByCondition(queryModel);
+                if(beans==null||beans.getId()<=0){
+                    sendSuccessMessage(response, "数据有误，请联系管理员！");
+                    return;
+                }
+                bean.setMerchantId(beans.getId());
                 mobileCardService.add(bean);
                 sendSuccessMessage(response, "保存成功~");
             }

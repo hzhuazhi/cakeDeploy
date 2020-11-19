@@ -8,6 +8,7 @@ import com.xn.manager.model.*;
 import com.xn.manager.model.excel.BankExcelModel;
 import com.xn.manager.service.BankService;
 import com.xn.manager.service.BankTypeService;
+import com.xn.manager.service.MerchantService;
 import com.xn.manager.service.MobileCardService;
 import com.xn.system.entity.Account;
 import org.apache.commons.lang.StringUtils;
@@ -45,6 +46,9 @@ public class BankController extends BaseController {
 
     @Autowired
     private MobileCardService<MobileCardModel> mobileCardService;
+
+    @Autowired
+    private MerchantService<MerchantModel> merchantService;
 
 
     @Autowired
@@ -106,11 +110,19 @@ public class BankController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel  mobileCardModel = new  MobileCardModel();
-            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                mobileCardModel.setMerchantId(account.getId());
-            }else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE) {
-                mobileCardModel.setMerchantSiteId(account.getId());
+//            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+//                mobileCardModel.setMerchantId(account.getId());
+//            }else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE) {
+//                mobileCardModel.setMerchantSiteId(account.getId());
+//            }
+            MerchantModel  queryModel = new MerchantModel();
+            queryModel.setAccountNum(account.getAccountNum());
+
+            MerchantModel beans = merchantService.queryByCondition(queryModel);
+            if(beans==null||beans.getId()<=0){
+                sendSuccessMessage(response, "数据有误，请联系管理员！");
             }
+            mobileCardModel.setMerchantId(beans.getId());
             model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
             model.addAttribute("type",bankTypeService.queryAllList());
         }else {
@@ -126,12 +138,22 @@ public class BankController extends BaseController {
     public void add(HttpServletRequest request, HttpServletResponse response, BankModel bean) throws Exception {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                bean.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                bean.setMerchantId(account.getCreateUser());
-                bean.setMerchantSiteId(account.getId());
+//            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+//                bean.setMerchantId(account.getId());
+//            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+//                bean.setMerchantId(account.getCreateUser());
+//                bean.setMerchantSiteId(account.getId());
+//            }
+            MerchantModel  queryModel = new MerchantModel();
+            queryModel.setAccountNum(account.getAccountNum());
+
+            MerchantModel beans = merchantService.queryByCondition(queryModel);
+            if(beans==null||beans.getId()<=0){
+                sendSuccessMessage(response, "数据有误，请联系管理员！");
+                return;
             }
+            bean.setMerchantId(beans.getId());
+
             Map<String, Object>   bankMap= bankService.isCheckCardsBank(bean,account);
             if(bankMap.get("type").equals("0")){
                 bankService.add((BankModel)bankMap.get("bankModel"));
@@ -266,6 +288,15 @@ public class BankController extends BaseController {
                 boolean  flag = true ;
                 String     errorString    = "";
 
+                MerchantModel  queryModel = new MerchantModel();
+                queryModel.setAccountNum(account.getAccountNum());
+
+                MerchantModel beans = merchantService.queryByCondition(queryModel);
+                if(beans==null||beans.getId()<=0){
+                    sendSuccessMessage(response, "数据有误，请联系管理员！");
+                    return;
+                }
+
                 for(BankExcelModel testExecl:importList){
 
                     BankModel bean= new BankModel();
@@ -294,6 +325,7 @@ public class BankController extends BaseController {
                 }
 
                 for(BankModel bankModel:addList){
+                    bankModel.setMerchantId(beans.getId());
                     bankService.add(bankModel);
                 }
                 sendSuccessMessage(response, "导入成功");
