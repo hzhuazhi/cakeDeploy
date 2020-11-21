@@ -16,21 +16,7 @@ var account = {
         {"data":"orderNo",},
         {"data":"orderMoney",},
         {"data":"outTradeNo",},
-        {"data":"orderStatus",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html="";
-                if(oData.orderStatus==1){
-                    html='<span>初始化</span>';
-                }else if(oData.orderStatus==2){
-                    html='<span>超时</span>';
-                }else if(oData.orderStatus==3){
-                    html='<span>质疑</span>';
-                }else if(oData.orderStatus==4){
-                    html='<span>成功</span>';
-                }
-                $(nTd).html(html);
-            }
-        },
+
         {"data":"withdrawType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
@@ -66,28 +52,42 @@ var account = {
         {"data":"outBankName",},
         {"data":"outBankCard",},
         {"data":"outAccountName",},
-        {"data":"checkStatus",
+        {"data":"orderStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
-                if(oData.checkStatus==1){
+                if(oData.orderStatus==1){
                     html='<span>初始化</span>';
-                }else if(oData.checkStatus==2){
-                    html='<span>审核收款失败</span>';
-                }else if(oData.checkStatus==3){
-                    html='<span>审核收款成功</span>';
+                }else if(oData.orderStatus==2){
+                    html='<span>失败</span>';
+                }else if(oData.orderStatus==3){
+                    html='<span>失败</span>';
+                }else if(oData.orderStatus==4){
+                    html='<span style="color:#ff301d;">成功</span>';
                 }
                 $(nTd).html(html);
             }
         },
+        // {"data":"checkStatus",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html="";
+        //         if(oData.checkStatus==1){
+        //             html='<span>初始化</span>';
+        //         }else if(oData.checkStatus==2){
+        //             html='<span>审核收款失败</span>';
+        //         }else if(oData.checkStatus==3){
+        //             html='<span>审核收款成功</span>';
+        //         }
+        //         $(nTd).html(html);
+        //     }
+        // },
         {"data":"checkInfo",},
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
-                html += '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpUpdate.do?id='+oData.id+'"> 编辑 </a>';
-                if (oData.handleType == 1){
-                    html += '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpUpdateCheck.do?id='+oData.id+'"> 审核 </a>';
-                }else if(oData.handleType == 2){
-                    html += '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpInfo.do?id='+oData.id+'"> 详情 </a>';
+                if (oData.orderStatus == 1){
+                    html += '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpUpdate.do?id='+oData.id+'"> 审核 </a>';
+                }else{
+                    html +="完成";
                 }
                 $(nTd).html(html);
             }

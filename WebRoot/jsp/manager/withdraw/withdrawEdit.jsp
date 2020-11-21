@@ -19,20 +19,30 @@
 <body>
 <div class="col_main">
     <div class="formHeadDiv">
-        <h2>新增账号</h2>
+        <h2>编辑策略</h2>
     </div>
     <div class="formContentDiv">
         <form id="addSupplierForm">
             <ul>
                 <c:set var="dl" value="${account}"/>
-                <input type="hidden" id="merchantId" name="merchantId" value="${dl.id}">
+                <input type="hidden" id="id" name="id" value="${dl.id}">
+
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" ><font color="red">*</font>订单号</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="orderNo" name="orderNo"  value="${dl.orderNo}" disabled	maxlength="240" />
+                    </div>
+                </li>
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
                         <span class="require" ><font color="red">*</font>银行名称</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outBankName" name="outBankName"	maxlength="240" />
+                        <input type="text" class="formInput" id="outBankName" name="outBankName"  value="${dl.outBankName}" disabled	maxlength="240" />
                     </div>
                 </li>
 
@@ -41,7 +51,7 @@
                         <span class="require" ><font color="red">*</font>银行卡账号</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outBankCard" name="outBankCard"	maxlength="240" />
+                        <input type="text" class="formInput" id="outBankCard" name="outBankCard" value="${dl.outBankName}" disabled 	maxlength="240" />
                     </div>
                 </li>
 
@@ -50,7 +60,7 @@
                         <span class="require" ><font color="red">*</font>开户名</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outAccountName" name="outAccountName"	maxlength="240" />
+                        <input type="text" class="formInput" id="outAccountName" name="outAccountName"	value="${dl.outBankName}" disabled maxlength="240" />
                     </div>
                 </li>
 
@@ -59,7 +69,7 @@
                         <span class="require" ><font color="red">*</font>提现金额</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="money" name="money"	maxlength="240" />
+                        <input type="text" class="formInput" id="money" name="money" value="${dl.outBankName}" disabled 	maxlength="240" />
                     </div>
                 </li>
 
@@ -78,9 +88,22 @@
                     </div>
                     <div class="formCtrlDiv">
                         <select name="outType" id="outType" disabled>
-                            <option value="1" selected>卡商</option>
-                            <option value="2">平台</option>
-                            <option value="3">中转站</option>
+
+                            <c:if test="${dl.outType == 1}">
+                                <option value="1" selected="selected">卡商</option>
+                                <option value="2">平台</option>
+                                <option value="3">中转站</option>
+                            </c:if>
+                            <c:if test="${dl.outType == 2}">
+                                <option value="1" >卡商</option>
+                                <option value="2" selected="selected">平台</option>
+                                <option value="3">中转站</option>
+                            </c:if>
+                            <c:if test="${dl.outType == 3}">
+                                <option value="1" >卡商</option>
+                                <option value="2">平台</option>
+                                <option value="3" selected="selected">中转站</option>
+                            </c:if>
                         </select>
                     </div>
                 </li>
@@ -90,11 +113,28 @@
                         <span class="require" ><font color="red">*</font>订单状态</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <select name="orderStatus" id="orderStatus" disabled>
-                            <option value="1" selected>初始化</option>
-                            <option value="2">超时</option>
-                            <option value="3">质疑</option>
-                            <option value="4">成功</option>
+                        <select name="orderStatus" id="orderStatus" >
+                            <c:if test="${dl.orderStatus == 1}">
+                                <option value="1" selected="selected">初始化</option>
+                                <option value="2" >失败</option>
+                                <option value="4" >成功</option>
+                            </c:if>
+                            <c:if test="${dl.orderStatus == 3}">
+                                <option value="1" >初始化</option>
+                                <option value="2" selected="selected">失败</option>
+                                <option value="4" >成功</option>
+                            </c:if>
+                            <c:if test="${dl.orderStatus == 2}">
+                                <option value="1" >初始化</option>
+                                <option value="2" selected="selected">失败</option>
+                                <option value="4" >成功</option>
+                            </c:if>
+                            <c:if test="${dl.orderStatus == 4}">
+                                <option value="1" >初始化</option>
+                                <option value="2">失败</option>
+                                <option value="4" selected="selected">成功</option>
+                            </c:if>
+
                         </select>
                     </div>
                 </li>
@@ -108,11 +148,12 @@
                     </div>
                 </li>
 
+
+
                 <li>
                     <div class="" style="margin-bottom: 20px; margin-top: 20px;margin-left:200px;">
-                        <input type="submit" class="formBtn" value="提现" style="background-color: #54D8FE;"/> <span>
-                        <input type="button" onClick="javascript :history.back(-1);" class="formBtn" value=" 返 回 " style="background-color: #54D8FE;" />
-                       </span>
+                        <input type="submit" class="formBtn" style="background-color: #1094fa" value="修 改" /> <span>
+                        <input type="button" onClick="javascript :history.back(-1);" style="background-color: #1094fa" class="formBtn" value=" 返 回 " />
                     </div>
                 </li>
             </ul>
@@ -120,66 +161,22 @@
     </div>
 </div>
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/common/common2.js'></script>
-<script type='text/javascript'>
+<script type="text/javascript">
     $(function(){
-        // 在键盘按下并释放及提交后验证提交表单
+        //密码输入验证
         $("#addSupplierForm").validate({
-            rules:{
-                merchantId:{
-                    required:true,
-                    maxlength:10
-                },
-                outBankName:{
-                    required:true,
-                    maxlength:36
-                },
-                outBankCard:{
-                    required:false,
-                    maxlength:36
-                },
-                outAccountName:{
-                    required:false,
-                    maxlength:36
-                },
-                orderMoney:{
-                    required:false,
-                    maxlength:10
-                }
-            },
-            messages: {
-                merchantId:{
-                    required : "'卡商不能为空!",
-                    maxlength : "'卡商最多是10个字符!"
-                },
-                outBankName:{
-                    required:"银行名称不能为空!",
-                    number:"银行名称最多是36个字符!"
-                },
-                outBankCard:{
-                    required:"银行卡号不能为空!",
-                    number:"银行卡号最多是36个字符!"
-                },
-                outAccountName:{
-                    required:"'开户人不能为空!",
-                    number:"开户人最多是36个字符!"
-                },
-                orderMoney:{
-                    required:"提现金额不能为空!",
-                    number:"提现金额最多是10个字符!"
-                }
-            },
 
             submitHandler : function() {
                 var formData = $("#addSupplierForm").serialize();
                 $.ajax({
-                    url : ctx+ "/merchantwithdraw/add.do",
+                    url : ctx+ "/withdraw/update.do",
                     type : 'post',
                     dataType : 'json',
                     data :formData,
                     success : function(data) {
                         if (data.success) {
-                            alert("添加成功！！！");
-                            window.location.href = ctx + "/merchant/list.do";
+                            alert("审核成功！");
+                            window.location.href = ctx + "/withdraw/list.do";
                         } else {
                             art.alert(data.msg);
                         }

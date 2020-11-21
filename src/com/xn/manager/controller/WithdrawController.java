@@ -193,10 +193,7 @@ public class WithdrawController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
 //        SpringConfig springConfig=new SpringConfig();
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            WithdrawModel  withdrawModel =  new WithdrawModel();
-
-            withdrawService.update(withdrawModel);
-
+            withdrawService.update(bean);
             sendSuccessMessage(response, "保存成功~");
         }else {
             sendFailureMessage(response, "登录超时,请重新登录在操作!");

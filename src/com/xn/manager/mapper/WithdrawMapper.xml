@@ -366,7 +366,7 @@
             <if test="outTradeNo != null" >
                 out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
             </if>
-            <if test="orderStatus != null" >
+            <if test="orderStatus != 0 and orderStatus>0 " >
                 order_status = #{orderStatus,jdbcType=BIT},
             </if>
             <if test="withdrawType != null" >
