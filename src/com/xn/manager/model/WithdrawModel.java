@@ -18,6 +18,7 @@ public class WithdrawModel extends BasePage{
      * @mbggenerated
      */
     private String alias;
+    private String accountNum;
 
     /**
      * 订单号
@@ -586,5 +587,13 @@ public class WithdrawModel extends BasePage{
 
     public void setEndCurday(Integer endCurday) {
         this.endCurday = endCurday;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }

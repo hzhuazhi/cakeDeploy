@@ -79,6 +79,9 @@
             <if test="endCurday  != 0 and endCurday >0" >
                 and a.curday  &lt;= #{endCurday}
             </if>
+            <if test="accountNum  != null and accountNum != ''" >
+                and b.account_num  = #{accountNum}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
