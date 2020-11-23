@@ -81,6 +81,7 @@ var account = {
         //     }
         // },
         {"data":"checkInfo",},
+        {"data":"createTime",},
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
@@ -114,7 +115,7 @@ var account = {
             account.condJsonData['outBankName'] = $("#outBankName").val();
             account.condJsonData['outBankCard'] = $("#outBankCard").val();
             account.condJsonData['outAccountName'] = $("#outAccountName").val();
-            account.condJsonData['orderMoney'] = $("#orderNo").val();
+            account.condJsonData['orderMoney'] = $("#orderMoney").val();
             account.condJsonData['beginCurday'] = $("#beginCurday").val();
             account.condJsonData['endCurday'] = $("#endCurday").val();
             common.showDatas(account.condJsonData,account.list);

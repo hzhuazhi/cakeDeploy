@@ -48,9 +48,6 @@
                     <input type="text" class ="inputCommonSty" name="endCurday" id="endCurday" size="10" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})"  />
                 </div>
 
-                <div class = "searchdiv">
-                    <input type="button" class = "buttonClass imginput addbtn" value="新增" style="margin-left: 30px;" >
-                </div>
                 <div class="searchdiv">
                     <input type = "button" id = "btnQuery" class = "buttonClass imginput" value = "搜索" />
                 </div>
@@ -78,6 +75,7 @@
             <th width="150">订单状态</th>
             <%--<th width="150">审核状态</th>--%>
             <th width="150">数据说明</th>
+            <th width="150">创建日期</th>
             <th width="380">操作</th>
         </tr>
         </thead>

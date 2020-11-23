@@ -58,8 +58,20 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
+            <if test="orderNo != null and orderNo != ''" >
+                and a.order_no = #{orderNo}
+            </if>
             <if test="alias != null and alias != ''" >
                 and a.alias = #{alias}
+            </if>
+            <if test="outBankName != null and outBankName != ''" >
+                and a.out_bank_name = #{outBankName}
+            </if>
+            <if test="outBankCard != null and outBankCard != ''" >
+                and a.out_bank_card = #{outBankCard}
+            </if>
+            <if test="outAccountName != null and outAccountName != ''" >
+                and a.out_account_name = #{outAccountName}
             </if>
             <if test="merchantId != 0 and merchantId >0" >
                 and a.merchant_id = #{merchantId}
@@ -67,9 +79,7 @@
             <if test="acName  != null and acName != ''" >
                 and b.ac_name = #{acName}
             </if>
-            <if test="orderMoney  != null  and  orderMoney != ''" >
-                and a.order_money = #{orderMoney}
-            </if>
+
             <if test="orderMoney  != null  and  orderMoney != ''" >
                 and a.order_money = #{orderMoney}
             </if>
