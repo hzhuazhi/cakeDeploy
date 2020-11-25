@@ -92,7 +92,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a
+        from tb_fr_mobile_card a  left join tb_fr_merchant b
+        on  a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -110,7 +111,8 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a
+        from tb_fr_mobile_card a left join tb_fr_merchant b
+        on  a.merchant_id=b.id
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>
