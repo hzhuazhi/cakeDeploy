@@ -180,10 +180,8 @@ public class BankController extends BaseController {
         atModel.setId(id);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel  mobileCardModel = new  MobileCardModel();
-            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                mobileCardModel.setMerchantId(account.getId());
-            }else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE) {
-                mobileCardModel.setMerchantSiteId(account.getId());
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                mobileCardModel.setAccountNum(account.getAccountNum());
             }
             model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
             model.addAttribute("account", bankService.queryById(atModel));
