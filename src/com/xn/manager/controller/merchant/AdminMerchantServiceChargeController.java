@@ -157,8 +157,11 @@ public class AdminMerchantServiceChargeController extends BaseController {
             merchantServiceChargeQuery.setChannelId(bean.getChannelId());
             MerchantServiceChargeModel merchantServiceChargeModel = merchantServiceChargeService.queryByCondition(merchantServiceChargeQuery);
             if (merchantServiceChargeModel != null || merchantServiceChargeModel.getId() > 0){
-                sendFailureMessage(response,"有重复纪录,更新失败!");
-                return;
+                if (merchantServiceChargeModel.getId() != bean.getId()){
+                    sendFailureMessage(response,"有重复纪录,更新失败!");
+                    return;
+                }
+
             }
             merchantServiceChargeService.update(bean);
             sendSuccessMessage(response, "保存成功~");
