@@ -94,6 +94,31 @@ var common = {
 
     },
 
+    //启用/禁用
+    manyOperationUse: function(data){
+        var showMsg = '';
+        if (data.useStatus == 1){
+            if(!confirm("确认要启用吗？")){
+                return;
+            }
+            showMsg = '启用成功!';
+        }else if(data.useStatus == 2){
+            if(!confirm("确认要禁用吗？")){
+                return;
+            }
+            showMsg = '禁用成功!';
+        }
+        this.ajax(this.url.manyOperation_url,data,function(data){
+            if (data.success) {
+                promptMessage (showMsg,'success',false);
+                common.goList();
+            } else {
+                art.alert(data.msg);
+            }
+        });
+
+    },
+
     //重发
     cf: function(data){
         var showMsg = '';

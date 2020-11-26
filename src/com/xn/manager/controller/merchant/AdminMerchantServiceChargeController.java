@@ -115,6 +115,15 @@ public class AdminMerchantServiceChargeController extends BaseController {
     public void add(HttpServletRequest request, HttpServletResponse response, MerchantServiceChargeModel bean) throws Exception {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            // check 是否有重复纪录
+            MerchantServiceChargeModel merchantServiceChargeQuery = new MerchantServiceChargeModel();
+            merchantServiceChargeQuery.setMerchantId(bean.getMerchantId());
+            merchantServiceChargeQuery.setChannelId(bean.getChannelId());
+            MerchantServiceChargeModel merchantServiceChargeModel = merchantServiceChargeService.queryByCondition(merchantServiceChargeQuery);
+            if (merchantServiceChargeModel != null || merchantServiceChargeModel.getId() > 0){
+                sendFailureMessage(response,"有重复纪录,添加失败!");
+                return;
+            }
             merchantServiceChargeService.add(bean);
             sendSuccessMessage(response, "保存成功~");
         }else {
@@ -130,6 +139,8 @@ public class AdminMerchantServiceChargeController extends BaseController {
         MerchantServiceChargeModel atModel = new MerchantServiceChargeModel();
         atModel.setId(id);
         model.addAttribute("account", merchantServiceChargeService.queryById(atModel));
+        model.addAttribute("merchantList", merchantService.queryAllList());
+        model.addAttribute("channelList", channelService.queryAllList());
         return "manager/adminmerchantservicecharge/adminmerchantservicechargeEdit";
     }
 
@@ -140,6 +151,15 @@ public class AdminMerchantServiceChargeController extends BaseController {
     public void update(HttpServletRequest request, HttpServletResponse response,MerchantServiceChargeModel bean) throws Exception {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            // check 是否有重复纪录
+            MerchantServiceChargeModel merchantServiceChargeQuery = new MerchantServiceChargeModel();
+            merchantServiceChargeQuery.setMerchantId(bean.getMerchantId());
+            merchantServiceChargeQuery.setChannelId(bean.getChannelId());
+            MerchantServiceChargeModel merchantServiceChargeModel = merchantServiceChargeService.queryByCondition(merchantServiceChargeQuery);
+            if (merchantServiceChargeModel != null || merchantServiceChargeModel.getId() > 0){
+                sendFailureMessage(response,"有重复纪录,更新失败!");
+                return;
+            }
             merchantServiceChargeService.update(bean);
             sendSuccessMessage(response, "保存成功~");
         }else {

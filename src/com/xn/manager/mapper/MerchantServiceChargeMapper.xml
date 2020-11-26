@@ -36,6 +36,9 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
+            <if test="alias != null and alias != '' " >
+                and a.alias = #{alias}
+            </if>
             <if test="merchantId != 0 and merchantId >0 " >
                 and a.merchant_id = #{merchantId}
             </if>
