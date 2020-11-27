@@ -371,7 +371,7 @@
 
     <!-- 更新支付服务中渠道提交的补单信息 -->
     <update id="updateChannelCheck" parameterType="Object">
-        UPDATE `hz-pay`.tb_hz_channel_replenish a
+        UPDATE `platform`.tb_hz_channel_replenish a
         <trim prefix="set" suffixOverrides=",">
             a.check_money = #{checkMoney},
             a.check_picture_ads = #{checkPictureAds},
