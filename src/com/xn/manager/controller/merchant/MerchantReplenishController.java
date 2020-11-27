@@ -7,7 +7,9 @@ import com.xn.common.util.OssUploadUtil;
 import com.xn.manager.model.ChannelReplenishModel;
 import com.xn.manager.model.MerchantReplenishModel;
 import com.xn.manager.model.OrderModel;
+import com.xn.manager.model.OrderReplenishModel;
 import com.xn.manager.service.MerchantReplenishService;
+import com.xn.manager.service.OrderReplenishService;
 import com.xn.manager.service.OrderService;
 import com.xn.system.entity.Account;
 import org.apache.commons.lang.StringUtils;
@@ -47,6 +49,9 @@ public class MerchantReplenishController extends BaseController {
 
     @Autowired
     private OrderService<OrderModel> orderService;
+
+    @Autowired
+    private OrderReplenishService<OrderReplenishModel> orderReplenishService;
 
 
     /**
@@ -242,6 +247,24 @@ public class MerchantReplenishController extends BaseController {
 //                    "&temp=你好的哦哈哈" + "&urlData=" + urlData;
 //            String sendData = "id=" + bean.getLinkId() + "&checkMoney=" + bean.getChannelMoney() + "&checkPictureAds=" + pictureAds + "&checkStatus=" + bean.getCheckStatus() + "&checkInfo=" + checkInfo;
 //            String resp = HttpSendUtils.sendGet(sendUrl + sendData, null, null);
+
+            if (bean.getCheckStatus() == 3){
+                MerchantReplenishModel merchantReplenishQuery = new MerchantReplenishModel();
+                merchantReplenishQuery.setId(bean.getId());
+                MerchantReplenishModel merchantReplenishData = merchantReplenishService.queryByCondition(merchantReplenishQuery);
+
+                OrderReplenishModel orderReplenishModel = new OrderReplenishModel();
+                orderReplenishModel.setOrderNo(merchantReplenishData.getOrderNo());
+                orderReplenishModel.setOutTradeNo(merchantReplenishData.getOutTradeNo());
+                orderReplenishModel.setOrderStatus(3);
+                if (!StringUtils.isBlank(account.getAcName())){
+                    orderReplenishModel.setHandlePeople(account.getAcName());
+                }
+                orderReplenishService.add(orderReplenishModel);
+            }
+
+
+
             ChannelReplenishModel channelReplenishUpdate = new ChannelReplenishModel();
             channelReplenishUpdate.setId(bean.getLinkId());
             if (!StringUtils.isBlank(bean.getChannelMoney())){
