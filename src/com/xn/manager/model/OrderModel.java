@@ -137,17 +137,17 @@ public class OrderModel extends BasePage {
     private String phoneNum;
 
     /**
-     * 归属卡商的账号ID：对应表tb_hz_sys_account的主键ID，并且角色类型是卡商
+     * 归属卡商的账号ID：对应表tb_fr_merchant的主键ID，并且角色类型是卡商
      *
      * @mbggenerated
      */
-    private Long accountId;
+    private Long merchantId;
     /**
-     * 卡组的账号ID：对应表tb_hz_sys_account的主键ID，并且角色类型是卡商
+     * 银行卡归属卡站点ID：对应表tb_fr_merchant_site的主键ID，并且角色是卡站点
      *
      * @mbggenerated
      */
-    private Long cardSiteId;
+    private Long merchantSiteId;
 
     /**
      * 银行归属卡商名称
@@ -155,6 +155,13 @@ public class OrderModel extends BasePage {
      * @mbggenerated
      */
     private String merchantName;
+
+    /**
+     * 卡站点名称
+     *
+     * @mbggenerated
+     */
+    private String cardSiteName;
 
     /**
      * 请求的商户ID：对应表tb_fr_channel的主键ID
@@ -313,19 +320,6 @@ public class OrderModel extends BasePage {
      */
     private Integer numMoney;
 
-
-    /**
-     * 卡商id
-     *
-     * @mbggenerated
-     */
-    private Long merchantId;
-    /**
-     * 子卡商id
-     *
-     * @mbggenerated
-     */
-    private Long merchantSiteId;
     /**
      * 任务成功率
      *
@@ -469,13 +463,6 @@ public class OrderModel extends BasePage {
         this.phoneNum = phoneNum;
     }
 
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
 
     public String getMerchantName() {
         return merchantName;
@@ -653,14 +640,6 @@ public class OrderModel extends BasePage {
         this.beginCurday = beginCurday;
     }
 
-    public Long getCardSiteId() {
-        return cardSiteId;
-    }
-
-    public void setCardSiteId(Long cardSiteId) {
-        this.cardSiteId = cardSiteId;
-    }
-
     public String getDistributionMoney() {
         return distributionMoney;
     }
@@ -747,5 +726,13 @@ public class OrderModel extends BasePage {
 
     public void setAccountNum(String accountNum) {
         this.accountNum = accountNum;
+    }
+
+    public String getCardSiteName() {
+        return cardSiteName;
+    }
+
+    public void setCardSiteName(String cardSiteName) {
+        this.cardSiteName = cardSiteName;
     }
 }

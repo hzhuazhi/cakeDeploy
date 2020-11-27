@@ -28,25 +28,15 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
     private long linkId;
 
     /**
-     * 归属卡商的账号ID：对应表tb_hz_sys_account的主键ID，并且角色类型是卡商
-     */
-    private long accountId;
-
-    /**
-     * 银行卡归属卡站点ID：对应表tb_hz_sys_account的主键ID，并且角色是卡站点
-     */
-    private long cardSiteId;
-
-
-
-
-    /**
-     * 归属卡商的账号ID：对应表tb_hz_sys_account的主键ID，并且角色类型是卡商
+     * 归属卡商的账号ID：对应表tb_fr_merchant的主键ID，并且角色类型是卡商
+     *
+     * @mbggenerated
      */
     private long merchantId;
-
     /**
-     * 银行卡归属卡站点ID：对应表tb_hz_sys_account的主键ID，并且角色是卡站点
+     * 银行卡归属卡站点ID：对应表tb_fr_merchant_site的主键ID，并且角色是卡站点
+     *
+     * @mbggenerated
      */
     private long merchantSiteId;
 
@@ -143,7 +133,7 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
     /**
      * 卡站点名称
      */
-    private String cardSiteName;
+    private String merchantSiteName;
 
     /**
      * 渠道/商户名称
@@ -154,7 +144,6 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
      * 处理人名称
      */
     private String handlePeopleName;
-
 
     public long getId() {
         return id;
@@ -172,20 +161,28 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
         this.linkId = linkId;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public long getMerchantId() {
+        return merchantId;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setMerchantId(long merchantId) {
+        this.merchantId = merchantId;
     }
 
-    public long getCardSiteId() {
-        return cardSiteId;
+    public long getMerchantSiteId() {
+        return merchantSiteId;
     }
 
-    public void setCardSiteId(long cardSiteId) {
-        this.cardSiteId = cardSiteId;
+    public void setMerchantSiteId(long merchantSiteId) {
+        this.merchantSiteId = merchantSiteId;
+    }
+
+    public long getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(long channelId) {
+        this.channelId = channelId;
     }
 
     public String getOrderNo() {
@@ -210,6 +207,14 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
 
     public void setOrderMoney(String orderMoney) {
         this.orderMoney = orderMoney;
+    }
+
+    public String getDistributionMoney() {
+        return distributionMoney;
+    }
+
+    public void setDistributionMoney(String distributionMoney) {
+        this.distributionMoney = distributionMoney;
     }
 
     public String getChannelMoney() {
@@ -316,12 +321,12 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
         this.merchantName = merchantName;
     }
 
-    public String getCardSiteName() {
-        return cardSiteName;
+    public String getMerchantSiteName() {
+        return merchantSiteName;
     }
 
-    public void setCardSiteName(String cardSiteName) {
-        this.cardSiteName = cardSiteName;
+    public void setMerchantSiteName(String merchantSiteName) {
+        this.merchantSiteName = merchantSiteName;
     }
 
     public String getChannelName() {
@@ -338,37 +343,5 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
 
     public void setHandlePeopleName(String handlePeopleName) {
         this.handlePeopleName = handlePeopleName;
-    }
-
-    public long getChannelId() {
-        return channelId;
-    }
-
-    public void setChannelId(long channelId) {
-        this.channelId = channelId;
-    }
-
-    public long getMerchantId() {
-        return merchantId;
-    }
-
-    public void setMerchantId(long merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public long getMerchantSiteId() {
-        return merchantSiteId;
-    }
-
-    public void setMerchantSiteId(long merchantSiteId) {
-        this.merchantSiteId = merchantSiteId;
-    }
-
-    public String getDistributionMoney() {
-        return distributionMoney;
-    }
-
-    public void setDistributionMoney(String distributionMoney) {
-        this.distributionMoney = distributionMoney;
     }
 }

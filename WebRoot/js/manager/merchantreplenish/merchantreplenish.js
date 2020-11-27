@@ -18,7 +18,7 @@ var account = {
         {"data":"orderMoney",},
         {"data":"distributionMoney",},
         {"data":"merchantName",},
-        {"data":"cardSiteName",},
+        {"data":"merchantSiteName",},
         {"data":"channelName",},
         {"data":"checkStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -66,7 +66,7 @@ var account = {
         orderNo:null,
         outTradeNo:null,
         merchantName:null,
-        cardSiteName:null,
+        merchantSiteName:null,
         channelName:null,
         handlePeopleName:null,
         checkStatus:0,
@@ -88,7 +88,7 @@ var account = {
             account.condJsonData['orderNo'] = $("#orderNo").val();
             account.condJsonData['outTradeNo'] = $("#outTradeNo").val();
             account.condJsonData['merchantName'] = $("#merchantName").val();
-            account.condJsonData['cardSiteName'] = $("#cardSiteName").val();
+            account.condJsonData['merchantSiteName'] = $("#merchantSiteName").val();
             account.condJsonData['channelName'] = $("#channelName").val();
             account.condJsonData['handlePeopleName'] = $("#handlePeopleName").val();
             account.condJsonData['checkStatus'] = $("#checkStatus").val();
@@ -105,8 +105,8 @@ var account = {
             $("#outTradeNo").val("");
             account.condJsonData['merchantName'] = "";
             $("#merchantName").val("");
-            account.condJsonData['cardSiteName'] = "";
-            $("#cardSiteName").val("");
+            account.condJsonData['merchantSiteName'] = "";
+            $("#merchantSiteName").val("");
             account.condJsonData['channelName'] = "";
             $("#channelName").val("");
             account.condJsonData['handlePeopleName'] = "";
@@ -141,6 +141,10 @@ var account = {
 
 }
 
+account.indexInit();
+
 $(function(){
-    account.indexInit();
+    // account.indexInit();
+    // self.setInterval("queryList()", 1000*10);
+    self.setInterval("account.indexInit()", 1000*10);
 })

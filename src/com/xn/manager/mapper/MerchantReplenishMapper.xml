@@ -5,8 +5,6 @@
     <resultMap type="com.xn.manager.model.MerchantReplenishModel" id="dataMap">
         <id property="id" column="id" />
         <result property="linkId" column="link_id" />
-        <result property="accountId" column="account_id" />
-        <result property="cardSiteId" column="card_site_id" />
         <result property="merchantId" column="merchantId" />
         <result property="merchantSiteId" column="merchantSiteId" />
         <result property="channelId" column="channel_id" />
@@ -28,7 +26,7 @@
         <result property="yn" column="yn" />
 
         <result property="merchantName" column="merchant_name" />
-        <result property="cardSiteName" column="card_site_name" />
+        <result property="merchantSiteName" column="merchant_site_name" />
         <result property="channelName" column="channel_name" />
         <result property="handlePeopleName" column="handle_people_name" />
     </resultMap>
@@ -40,7 +38,7 @@
         a.handle_type,a.handle_people,a.remark,
         a.create_time,a.update_time,a.yn,
         b.ac_name as merchant_name,
-        c.ac_name as card_site_name,
+        c.ac_name as merchant_site_name,
         d.alias as channel_name,
         e.ac_name as handle_people_name
     </sql>
@@ -76,8 +74,8 @@
             <if test="merchantName != null and merchantName != '' " >
                 and b.ac_name = #{merchantName}
             </if>
-            <if test="cardSiteName != null and cardSiteName != '' " >
-                and c.ac_name = #{cardSiteName}
+            <if test="merchantSiteName != null and merchantSiteName != '' " >
+                and c.ac_name = #{merchantSiteName}
             </if>
             <if test="channelName != null and channelName != '' " >
                 and d.alias = #{channelName}
@@ -104,8 +102,8 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_fr_merchant b on a.merchant_id = b.id
+        left join tb_fr_merchant_site c on a.merchant_site_id = c.id
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -115,8 +113,8 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_fr_merchant b on a.merchant_id = b.id
+        left join tb_fr_merchant_site c on a.merchant_site_id = c.id
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -128,8 +126,8 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_fr_merchant b on a.merchant_id = b.id
+        left join tb_fr_merchant_site c on a.merchant_site_id = c.id
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>
@@ -140,8 +138,8 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.merchant_site_id = c.id and c.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_fr_merchant b on a.merchant_id = b.id
+        left join tb_fr_merchant_site c on a.merchant_site_id = c.id
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause_id"/>
@@ -151,8 +149,8 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_merchant_replenish a left join tb_hz_sys_account b on a.merchant_id = b.id and b.role_id = 2
-        left join tb_hz_sys_account c on a.merchant_site_id = c.id and b.role_id = 3
+        from tb_fr_merchant_replenish a left join tb_fr_merchant b on a.merchant_id = b.id
+        left join tb_fr_merchant_site c on a.merchant_site_id = c.id
         left join tb_fr_channel d on a.channel_id = d.id
         left join tb_hz_sys_account e on a.handle_people = e.id
         <include refid="Example_Where_Clause"/>

@@ -28,7 +28,7 @@
 
                 <div class = "condQueryLabelDiv">卡站点：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="cardSiteName" name ="cardSiteName">
+                    <input type ="text" class ="inputCommonSty" id="merchantSiteName" name ="merchantSiteName">
                 </div>
 
                 <div class = "condQueryLabelDiv">商户：</div>

@@ -101,7 +101,7 @@
                         <span class="require">卡站点</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="cardSiteName" name="cardSiteName" value="${dl.cardSiteName}" 	maxlength="240" />
+                        <input type="text" class="formInput" id="merchantSiteName" name="merchantSiteName" value="${dl.merchantSiteName}" 	maxlength="240" />
                     </div>
                 </li>
 

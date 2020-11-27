@@ -68,12 +68,12 @@ public class MerchantReplenishController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                if (account.getRoleId() == 2){
+                if (account.getRoleId() == 2 || account.getRoleId() == 4){
                     // 卡商
-                    model.setAccountId(account.getId());
+                    model.setMerchantId(account.getId());
                 }else if (account.getRoleId() == 3){
                     // 卡站点
-                    model.setCardSiteId(account.getId());
+                    model.setMerchantSiteId(account.getId());
                 }
             }
             dataList = merchantReplenishService.queryByList(model);
@@ -92,13 +92,13 @@ public class MerchantReplenishController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                if (account.getRoleId() == 2){
+                if (account.getRoleId() == 2 || account.getRoleId() == 4){
                     // 卡商
-                    model.setAccountId(account.getId());
-                    log.info("");
+                    model.setMerchantId(account.getId());
                 }else if (account.getRoleId() == 3){
+                    log.info("");
                     // 卡站点
-                    model.setCardSiteId(account.getId());
+                    model.setMerchantSiteId(account.getId());
                 }
             }
             dataList = merchantReplenishService.queryAllList(model);
@@ -287,9 +287,9 @@ public class MerchantReplenishController extends BaseController {
                 orderQuery.setOutTradeNo(merchantReplenishModel.getOutTradeNo());
                 OrderModel orderModel = orderService.queryByCondition(orderQuery);
                 if (orderModel != null && orderModel.getId() > 0){
-                    merchantReplenishModel.setAccountId(orderModel.getAccountId());
-                    if (orderModel.getCardSiteId() != null && orderModel.getCardSiteId() > 0){
-                        merchantReplenishModel.setCardSiteId(orderModel.getCardSiteId());
+                    merchantReplenishModel.setMerchantId(orderModel.getMerchantId());
+                    if (orderModel.getMerchantSiteId() != null && orderModel.getMerchantSiteId() > 0){
+                        merchantReplenishModel.setMerchantSiteId(orderModel.getMerchantSiteId());
                     }
                     merchantReplenishModel.setChannelId(orderModel.getChannelId());
                     merchantReplenishModel.setOrderNo(orderModel.getOrderNo());
