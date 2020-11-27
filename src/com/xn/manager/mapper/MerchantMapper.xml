@@ -153,16 +153,16 @@
 
     <!-- 添加记录 -->
     <insert id="add" parameterType="Object" >
-        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
-            SELECT LAST_INSERT_ID() as id
-        </selectKey>
+        <!--<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">-->
+            <!--SELECT LAST_INSERT_ID() as id-->
+        <!--</selectKey>-->
         insert into tb_fr_merchant
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="serviceCharge != null" >
-                service_charge,
-            </if>
             <if test="id != null" >
                 id,
+            </if>
+            <if test="serviceCharge != null" >
+                service_charge,
             </if>
             <if test="alias != null" >
                 alias,
@@ -237,11 +237,11 @@
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="serviceCharge != null" >
-                #{serviceCharge,jdbcType=BIGINT},
-            </if>
             <if test="id != null" >
                 #{id,jdbcType=BIGINT},
+            </if>
+            <if test="serviceCharge != null" >
+                #{serviceCharge,jdbcType=BIGINT},
             </if>
             <if test="alias != null and alias != '' " >
                 #{alias,jdbcType=VARCHAR},

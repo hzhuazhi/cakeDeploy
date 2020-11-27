@@ -94,7 +94,7 @@ public class AdminLoginController extends BaseController {
 		if(adminAccount != null && adminAccount.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
 			accountId = adminAccount.getId();
 			// 赋值内部角色还是外部角色，这里是内部角色
-			adminAccount.setRoleType(1);
+			adminAccount.setRoleType(adminAccount.getAcType());
 			//
 		}
 

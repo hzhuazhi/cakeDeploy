@@ -171,10 +171,13 @@ public class AccountController extends BaseController{
 //					merchantService.add(merchantModel);
 //				}
 
+				long accountId = bean.getId();
+
 
 
 				if(bean.getRoleId()==2){
 					MerchantModel merchantModel  = new  MerchantModel();
+					merchantModel.setId(accountId);
 					merchantModel.setAcName(bean.getAcName());
 					merchantModel.setAccountNum(bean.getAccountNum());
 					merchantModel.setPassWd(bean.getPassWd());
@@ -188,11 +191,12 @@ public class AccountController extends BaseController{
 				}else if(bean.getRoleId()==4){
 					MerchantModel merchantModel  = new  MerchantModel();
 //					merchantSiteModel.setAlias(bean.geta);
+					merchantModel.setId(accountId);
 					merchantModel.setAcName(bean.getAcName());
 					merchantModel.setAccountNum(bean.getAccountNum());
 					merchantModel.setPassWd(bean.getPassWd());
 					merchantModel.setWithdrawPassWd(bean.getWithdrawPassWd());
-					merchantModel.setRoleId(2);
+					merchantModel.setRoleId(4);
 					merchantModel.setOperateType(2);
 					merchantModel.setUseStatus(1);
 					merchantModel.setCreateUserId(account.getId());
@@ -200,11 +204,12 @@ public class AccountController extends BaseController{
 					merchantService.add(merchantModel);
 				}else if(bean.getRoleId()==5){
 					InterestModel interestModel  = new  InterestModel();
+					interestModel.setId(accountId);
 					interestModel.setAcName(bean.getAcName());
 					interestModel.setAccountNum(bean.getAccountNum());
 					interestModel.setPassWd(bean.getPassWd());
 					interestModel.setWithdrawPassWd(bean.getWithdrawPassWd());
-					interestModel.setRoleId(2L);
+					interestModel.setRoleId(5L);
 					interestModel.setUseStatus(1);
 					interestModel.setCreateUserId(account.getId());
 					interestModel.setCreateRoleId(account.getRoleId());

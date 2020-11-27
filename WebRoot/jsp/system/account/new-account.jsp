@@ -53,7 +53,7 @@
 						<span class="require" ><font color="red">*</font>账号类型</span>
 					</div>
 					<div class="formCtrlDiv">
-						<select id="accountType" name="accountType">
+						<select id="acType" name="acType">
 						    <option value="1" selected="selected">内部账号</option>
 							<option value="2">外部账号</option>
 						</select>
