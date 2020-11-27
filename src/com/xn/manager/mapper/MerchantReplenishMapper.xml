@@ -223,10 +223,10 @@
             <if test="linkId != 0 and linkId >0 " >
                 <![CDATA[  #{linkId}, ]]>
             </if>
-            <if test="accountId != 0 and accountId >0 " >
+            <if test="merchantId != 0 and merchantId >0 " >
                 <![CDATA[  #{merchantId}, ]]>
             </if>
-            <if test="cardSiteId != 0 and cardSiteId >0 " >
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
                 <![CDATA[  #{merchantSiteId}, ]]>
             </if>
             <if test="channelId != 0 and channelId >0 " >

@@ -26,6 +26,7 @@
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
         <result column="merchant_site_id" property="merchantSiteId" jdbcType="BIGINT" />
         <result column="card_site_name" property="cardSiteName" jdbcType="VARCHAR" />
+        <result column="channel_id" property="channelId" jdbcType="BIGINT" />
         <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
         <result column="replenish_type" property="replenishType" jdbcType="BIT" />
         <result column="work_type" property="workType" jdbcType="BIT" />
