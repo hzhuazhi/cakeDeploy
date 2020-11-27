@@ -3,9 +3,7 @@ package com.xn.manager.controller.merchant;
 import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
 import com.xn.common.util.HtmlUtil;
-import com.xn.common.util.HttpSendUtils;
 import com.xn.common.util.OssUploadUtil;
-import com.xn.common.util.StringUtil;
 import com.xn.manager.model.ChannelReplenishModel;
 import com.xn.manager.model.MerchantReplenishModel;
 import com.xn.manager.model.OrderModel;
@@ -42,7 +40,7 @@ public class MerchantReplenishController extends BaseController {
 
     private static Logger log = Logger.getLogger(MerchantReplenishController.class);
 
-    public static String fruitUrl = "http://localhost:8002/payDeploy/channelreplenish/actionUpdateCheck.do?";
+    public static String fruitUrl = "http://localhost:8002/platformDeploy/channelreplenish/actionUpdateCheck.do?";
 //public static String fruitUrl = "http://192.168.1.52:8080/channelreplenish/actionUpdateCheck.do?";
     @Autowired
     private MerchantReplenishService<MerchantReplenishModel> merchantReplenishService;
