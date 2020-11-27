@@ -167,6 +167,8 @@
         <include refid="Base_Column_List_CountInfo" />
         from tb_fr_bank_collection a  left  join    tb_fr_bank  b
         on   a.bank_id=b.id
+        LEFT JOIN  tb_fr_merchant  c
+        on  b.merchant_id = c.id
         <include refid="Example_Where_Clause_CountInfo"/>
         group by
         a.curday desc,
@@ -218,6 +220,9 @@
             <if test="endTime != null and endTime != '' " >
                 and a.create_time &lt;= #{endTime}
             </if>
+            <if test="accountNum != null and accountNum != '' " >
+                and c.account_num = #{accountNum}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -232,6 +237,8 @@
         count(a.bank_id)
         from tb_fr_bank_collection a  left  join    tb_fr_bank  b
         on   a.bank_id=b.id
+        LEFT JOIN  tb_fr_merchant  c
+        on  b.merchant_id = c.id
         <include refid="Example_Where_Clause_CountInfo"/>
         <include refid="Having"/>
     </select>
@@ -243,6 +250,8 @@
         sum(a.money) as money
         from tb_fr_bank_collection a  left  join    tb_fr_bank  b
         on   a.bank_id=b.id
+        LEFT JOIN  tb_fr_merchant  c
+        on  b.merchant_id = c.id
         <include refid="Example_Where_Clause_CountInfo"/>
     </select>
 

@@ -73,11 +73,7 @@ public class BankCollectionController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                    model.setMerchantId(account.getId());
-                }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                    model.setMerchantSiteId(account.getId());
-                }
+                    model.setAccountNum(account.getAccountNum());
             }
             dataList = bankCollectionService.queryBankCollection(model);
         }
@@ -94,10 +90,8 @@ public class BankCollectionController extends BaseController {
         List<BankCollectionModel> dataList = new ArrayList<BankCollectionModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                model.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setMerchantSiteId(account.getId());
+            if(account.getRoleId()!=ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                model.setAccountNum(account.getAccountNum());
             }
             dataList = bankCollectionService.queryAllList(model);
         }

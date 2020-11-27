@@ -33,6 +33,14 @@ public class BankCollectionModel extends BasePage {
      */
     private String money;
 
+
+    /**
+     * 卡商信息
+     *
+     * @mbggenerated
+     */
+    private String accountNum;
+
     /**
      * 创建日期：存的日期格式20160530
      *
@@ -332,5 +340,13 @@ public class BankCollectionModel extends BasePage {
 
     public void setMerchantSiteId(Long merchantSiteId) {
         this.merchantSiteId = merchantSiteId;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 }
