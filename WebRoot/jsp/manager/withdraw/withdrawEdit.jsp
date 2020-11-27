@@ -42,7 +42,7 @@
                         <span class="require" ><font color="red">*</font>银行名称</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outBankName" name="outBankName"  value="${dl.outBankName}" disabled	maxlength="240" />
+                        <input type="text" class="formInput" id="inBankName" name="inBankName"  value="${dl.inBankName}" disabled	maxlength="240" />
                     </div>
                 </li>
 
@@ -51,7 +51,7 @@
                         <span class="require" ><font color="red">*</font>银行卡账号</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outBankCard" name="outBankCard" value="${dl.outBankName}" disabled 	maxlength="240" />
+                        <input type="text" class="formInput" id="inBankCard" name="inBankCard" value="${dl.inBankCard}" disabled 	maxlength="240" />
                     </div>
                 </li>
 
@@ -60,7 +60,7 @@
                         <span class="require" ><font color="red">*</font>开户名</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outAccountName" name="outAccountName"	value="${dl.outBankName}" disabled maxlength="240" />
+                        <input type="text" class="formInput" id="inAccountName" name="inAccountName"	value="${dl.inAccountName}" disabled maxlength="240" />
                     </div>
                 </li>
 
@@ -69,7 +69,7 @@
                         <span class="require" ><font color="red">*</font>提现金额</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="money" name="money" value="${dl.outBankName}" disabled 	maxlength="240" />
+                        <input type="text" class="formInput" id="orderMoney" name="orderMoney" value="${dl.orderMoney}" disabled 	maxlength="240" />
                     </div>
                 </li>
 
@@ -154,6 +154,7 @@
                     <div class="" style="margin-bottom: 20px; margin-top: 20px;margin-left:200px;">
                         <input type="submit" class="formBtn" style="background-color: #1094fa" value="修 改" /> <span>
                         <input type="button" onClick="javascript :history.back(-1);" style="background-color: #1094fa" class="formBtn" value=" 返 回 " />
+                        </span>
                     </div>
                 </li>
             </ul>

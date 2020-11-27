@@ -49,9 +49,9 @@ var account = {
             }
         },
         {"data":"acName",},
-        {"data":"outBankName",},
-        {"data":"outBankCard",},
-        {"data":"outAccountName",},
+        {"data":"inBankName",},
+        {"data":"inBankCard",},
+        {"data":"inAccountName",},
         {"data":"orderStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
