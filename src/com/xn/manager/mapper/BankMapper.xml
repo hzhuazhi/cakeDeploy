@@ -90,9 +90,9 @@
                 and a.check_status = #{checkStatus}
             </if>
 
-            <if test="accountNum != null and accountNum !='' " >
-                and b.account_num = #{accountNum}
-            </if>
+            <!--<if test="accountNum != null and accountNum !='' " >-->
+                <!--and b.account_num = #{accountNum}-->
+            <!--</if>-->
 
             and a.yn =  0
         </trim>
@@ -127,8 +127,7 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_bank a left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_bank a
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -136,8 +135,7 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_bank a  left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_bank a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -156,8 +154,7 @@
     <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_bank a left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_bank a
         <include refid="Example_Where_Clause_Import"/>
         order by a.create_time desc
     </select>
@@ -174,8 +171,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_bank a left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_bank a
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

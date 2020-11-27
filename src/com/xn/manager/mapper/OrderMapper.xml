@@ -112,9 +112,6 @@
             <if test="endCurday != 0 and endCurday >0 " >
                 and a.curday &lt;= #{endCurday}
             </if>
-            <if test="accountNum  != null and  accountNum != '' " >
-                and b.account_num = #{accountNum}
-            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -149,8 +146,7 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a left join  tb_fr_merchant b
-        on a.merchant_id =b.id
+        from tb_fr_order a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -160,8 +156,7 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a left join  tb_fr_merchant b
-        on a.merchant_id =b.id
+        from tb_fr_order a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -171,8 +166,7 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a left join  tb_fr_merchant b
-        on a.merchant_id =b.id
+        from tb_fr_order a
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -180,8 +174,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a left join  tb_fr_merchant b
-        on a.merchant_id =b.id
+        from tb_fr_order a
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>
@@ -538,9 +531,7 @@
             <if test="curday != 0 and curday >0 " >
                 and a.curday = #{curday}
             </if>
-            <if test="accountNum != null and accountNum != ''  " >
-                and c.account_num = #{accountNum}
-            </if>
+
             and a.yn =  0
         </trim>
     </sql>
@@ -560,8 +551,7 @@
         IFNULL((SELECT count(id) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  success_num,
         IFNULL(( SELECT sum(money) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  num_money
         FROM
-            tb_fr_order a  left JOIN tb_hz_sys_account b   on
-        a.merchant_id= b.id
+            tb_fr_order a
             LEFT JOIN  tb_fr_merchant  c
             on  a.merchant_id = c.id
             <include refid="Example_Where_Clause_Release"/>
@@ -577,10 +567,7 @@
         a.bank_id,
         count( a.id ) task_num
         FROM
-        tb_fr_order a  left JOIN tb_hz_sys_account b   on
-        a.merchant_id= b.id
-        LEFT JOIN  tb_fr_merchant  c
-        on  a.merchant_id = c.id
+        tb_fr_order a
         <include refid="Example_Where_Clause_Release"/>
         GROUP BY a.bank_id
     </select>

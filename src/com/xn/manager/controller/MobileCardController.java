@@ -69,7 +69,8 @@ public class MobileCardController extends BaseController {
 //                model.setMerchantSiteId(account.getId());
 //            }
             if(account.getRoleId()!=ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                model.setAccountNum(account.getAccountNum());
+//                model.setAccountNum(account.getAccountNum());
+                model.setMerchantId(account.getId());
             }
 
             dataList = mobileCardService.queryByList(model);
@@ -142,15 +143,15 @@ public class MobileCardController extends BaseController {
             if (queryBean != null && queryBean.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
                 sendFailureMessage(response,"有重复的手机号了,请重新输入其它手机号!");
             }else{
-                MerchantModel  queryModel = new MerchantModel();
-                queryModel.setAccountNum(account.getAccountNum());
-
-                MerchantModel beans = merchantService.queryByCondition(queryModel);
-                if(beans==null||beans.getId()<=0){
-                    sendSuccessMessage(response, "数据有误，请联系管理员！");
-                    return;
-                }
-                bean.setMerchantId(beans.getId());
+//                MerchantModel  queryModel = new MerchantModel();
+//                queryModel.setAccountNum(account.getAccountNum());
+//
+//                MerchantModel beans = merchantService.queryByCondition(queryModel);
+//                if(beans==null||beans.getId()<=0){
+//                    sendSuccessMessage(response, "数据有误，请联系管理员！");
+//                    return;
+//                }
+                bean.setMerchantId(account.getId());
                 mobileCardService.add(bean);
                 sendSuccessMessage(response, "保存成功~");
             }
@@ -180,12 +181,12 @@ public class MobileCardController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel mobileCardModel = new MobileCardModel();
             mobileCardModel.setPhoneNum(bean.getPhoneNum());
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-                bean.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                bean.setMerchantId(account.getCreateUser());
-                bean.setMerchantSiteId(account.getId());
-            }
+//            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+//                bean.setMerchantId(account.getId());
+//            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
+//                bean.setMerchantId(account.getCreateUser());
+//                bean.setMerchantSiteId(account.getId());
+//            }
             MobileCardModel queryBean = mobileCardService.queryByCondition(mobileCardModel);
 
             if (queryBean != null && queryBean.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){

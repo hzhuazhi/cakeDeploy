@@ -51,9 +51,9 @@
             <if test="heartbeatStatus != 0 and heartbeatStatus >0 " >
                 and a.heartbeat_status = #{heartbeatStatus}
             </if>
-            <if test="accountNum != null and accountNum !='' " >
-                and b.account_num = #{accountNum}
-            </if>
+            <!--<if test="accountNum != null and accountNum !='' " >-->
+                <!--and b.account_num = #{accountNum}-->
+            <!--</if>-->
             and a.yn =  0
         </trim>
     </sql>
@@ -81,8 +81,7 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a  left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_mobile_card a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -92,8 +91,7 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a  left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_mobile_card a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -102,8 +100,7 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_mobile_card a
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -111,8 +108,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_mobile_card a
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

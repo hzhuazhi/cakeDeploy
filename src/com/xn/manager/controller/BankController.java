@@ -75,7 +75,9 @@ public class BankController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                model.setAccountNum(account.getAccountNum());
+//                model.setAccountNum(account.getAccountNum());
+
+                model.setMerchantId(account.getId());
             }
             dataList = bankService.queryByList(model);
         }
@@ -91,12 +93,11 @@ public class BankController extends BaseController {
     public void dataAllList(HttpServletRequest request, HttpServletResponse response, BankModel model) throws Exception {
         List<BankModel> dataList = new ArrayList<BankModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
-        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+            if(account.getRoleId()!=ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 model.setMerchantId(account.getId());
-            }else if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                model.setMerchantSiteId(account.getId());
             }
+
             dataList = bankService.queryAllList(model);
         }
         HtmlUtil.writerJson(response, dataList);
@@ -110,19 +111,9 @@ public class BankController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel  mobileCardModel = new  MobileCardModel();
-//            if (account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_MERCHANTS_VALUE){
-//                mobileCardModel.setMerchantId(account.getId());
-//            }else if(account.getRoleId() == ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE) {
-//                mobileCardModel.setMerchantSiteId(account.getId());
-//            }
-            MerchantModel  queryModel = new MerchantModel();
-            queryModel.setAccountNum(account.getAccountNum());
-
-            MerchantModel beans = merchantService.queryByCondition(queryModel);
-            if(beans==null||beans.getId()<=0){
-                sendSuccessMessage(response, "数据有误，请联系管理员！");
+            if(account.getRoleId()!=ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                mobileCardModel.setMerchantId(account.getId());
             }
-            mobileCardModel.setMerchantId(beans.getId());
             model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
             model.addAttribute("type",bankTypeService.queryAllList());
         }else {
@@ -144,15 +135,15 @@ public class BankController extends BaseController {
 //                bean.setMerchantId(account.getCreateUser());
 //                bean.setMerchantSiteId(account.getId());
 //            }
-            MerchantModel  queryModel = new MerchantModel();
-            queryModel.setAccountNum(account.getAccountNum());
-
-            MerchantModel beans = merchantService.queryByCondition(queryModel);
-            if(beans==null||beans.getId()<=0){
-                sendSuccessMessage(response, "数据有误，请联系管理员！");
-                return;
-            }
-            bean.setMerchantId(beans.getId());
+//            MerchantModel  queryModel = new MerchantModel();
+//            queryModel.setAccountNum(account.getAccountNum());
+//
+//            MerchantModel beans = merchantService.queryByCondition(queryModel);
+//            if(beans==null||beans.getId()<=0){
+//                sendSuccessMessage(response, "数据有误，请联系管理员！");
+//                return;
+//            }
+            bean.setMerchantId(account.getId());
 
             Map<String, Object>   bankMap= bankService.isCheckCardsBank(bean,account);
             if(bankMap.get("type").equals("0")){
@@ -181,7 +172,7 @@ public class BankController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             MobileCardModel  mobileCardModel = new  MobileCardModel();
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                mobileCardModel.setAccountNum(account.getAccountNum());
+                mobileCardModel.setMerchantId(account.getId());
             }
             model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
             model.addAttribute("account", bankService.queryById(atModel));
@@ -323,7 +314,7 @@ public class BankController extends BaseController {
                 }
 
                 for(BankModel bankModel:addList){
-                    bankModel.setMerchantId(beans.getId());
+//                    bankModel.setMerchantId(beans.getId());
                     bankService.add(bankModel);
                 }
                 sendSuccessMessage(response, "导入成功");

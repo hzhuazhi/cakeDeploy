@@ -71,7 +71,9 @@ public class OrderOutController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setAccountNum(account.getAccountNum());
+//                model.setAccountNum(account.getAccountNum());
+
+                model.setMerchantId(account.getId());
             }
             dataList = orderOutService.queryByList(model);
         }

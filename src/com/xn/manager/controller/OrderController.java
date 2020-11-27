@@ -66,7 +66,8 @@ public class OrderController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setAccountName(account.getAccountNum());
+//                model.setAccountName(account.getAccountNum());
+                model.setMerchantId(account.getId());
             }
             dataList = orderService.queryByList(model);
         }
@@ -90,7 +91,8 @@ public class OrderController extends BaseController {
 
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setAccountNum(account.getAccountNum());
+//                model.setAccountNum(account.getAccountNum());
+                model.setMerchantId(account.getId());
             }
             dataList = orderService.queryByListRelease(model);
         }
@@ -117,7 +119,8 @@ public class OrderController extends BaseController {
 
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setAccountNum(account.getAccountNum());
+//                model.setAccountNum(account.getAccountNum());
+                model.setMerchantId(account.getId());
             }
             dataList = orderService.queryByListReleaseByCount(model);
         }
@@ -140,7 +143,7 @@ public class OrderController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-                model.setId(account.getId());
+                model.setMerchantId(account.getId());
             }
             dataList = orderService.queryAllList(model);
         }
