@@ -5,10 +5,7 @@ import com.xn.common.controller.BaseController;
 import com.xn.common.util.DateUtil;
 import com.xn.common.util.HtmlUtil;
 import com.xn.manager.model.*;
-import com.xn.manager.service.BankService;
-import com.xn.manager.service.BankShortMsgService;
-import com.xn.manager.service.MerchantRechargeService;
-import com.xn.manager.service.MobileCardService;
+import com.xn.manager.service.*;
 import com.xn.system.entity.Account;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +39,15 @@ public class AbnormalController extends BaseController {
     private BankShortMsgService<BankShortMsgModel> bankShortMsgService;
 
     @Autowired
+    private MerchantReplenishService<MerchantReplenishModel> modelMerchantReplenishService;
+
+    @Autowired
     private MerchantRechargeService<MerchantRechargeModel> merchantRechargeService;
+
+    @Autowired
+    private WithdrawService<WithdrawModel> withdrawService;
+
+
 
     /**
      *
@@ -53,47 +58,36 @@ public class AbnormalController extends BaseController {
 
         AbnormalModel abnormalModel = new AbnormalModel();
 
-        MobileCardModel  mobileCardModel = new MobileCardModel();
-        BankModel  bankModel = new BankModel();
-        MerchantRechargeModel  merchantRechargeModel = new MerchantRechargeModel();
-        BankShortMsgModel  bankShortMsgModel = new BankShortMsgModel();
+        MobileCardModel  mobileCardModel = new MobileCardModel(); //手机监听
+
+        WithdrawModel    withdrawModel =new  WithdrawModel();   //下发信息
+
+        MerchantReplenishModel  merchantReplenishModel = new  MerchantReplenishModel();// 补单信息
 
         List<MobileCardModel>  mobileCardModelList  = new ArrayList<>();
-        List<BankModel>  bankModelList  = new ArrayList<>();
         List<MerchantRechargeModel>  merchantRechargeModelList  = new ArrayList<>();
-        List<BankShortMsgModel>  bankShortMsgModelList  = new ArrayList<>();
         mobileCardModel.setHeartbeatStatus(1);
-        bankModel.setCheckStatus(2);
-        bankShortMsgModel.setWorkType(2);
-        bankShortMsgModel.setHandleType(1);
-        bankShortMsgModel.setCurday(Integer.parseInt(DateUtil.getNowShortDate()));
-        merchantRechargeModel.setOrderStatus(3);
+        withdrawModel.setOrderStatus(1);
+        merchantReplenishModel.setCheckStatus(1);
+
         List<BankCollectionModel> dataList = new ArrayList<BankCollectionModel>();
+        List<WithdrawModel> withdrawModelList  = new ArrayList<WithdrawModel>();
+        List<MerchantReplenishModel> merchantReplenishlList  = new ArrayList<MerchantReplenishModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-                if(account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.CARD_SITE_VALUE){
-                    mobileCardModel.setCardSiteId(account.getId());
-                    bankModel.setCardSiteId(account.getId());
-                    merchantRechargeModel.setCardSiteId(account.getId());
-                }else{
-                    mobileCardModel.setAccountId(account.getId());
-                    bankModel.setAccountId(account.getId());
-                    merchantRechargeModel.setAccountId(account.getId());
-                }
-                mobileCardModelList  = mobileCardService.queryAllList(mobileCardModel);
-                bankModelList  = bankService.queryAllList(bankModel);
-                merchantRechargeModelList   = merchantRechargeService.queryAllList(merchantRechargeModel);
-            }else{
-                mobileCardModelList  = mobileCardService.queryAllList(mobileCardModel);
-                bankModelList  = bankService.queryAllList(bankModel);
-                bankShortMsgModelList = bankShortMsgService.queryByList(bankShortMsgModel);
-                merchantRechargeModelList   = merchantRechargeService.queryAllList(merchantRechargeModel);
+                mobileCardModel.setMerchantId(account.getId());
+                withdrawModel.setMerchantId(account.getId());
+                merchantReplenishModel.setMerchantId(account.getId());
+
             }
+            merchantReplenishlList = modelMerchantReplenishService.queryAllList(merchantReplenishModel);
+            mobileCardModelList  = mobileCardService.queryAllList(mobileCardModel);
+            withdrawModelList = withdrawService.queryAllList(withdrawModel);
+
             abnormalModel.setPhoneNum(mobileCardModelList.size());
-            abnormalModel.setBankNum(bankModelList.size());
-            abnormalModel.setSmsMessageNum(bankShortMsgModelList.size());
-            abnormalModel.setPaymentNum(merchantRechargeModelList.size());
+            abnormalModel.setWithdrawNum(withdrawModelList.size());
+            abnormalModel.setMerchantReplenishNum(merchantReplenishlList.size());
         }
         HtmlUtil.writerJson(response, abnormalModel);
     }

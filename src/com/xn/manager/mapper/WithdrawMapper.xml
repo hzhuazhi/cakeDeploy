@@ -55,6 +55,9 @@
     <sql id="Example_Where_Clause">
         where 1=1
         <trim  suffixOverrides="," >
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                and a.order_status = #{orderStatus}
+            </if>
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>

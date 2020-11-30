@@ -1,5 +1,6 @@
 var datatable;
 function  queryList(){
+
     var date = new Date();
     // var seperator1 = "-";
     var year = date.getFullYear();
@@ -24,34 +25,33 @@ function  queryList(){
         data:data,
         // 成功执行
         success (data) {
+
+
             if(data.phoneNum==0){
                 $('#div_phone').attr("class","h_item");
             }else if(data.phoneNum!=0){
                 $('#div_phone').attr("class","h_item h_item1");
             }
 
-            if(data.bankNum==0){
-                $('#div_bank').attr("class","h_item");
+            if(data.merchantReplenishNum==0){
+                $('#div_merchantReplenish').attr("class","h_item");
             }else if(data.bankNum!=0){
-                $('#div_bank').attr("class","h_item h_item1");
+                $('#div_merchantReplenish').attr("class","h_item h_item1");
             }
 
-            if(data.smsMessageNum==0){
-                $('#div_sms').attr("class","h_item");
-            }else if(data.smsMessageNum!=0){
-                $('#div_sms').attr("class","h_item h_item1");
-            }
-
-            if(data.paymentNum==0){
-                $('#div_paymentnum').attr("class","h_item");
-            }else if(data.paymentNum!=0){
-                $('#div_paymentnum').attr("class","h_item h_item1");
+            if(data.withdrawNum==0){
+                $('#div_withdraw').attr("class","h_item");
+            }else if(data.withdrawNum!=0){
+                $('#div_withdraw').attr("class","h_item h_item1");
             }
 
             $("#sphone").text("手机号异常数:"+data.phoneNum);
-            $("#sbank").text("失效的银行卡:"+data.bankNum);
-            $("#ssms").text("短信未匹配数:"+data.smsMessageNum);
-            $("#spaymentnum").text("未处理下发条数:"+data.paymentNum);
+            $("#sbank").text("需要补单数据:"+data.merchantReplenishNum);
+            $("#spaymentnum").text("未处理下发条数:"+data.withdrawNum);
+
+            if(data.phoneNum!=0||data.merchantReplenishNum!=0||data.withdrawNum!=0){
+                audioPlay();
+            }
 
         }
     })
@@ -73,9 +73,6 @@ function  queryPhone(){
         data:condJsonData,
         // 成功执行
         success (data) {
-            debugger;
-            // alert(data.rows.length);
-
             table+='<table class="datatable tables">';
             table+='<thead>';
                 table+='<tr>';
@@ -96,17 +93,14 @@ function  queryPhone(){
                     }else{
                         table+='<td>欠费</td>';
                     }
-                    // table+='<td>'+data.rows[i].isArrears+'</td>';
 
                     if(data.rows[i].heartbeatStatus==1){
                         table+='<td style="color: #ff301d">异常</td>';
                     }else{
                         table+='<td>正常</td>';
                     }
-                    // table+='<td>'+data.rows[i].heartbeatStatus+'</td>';
                 table+='</tr>';
             }
-
             table+='</table>';
             $("#tables").html(table);
 
@@ -118,42 +112,41 @@ function  queryPhone(){
 /***
  * 查询未打款的
  */
-function  queryPaymentnum(){
+function  queryWithdraw(){
     var condJsonData={
-        "orderStatus":3
+        "orderStatus":1
     }
     let  table='';
     $.ajax({
-        url: ctx+ '/merchantrecharge/dataList.do',
+        url: ctx+ '/withdraw/dataList.do',
         type: 'post',
         data:condJsonData,
         // 成功执行
         success (data) {
-            debugger;
             // alert(data.rows.length);
             table+='<table class="datatable tables">';
             table+='<thead>';
             table+='<tr>';
-            table+='<td>下发表的订单号</td>';
-            table+='<td>银行名称</td>';
-            table+='<td>银行卡账号</td>';
-            table+='<td>开户名</td>';
-            table+='<td>订单金额</td>';
-            table+='<td>订单状态</td>';
+            table+='<td><b>下发表的订单号</b></td>';
+            table+='<td><b>银行名称</b></td>';
+            table+='<td><b>银行卡账号</b></td>';
+            table+='<td><b>开户名</b></td>';
+            table+='<td><b>订单金额</b></td>';
+            table+='<td><b>订单状态</b></td>';
+            table+='<td><b>操作</b></td>';
             table+='</tr>';
             table+='</thead>';
             for (var i=0;i<data.rows.length;i++){
                 table+='<tr>';
-                table+='<td>'+data.rows[i].issueOrderNo+'</td>';
-                table+='<td>'+data.rows[i].bankName+'</td>';
-                table+='<td>'+data.rows[i].bankCard+'</td>';
-                table+='<td>'+data.rows[i].accountName+'</td>';
+                table+='<td>'+data.rows[i].orderNo+'</td>';
+                table+='<td>'+data.rows[i].inBankName+'</td>';
+                table+='<td>'+data.rows[i].inBankCard+'</td>';
+                table+='<td>'+data.rows[i].inAccountName+'</td>';
                 table+='<td>'+data.rows[i].orderMoney+'</td>';
-                if(data.rows[i].order_status==1){
+                if(data.rows[i].orderStatus==1){
                     table+='<td>初始化</td>';
-                }else{
-                    table+='<td>超时/失败/审核驳回</td>';
                 }
+                table+='<td> <a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpUpdate.do?id='+data.rows[i].id+'"> 审核 </a></td>';
                 table+='</tr>';
             }
 
@@ -167,13 +160,13 @@ function  queryPaymentnum(){
 /***
  * 查询银行卡异常
  */
-function  queryBank(){
+function  queryMerchantReplenish(){
      var condJsonData={
-        "checkStatus":2
+        "checkStatus":1
     }
     let  table='';
     $.ajax({
-        url: ctx+ '/bank/dataList.do',
+        url: ctx+ '/merchantreplenish/dataList.do',
         type: 'post',
         data:condJsonData,
         // 成功执行
@@ -182,22 +175,26 @@ function  queryBank(){
             table+='<table class="datatable tables">';
             table+='<thead>';
             table+='<tr>';
-            table+='<td>手机卡别名</td>';
-            table+='<td>手机号</td>';
-            table+='<td>银行卡账号</td>';
-            table+='<td>开户名</td>';
-            table+='<td>检测状态</td>';
-            table+='<td>检测内容</td>';
+            table+='<td><b>订单号</b></td>';
+            table+='<td><b>订单金额</b></td>';
+            table+='<td><b>派单金额</b></td>';
+            table+='<td><b>卡商</b></td>';
+            table+='<td><b>商户</b></td>';
+            table+='<td><b>处理状态</b></td>';
+            table+='<td><b>创建时间</b></td>';
+            table+='<td><b>操作</b></td>';
             table+='</tr>';
             table+='</thead>';
             for (var i=0;i<data.rows.length;i++){
                 table+='<tr>';
-                table+='<td>'+data.rows[i].alias+'</td>';
-                table+='<td>'+data.rows[i].phoneNum+'</td>';
-                table+='<td>'+data.rows[i].bankCard+'</td>';
-                table+='<td>'+data.rows[i].accountName+'</td>';
-                table+='<td style="color: #ff301d">不正常</td>';
-                table+='<td>'+data.rows[i].dataExplain+'</td>';
+                table+='<td>'+data.rows[i].orderNo+'</td>';
+                table+='<td>'+data.rows[i].orderMoney+'</td>';
+                table+='<td>'+data.rows[i].distributionMoney+'</td>';
+                table+='<td>'+data.rows[i].merchantName+'</td>';
+                table+='<td >'+data.rows[i].channelName+'</td>';
+                table+='<td style="color: #ff301d">未处理</td>';
+                table+='<td>'+data.rows[i].createTime+'</td>';
+                table+='<td><a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchantreplenish/jumpUpdateCheck.do?id='+data.rows[i].id+'"> 审核 </a></td>';
                 table+='</tr>';
             }
 
@@ -289,6 +286,13 @@ function  updatahandleType(id){
             }
         })
     }
+}
+
+
+
+function  audioPlay() {
+    let audio =$("#audio");
+    audio.get(0).play();
 }
 
 queryList();

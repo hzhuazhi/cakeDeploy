@@ -20,6 +20,15 @@ public class AbnormalModel {
      */
     public Integer   bankNum;
     /***
+     * 下发数量
+     */
+    public Integer   withdrawNum;
+
+    /***
+     * 补单审核数量
+     */
+    public Integer   merchantReplenishNum;
+    /***
      * 异常银行卡信息
      */
     public String   bankInfo;
@@ -104,5 +113,21 @@ public class AbnormalModel {
 
     public void setPaymentInfo(String paymentInfo) {
         this.paymentInfo = paymentInfo;
+    }
+
+    public Integer getWithdrawNum() {
+        return withdrawNum;
+    }
+
+    public void setWithdrawNum(Integer withdrawNum) {
+        this.withdrawNum = withdrawNum;
+    }
+
+    public Integer getMerchantReplenishNum() {
+        return merchantReplenishNum;
+    }
+
+    public void setMerchantReplenishNum(Integer merchantReplenishNum) {
+        this.merchantReplenishNum = merchantReplenishNum;
     }
 }
