@@ -6,6 +6,7 @@
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="alias" property="alias" jdbcType="VARCHAR" />
         <result column="secret_key" property="secretKey" jdbcType="VARCHAR" />
+        <result column="channel_type" property="channelType" jdbcType="BIT" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="use_status" property="useStatus" jdbcType="BIT" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -16,7 +17,7 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id, a.alias, a.secret_key, a.remark, a.use_status, a.create_time, a.update_time, a.ts_time, a.yn, a.bank_binding_type
+        a.id, a.alias, a.secret_key, a.bank_binding_type, a.channel_type, a.remark, a.use_status, a.create_time, a.update_time, a.ts_time, a.yn
     </sql>
 
     <!-- 查询条件 -->
@@ -28,6 +29,9 @@
             </if>
             <if test="secretKey != null and secretKey != '' " >
                 and a.secret_key = #{secretKey}
+            </if>
+            <if test="channelType != null and channelType != '' " >
+                and a.channel_type = #{channelType}
             </if>
             <if test="alias != null and alias != '' " >
                 and a.alias = #{alias}
@@ -113,6 +117,9 @@
             <if test="secretKey != null" >
                 secret_key,
             </if>
+            <if test="channelType != null" >
+                channel_type,
+            </if>
             <if test="remark != null" >
                 remark,
             </if>
@@ -134,6 +141,9 @@
             </if>
             <if test="secretKey != null" >
                 #{secretKey,jdbcType=VARCHAR},
+            </if>
+            <if test="channelType != null" >
+                #{channelType,jdbcType=BIT},
             </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
@@ -158,6 +168,9 @@
             </if>
             <if test="secretKey != null" >
                 secret_key = #{secretKey,jdbcType=VARCHAR},
+            </if>
+            <if test="channelType != null" >
+                channel_type = #{channelType,jdbcType=BIT},
             </if>
             <if test="remark != null" >
                 remark = #{remark,jdbcType=VARCHAR},

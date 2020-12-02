@@ -11,6 +11,11 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl">
+
+                <div class = "condQueryLabelDiv">归属卡商：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="merchantName" name ="merchantName">
+                </div>
                 <div class = "condQueryLabelDiv">归属人的名称	：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="useName" name ="useName">
@@ -41,6 +46,7 @@
         <thead>
         <tr>
             <th width="150">ID</th>
+            <th width="150">归属卡商</th>
             <th width="150">手机卡名称</th>
             <th width="150">归属人的名称</th>
             <th width="150">手机号</th>

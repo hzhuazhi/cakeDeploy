@@ -147,6 +147,11 @@ public class MobileCardModel extends BasePage {
     private Long cardSiteId;
     private Long merchantSiteId;
 
+    /**
+     * 卡商名
+     */
+    private String merchantName;
+
     public Long getId() {
         return id;
     }
@@ -324,5 +329,13 @@ public class MobileCardModel extends BasePage {
 
     public void setAccountNum(String accountNum) {
         this.accountNum = accountNum;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 }

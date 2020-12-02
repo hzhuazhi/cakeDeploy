@@ -20,12 +20,16 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
         <result column="yn" property="yn" jdbcType="BIT" />
+
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
         a.id, a.card_name, a.use_name, a.phone_num, a.id_card, a.binding_mobile, a.cost, a.province, a.city,
         a.is_arrears, a.heartbeat_status, a.remark, a.use_status, a.create_time, a.update_time, a.ts_time,
-        a.yn
+        a.yn,
+        b.ac_name as merchant_name
     </sql>
 
     <!-- 查询条件 -->
@@ -51,9 +55,9 @@
             <if test="heartbeatStatus != 0 and heartbeatStatus >0 " >
                 and a.heartbeat_status = #{heartbeatStatus}
             </if>
-            <!--<if test="accountNum != null and accountNum !='' " >-->
-                <!--and b.account_num = #{accountNum}-->
-            <!--</if>-->
+            <if test="merchantName != null and merchantName !='' " >
+                and b.ac_name = #{merchantName}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -72,8 +76,7 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_mobile_card a  left join tb_fr_merchant b
-        on  a.merchant_id=b.id
+        from tb_fr_mobile_card a left join tb_fr_merchant b on a.merchant_id = b.id
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -81,7 +84,7 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a
+        from tb_fr_mobile_card a left join tb_fr_merchant b on a.merchant_id = b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -91,7 +94,7 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a
+        from tb_fr_mobile_card a left join tb_fr_merchant b on a.merchant_id = b.id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -100,7 +103,7 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a
+        from tb_fr_mobile_card a left join tb_fr_merchant b on a.merchant_id = b.id
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -108,7 +111,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_mobile_card a
+        from tb_fr_mobile_card a left join tb_fr_merchant b on a.merchant_id = b.id
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

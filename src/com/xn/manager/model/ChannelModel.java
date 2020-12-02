@@ -27,6 +27,11 @@ public class ChannelModel extends BasePage {
     private String secretKey;
 
     /**
+     * 渠道类型：1代收，2大包，3代付
+     */
+    private Integer channelType;
+
+    /**
      * 备注
      *
      * @mbggenerated
@@ -167,5 +172,13 @@ public class ChannelModel extends BasePage {
 
     public void setMerchantStr(String merchantStr) {
         this.merchantStr = merchantStr;
+    }
+
+    public Integer getChannelType() {
+        return channelType;
+    }
+
+    public void setChannelType(Integer channelType) {
+        this.channelType = channelType;
     }
 }

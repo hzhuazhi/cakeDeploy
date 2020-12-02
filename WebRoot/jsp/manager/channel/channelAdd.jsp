@@ -54,6 +54,20 @@
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
+                        <span class="require" ><font color="red">*</font>商户类型</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <select id="channelType" name="channelType">
+                            <option value="" selected="selected">===请选择===</option>
+                            <option value="1">代收</option>
+                            <option value="2">大包</option>
+                            <option value="3">代付</option>
+                        </select>
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
                         <span class="require" >备注</span>
                     </div>
                     <div class="formCtrlDiv">
@@ -103,6 +117,9 @@
                     required:true,
                     maxlength:2
                 },
+                channelType:{
+                    required:true
+                },
                 useStatus:{
                     required:true,
                     maxlength:1
@@ -119,6 +136,9 @@
                 },
                 bankBindingType:{
                     required : "绑定类型不能为空!"
+                },
+                channelType:{
+                    required : "商户类型不能为空!"
                 },
                 useStatus:{
                     required:"使用状态不能为空!",

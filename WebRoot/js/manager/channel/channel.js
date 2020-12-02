@@ -27,6 +27,19 @@ var account = {
                 $(nTd).html(html);
             }
         },
+        {"data":"channelType",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.channelType==1){
+                    html+= '<span >代收</span>';
+                }else if(oData.channelType==2){
+                    html+= '<span >大包</span>';
+                }else if(oData.channelType==3){
+                    html+= '<span >代付</span>';
+                }
+                $(nTd).html(html);
+            }
+        },
         {"data":"remark",},
         {"data":"useStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -52,7 +65,8 @@ var account = {
     ],
     // 查询条件，aoData是必要的。其他的就是对应的实体类字段名，因为条件查询是把数据封装在实体类中的。
     condJsonData : {
-        accountNum:null
+        accountNum:null,
+        channelType:0
     },
     //页面加载
     indexInit : function (){
@@ -69,6 +83,7 @@ var account = {
         $('#btnQuery').click(function() {
             account.condJsonData['alias'] = $("#alias").val();
             account.condJsonData['secretKey'] = $("#secretKey").val();
+            account.condJsonData['channelType'] = $("#channelType").val();
             account.condJsonData['useStatus'] = $("#useStatus").val();
             common.showDatas(account.condJsonData,account.list);
         });
@@ -77,9 +92,11 @@ var account = {
         $("#butReset").click(function(){
             account.condJsonData['alias'] = "";
             account.condJsonData['secretKey'] = "";
-            account.condJsonData['useStatus'] = "";
+            account.condJsonData['channelType'] = "0";
+            account.condJsonData['useStatus'] = "0";
             $("#alias").val("");
             $("#secretKey").val("");
+            $("#channelType").val("0");
             $("#useStatus").val("0");
             common.showDatas(account.condJsonData,account.list);
         });

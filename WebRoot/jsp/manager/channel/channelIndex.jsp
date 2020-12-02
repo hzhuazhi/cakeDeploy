@@ -19,6 +19,17 @@
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="secretKey" name ="secretKey">
                 </div>
+
+                <div class = "condQueryLabelDiv">商户类型：</div>
+                <div class="formCtrlDiv">
+                    <select id="channelType" name="channelType">
+                        <option value="0">===请选择===</option>
+                        <option value="1">代收</option>
+                        <option value="2">大包</option>
+                        <option value="3">代付</option>
+                    </select>
+                </div>
+
                 <div class = "condQueryLabelDiv">使用状态：</div>
                 <div class="formCtrlDiv">
                     <select id="useStatus" name="useStatus">
@@ -48,6 +59,7 @@
             <th width="150">商户名称</th>
             <th width="150">商户秘钥</th>
             <th width="150">绑定类型</th>
+            <th width="150">商户类型</th>
             <th width="150">备注</th>
             <th width="150">使用状态</th>
             <th width="150">创建时间</th>

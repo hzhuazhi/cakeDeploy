@@ -14,6 +14,7 @@ var account = {
     //列表显示参数
     list:[
         {"data":"id",},
+        {"data":"merchantName",},
         {"data":"cardName",},
         {"data":"useName",},
         {"data":"phoneNum",},
@@ -80,6 +81,7 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
+            account.condJsonData['merchantName'] = $("#merchantName").val();
             account.condJsonData['useName'] = $("#useName").val();
             account.condJsonData['phoneNum'] = $("#phoneNum").val();
             common.showDatas(account.condJsonData,account.list);
@@ -87,8 +89,10 @@ var account = {
 
         // 重置
         $("#butReset").click(function(){
+            account.condJsonData['merchantName'] = "";
             account.condJsonData['useName'] = "";
             account.condJsonData['phoneNum'] = "";
+            $("#merchantName").val("");
             $("#useName").val("");
             $("#phoneNum").val("");
             common.showDatas(account.condJsonData,account.list);
