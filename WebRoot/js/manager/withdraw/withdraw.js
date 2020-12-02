@@ -21,15 +21,11 @@ var account = {
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
                 if(oData.withdrawType==1){
-                    html='<span>归属渠道</span>';
+                    html='<span>利益者</span>';
                 }else if(oData.withdrawType==2){
-                    html='<span>归属子渠道</span>';
+                    html='<span>卡商</span>';
                 }else if(oData.withdrawType==3){
-                    html='<span>归属支付通道</span>';
-                }else if(oData.withdrawType==4){
-                    html='<span>归属卡商</span>';
-                }else if(oData.withdrawType==5){
-                    html='<span>归属利益人</span>';
+                    html='<span>渠道</span>';
                 }
                 $(nTd).html(html);
             }
@@ -38,11 +34,11 @@ var account = {
         {"data":"outType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
-                if(oData.withdrawType==1){
+                if(oData.outType==1){
                     html='<span>卡商</span>';
-                }else if(oData.withdrawType==2){
+                }else if(oData.outType==2){
                     html='<span>平台</span>';
-                }else if(oData.withdrawType==3){
+                }else if(oData.outType==3){
                     html='<span>中转站</span>';
                 }
                 $(nTd).html(html);
@@ -81,6 +77,16 @@ var account = {
         //     }
         // },
         {"data":"checkInfo",},
+        {"data":"pictureAds",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.pictureAds!=""){
+                    html='<img src="'+oData.pictureAds+'"  style="width: 100px;height: 100px">';
+                    // html='<img id="'+oData.id+'" class="zoomify'+oData.id+'" onclick="imgShow(\''+oData.id+'\')" src="'+oData.pictureAds+'" alt="">';
+                }
+                $(nTd).html(html);
+            }
+        },
         {"data":"createTime",},
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

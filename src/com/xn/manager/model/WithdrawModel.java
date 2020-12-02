@@ -277,6 +277,11 @@ public class WithdrawModel extends BasePage{
      */
     private Integer yn;
 
+    /**
+     * 卡商
+     */
+    private String merchantName;
+
     public Long getId() {
         return id;
     }
@@ -595,5 +600,13 @@ public class WithdrawModel extends BasePage{
 
     public void setAccountNum(String accountNum) {
         this.accountNum = accountNum;
+    }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 }

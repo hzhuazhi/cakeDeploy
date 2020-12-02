@@ -68,13 +68,14 @@
             <th width="150">提现类型</th>
             <th width="150">提现归属人账户ID</th>
             <th width="150">指派类型</th>
-            <th width="150">卡商名称</th>
+            <th width="150">指派卡商</th>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
             <th width="150">付款开户名</th>
             <th width="150">订单状态</th>
             <%--<th width="150">审核状态</th>--%>
             <th width="150">数据说明</th>
+            <th width="200">转账凭证</th>
             <th width="150">创建日期</th>
             <th width="380">操作</th>
         </tr>

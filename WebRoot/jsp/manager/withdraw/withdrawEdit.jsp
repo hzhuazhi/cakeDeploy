@@ -22,7 +22,8 @@
         <h2>编辑策略</h2>
     </div>
     <div class="formContentDiv">
-        <form id="addSupplierForm">
+        <form id="addSupplierForm" method="POST" enctype="multipart/form-data"
+              action='${ctxData}withdraw/update.do'>
             <ul>
                 <c:set var="dl" value="${account}"/>
                 <input type="hidden" id="id" name="id" value="${dl.id}">
@@ -108,6 +109,15 @@
                     </div>
                 </li>
 
+
+
+
+
+                <div class="formHeadDiv">
+                    <h2><font color="red">审核操作</font></h2>
+                </div>
+
+
                 <li style="border-top: none;">
                     <div class="formTextDiv">
                         <span class="require" ><font color="red">*</font>订单状态</span>
@@ -134,17 +144,27 @@
                                 <option value="2">失败</option>
                                 <option value="4" selected="selected">成功</option>
                             </c:if>
-
                         </select>
                     </div>
                 </li>
+
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require"><font color="red">*</font>转账凭证</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="file" accept="files/*" name="files" id="files"/>
+                    </div>
+                </li>
+
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
                         <span class="require" >备注</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="dataExplain" name="dataExplain"	maxlength="240" />
+                        <textarea id="dataExplain" name="dataExplain" cols="70" rows="9">${dl.dataExplain}</textarea>
                     </div>
                 </li>
 
@@ -163,34 +183,34 @@
 </div>
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/common/common2.js'></script>
 <script type="text/javascript">
-    $(function(){
-        //密码输入验证
-        $("#addSupplierForm").validate({
-
-            submitHandler : function() {
-                var formData = $("#addSupplierForm").serialize();
-                $.ajax({
-                    url : ctx+ "/withdraw/update.do",
-                    type : 'post',
-                    dataType : 'json',
-                    data :formData,
-                    success : function(data) {
-                        if (data.success) {
-                            alert("审核成功！");
-                            window.location.href = ctx + "/withdraw/list.do";
-                        } else {
-                            art.alert(data.msg);
-                        }
-                    },
-                    error : function(data) {
-                        art.alert(data.info);
-                    }
-                });
-                return false;
-                //阻止表单提交
-            }
-        });
-    });
+    // $(function(){
+    //     //密码输入验证
+    //     $("#addSupplierForm").validate({
+    //
+    //         submitHandler : function() {
+    //             var formData = $("#addSupplierForm").serialize();
+    //             $.ajax({
+    //                 url : ctx+ "/withdraw/update.do",
+    //                 type : 'post',
+    //                 dataType : 'json',
+    //                 data :formData,
+    //                 success : function(data) {
+    //                     if (data.success) {
+    //                         alert("审核成功！");
+    //                         window.location.href = ctx + "/withdraw/list.do";
+    //                     } else {
+    //                         art.alert(data.msg);
+    //                     }
+    //                 },
+    //                 error : function(data) {
+    //                     art.alert(data.info);
+    //                 }
+    //             });
+    //             return false;
+    //             //阻止表单提交
+    //         }
+    //     });
+    // });
 </script>
 </body>
 </html>
