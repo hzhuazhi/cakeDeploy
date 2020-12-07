@@ -67,6 +67,10 @@ public class AdminLoginFilter extends BaseController implements Filter {
 		exceptURLs.add("/system/module/menuList.do");
 		exceptURLs.add("/admin-login.jsp");
 		exceptURLs.add("/merchantreplenish/actionAdd.do");
+		exceptURLs.add("/upload/qiniuUpload.do");
+		exceptURLs.add("/upload/ossUpload.do");
+		exceptURLs.add("/upload/ossUploadTest.do");
+		exceptURLs.add("/jsp/oss-upload/indexCopy.jsp");
 		/*		exceptURLs.add("/admin/admin/admin-login");
 		exceptURLs.add("/admin/");
 		exceptURLs.add("/admin");

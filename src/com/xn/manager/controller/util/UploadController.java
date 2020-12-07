@@ -103,4 +103,40 @@ public class UploadController extends BaseController {
             log.error(String.format("this UploadController.ossUpload() is error !"));
         }
     }
+
+
+
+    /**
+     * @Description: 阿里云图片上传
+     * <p>
+     *     上传成功之后，返回图片地址
+     * </p>
+     * @return
+     * @author yoko
+     * @date 2020/9/28 10:51
+     */
+    @RequestMapping("/ossUploadTest")
+    public void ossUploadTest(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile files) throws Exception{
+        try{
+            if (files == null){
+                return;
+            }
+            log.info("进来了!");
+            File file = OssUploadUtil.multipartFileToFile(files);
+            String suffix = files.getOriginalFilename().substring(files.getOriginalFilename().lastIndexOf(".") + 1);
+//            byte[] bytes = file.getBytes();
+            String imageName = UUID.randomUUID().toString().replaceAll("\\-", "") + "." + suffix;
+            String objectName = endpoint + imageName;
+            String str = OssUploadUtil.ossUploadFile(bucketName, objectName, file);
+            // 返回数据给客户端
+//            PrintWriter out = response.getWriter();
+//            out.print(str);
+//            out.flush();
+//            out.close();
+            sendSuccessMessage(response, str);
+        }catch(Exception e){
+            e.printStackTrace();
+            log.error(String.format("this UploadController.ossUpload() is error !"));
+        }
+    }
 }
