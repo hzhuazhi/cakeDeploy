@@ -8,14 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.xn.common.constant.ManagerConstant;
 
-import com.xn.manager.model.InterestModel;
-import com.xn.manager.model.MerchantChannelModel;
-import com.xn.manager.model.MerchantModel;
-import com.xn.manager.model.MerchantSiteModel;
-import com.xn.manager.service.InterestService;
-import com.xn.manager.service.MerchantChannelService;
-import com.xn.manager.service.MerchantService;
-import com.xn.manager.service.MerchantSiteService;
+import com.xn.manager.model.*;
+import com.xn.manager.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,6 +62,12 @@ public class AccountController extends BaseController{
 	 */
 	@Autowired
 	private InterestService<InterestModel> interestService;
+
+	/**
+	 * 中转站
+	 */
+	@Autowired
+	private TransferService<TransferModel> transferService;
 
 
 
@@ -214,6 +214,18 @@ public class AccountController extends BaseController{
 					interestModel.setCreateUserId(account.getId());
 					interestModel.setCreateRoleId(account.getRoleId());
 					interestService.add(interestModel);
+				}else if(bean.getRoleId() == 6){
+					TransferModel transferModel  = new  TransferModel();
+					transferModel.setId(accountId);
+					transferModel.setAcName(bean.getAcName());
+					transferModel.setAccountNum(bean.getAccountNum());
+					transferModel.setPassWd(bean.getPassWd());
+					transferModel.setWithdrawPassWd(bean.getWithdrawPassWd());
+					transferModel.setRoleId(6L);
+					transferModel.setUseStatus(1);
+					transferModel.setCreateUserId(account.getId());
+					transferModel.setCreateRoleId(account.getRoleId());
+					transferService.add(transferModel);
 				}
 			}
 			sendSuccessMessage(response, "保存成功~");

@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.TransferDao">
+    <!-- 属性映射 -->
+    <resultMap type="com.xn.manager.model.TransferModel" id="dataMap">
+        <id property="id" column="id" />
+        <result property="alias" column="alias" />
+        <result property="accountNum" column="account_num" />
+        <result property="passWd" column="pass_wd" />
+        <result property="withdrawPassWd" column="withdraw_pass_wd" />
+        <result property="roleId" column="role_id" />
+        <result property="acContacts" column="ac_contacts" />
+        <result property="acPhone" column="ac_phone" />
+        <result property="acType" column="ac_type" />
+        <result property="totalMoney" column="total_money" />
+        <result property="leastMoney" column="least_money" />
+        <result property="balance" column="balance" />
+        <result property="lockMoney" column="lock_money" />
+        <result property="totalProfit" column="total_profit" />
+        <result property="profit" column="profit" />
+        <result property="serviceCharge" column="service_charge" />
+        <result property="totalInMoney" column="total_in_money" />
+        <result property="totalOutMoney" column="total_out_money" />
+        <result property="transferMoney" column="transfer_money" />
+        <result property="interfaceAds" column="interface_ads" />
+        <result property="secretKey" column="secret_key" />
+        <result property="whiteIp" column="white_ip" />
+        <result property="transferType" column="transfer_type" />
+        <result property="remark" column="remark" />
+        <result property="useStatus" column="use_status" />
+        <result property="createUserId" column="create_user_id" />
+        <result property="createRoleId" column="create_role_id" />
+        <result property="updateUserId" column="update_user_id" />
+        <result property="updateRoleId" column="update_role_id" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="yn" column="yn" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id,a.alias,a.account_num,a.pass_wd,a.withdraw_pass_wd,a.role_id,a.ac_name,a.ac_contacts,a.ac_phone,
+        a.ac_type,a.total_money,a.least_money,a.balance,a.lock_money,a.total_profit,a.profit,a.service_charge,
+        a.total_in_money,a.total_out_money,a.transfer_money,a.interface_ads,a.secret_key,a.white_ip,a.transfer_type,
+        a.remark,a.use_status,a.create_user_id,a.create_role_id,a.update_user_id,a.update_role_id,a.create_time,a.update_time,
+        a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="alias != null and alias != '' " >
+                and a.alias = #{alias}
+            </if>
+            <if test="accountNum != null and accountNum != '' " >
+                and a.account_num = #{accountNum}
+            </if>
+            <if test="passWd != null and passWd != '' " >
+                and a.pass_wd = #{passWd}
+            </if>
+            <if test="withdrawPassWd != null and withdrawPassWd != '' " >
+                and a.withdraw_pass_wd = #{withdrawPassWd}
+            </if>
+            <if test="acName != null and acName != '' " >
+                and a.ac_name = #{acName}
+            </if>
+            <if test="secretKey != null and secretKey != '' " >
+                and a.secret_key = #{secretKey}
+            </if>
+            <if test="transferType != 0 and transferType >0 " >
+                and a.transfer_type = #{transferType}
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                and a.use_status = #{useStatus}
+            </if>
+            and a.yn = 0
+        </trim>
+    </sql>
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn = 0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_transfer a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_transfer a
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_transfer a
+        <include refid="Example_Where_Clause"/>
+        order by a.my_bank_info desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_transfer a
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_transfer a
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_transfer
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="alias != null and alias != '' " >
+                alias,
+            </if>
+            <if test="accountNum != null and accountNum != '' " >
+                account_num,
+            </if>
+            <if test="passWd != null and passWd != '' " >
+                pass_wd,
+            </if>
+            <if test="withdrawPassWd != null and withdrawPassWd != ''" >
+                withdraw_pass_wd,
+            </if>
+            <if test="roleId != 0 and roleId >0 " >
+                role_id,
+            </if>
+            <if test="acName != null and acName != '' " >
+                ac_name,
+            </if>
+            <if test="acContacts != null and acContacts != '' " >
+                ac_contacts,
+            </if>
+            <if test="acPhone != null and acPhone != '' " >
+                ac_phone,
+            </if>
+            <if test="acType != 0 and acType >0 " >
+                ac_type,
+            </if>
+            <if test="totalMoney != null and totalMoney != '' " >
+                total_money,
+            </if>
+            <if test="leastMoney != null and leastMoney != '' " >
+                least_money,
+            </if>
+            <if test="balance != null and balance != '' " >
+                balance,
+            </if>
+            <if test="lockMoney != null and lockMoney != '' " >
+                lock_money,
+            </if>
+            <if test="totalProfit != null and totalProfit != '' " >
+                total_profit,
+            </if>
+            <if test="profit != null and profit != '' " >
+                profit,
+            </if>
+            <if test="serviceCharge != null and serviceCharge != '' " >
+                service_charge,
+            </if>
+            <if test="totalInMoney != null and totalInMoney != '' " >
+                total_in_money,
+            </if>
+            <if test="totalOutMoney != null and totalOutMoney != '' " >
+                total_out_money,
+            </if>
+            <if test="transferMoney != null and transferMoney != '' " >
+                transfer_money,
+            </if>
+            <if test="interfaceAds != null and interfaceAds != '' " >
+                interface_ads,
+            </if>
+            <if test="interfaceAds != null and interfaceAds != '' " >
+                interface_ads,
+            </if>
+            <if test="secretKey != null and secretKey != '' " >
+                secret_key,
+            </if>
+            <if test="whiteIp != null and whiteIp != '' " >
+                white_ip,
+            </if>
+            <if test="transferType != 0 and transferType >0 " >
+                transfer_type,
+            </if>
+            <if test="remark != null and remark != '' " >
+                remark,
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                use_status,
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                create_user_id,
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                create_role_id,
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                update_user_id,
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                update_role_id,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="alias != null and alias != '' " >
+                <![CDATA[  #{alias}, ]]>
+            </if>
+            <if test="accountNum != null and accountNum != '' " >
+                <![CDATA[  #{accountNum}, ]]>
+            </if>
+            <if test="passWd != null and passWd != '' " >
+                <![CDATA[  #{passWd}, ]]>
+            </if>
+            <if test="withdrawPassWd != null and withdrawPassWd != ''" >
+                <![CDATA[  #{withdrawPassWd}, ]]>
+            </if>
+            <if test="roleId != 0 and roleId >0 " >
+                <![CDATA[  #{roleId}, ]]>
+            </if>
+            <if test="acName != null and acName != '' " >
+                <![CDATA[  #{acName}, ]]>
+            </if>
+            <if test="acContacts != null and acContacts != '' " >
+                <![CDATA[  #{acContacts}, ]]>
+            </if>
+            <if test="acPhone != null and acPhone != '' " >
+                <![CDATA[  #{acPhone}, ]]>
+            </if>
+            <if test="acType != 0 and acType >0 " >
+                <![CDATA[  #{acType}, ]]>
+            </if>
+            <if test="totalMoney != null and totalMoney != '' " >
+                <![CDATA[  #{totalMoney}, ]]>
+            </if>
+            <if test="leastMoney != null and leastMoney != '' " >
+                <![CDATA[  #{leastMoney}, ]]>
+            </if>
+            <if test="balance != null and balance != '' " >
+                <![CDATA[  #{balance}, ]]>
+            </if>
+            <if test="lockMoney != null and lockMoney != '' " >
+                <![CDATA[  #{lockMoney}, ]]>
+            </if>
+            <if test="totalProfit != null and totalProfit != '' " >
+                <![CDATA[  #{totalProfit}, ]]>
+            </if>
+            <if test="profit != null and profit != '' " >
+                <![CDATA[  #{profit}, ]]>
+            </if>
+            <if test="serviceCharge != null and serviceCharge != '' " >
+                <![CDATA[  #{serviceCharge}, ]]>
+            </if>
+            <if test="totalInMoney != null and totalInMoney != '' " >
+                <![CDATA[  #{totalInMoney}, ]]>
+            </if>
+            <if test="totalOutMoney != null and totalOutMoney != '' " >
+                <![CDATA[  #{totalOutMoney}, ]]>
+            </if>
+            <if test="transferMoney != null and transferMoney != '' " >
+                <![CDATA[  #{transferMoney}, ]]>
+            </if>
+            <if test="interfaceAds != null and interfaceAds != '' " >
+                <![CDATA[  #{interfaceAds}, ]]>
+            </if>
+            <if test="interfaceAds != null and interfaceAds != '' " >
+                <![CDATA[  #{interfaceAds}, ]]>
+            </if>
+            <if test="secretKey != null and secretKey != '' " >
+                <![CDATA[  #{secretKey}, ]]>
+            </if>
+            <if test="whiteIp != null and whiteIp != '' " >
+                <![CDATA[  #{whiteIp}, ]]>
+            </if>
+            <if test="transferType != 0 and transferType >0 " >
+                <![CDATA[  #{transferType}, ]]>
+            </if>
+            <if test="remark != null and remark != '' " >
+                <![CDATA[  #{remark}, ]]>
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                <![CDATA[  #{useStatus}, ]]>
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                <![CDATA[  #{createUserId}, ]]>
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                <![CDATA[  #{createRoleId}, ]]>
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                <![CDATA[  #{updateUserId}, ]]>
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                <![CDATA[  #{updateRoleId}, ]]>
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_transfer a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="alias != null and alias != '' " >
+                a.alias = #{alias},
+            </if>
+            <if test="accountNum != null and accountNum != '' " >
+                a.account_num = #{accountNum},
+            </if>
+            <if test="passWd != null and passWd != '' " >
+                a.pass_wd = #{passWd},
+            </if>
+            <if test="withdrawPassWd != null and withdrawPassWd != ''" >
+                a.withdraw_pass_wd = #{withdrawPassWd},
+            </if>
+            <if test="roleId != 0 and roleId >0 " >
+                a.role_id = #{roleId},
+            </if>
+            <if test="acName != null and acName != '' " >
+                a.ac_name = #{acName},
+            </if>
+            <if test="acContacts != null and acContacts != '' " >
+                a.ac_contacts = #{acContacts},
+            </if>
+            <if test="acPhone != null and acPhone != '' " >
+                a.ac_phone = #{acPhone},
+            </if>
+            <if test="acType != 0 and acType >0 " >
+                a.ac_type = #{acType},
+            </if>
+            <if test="totalMoney != null and totalMoney != '' " >
+                a.total_money = #{totalMoney},
+            </if>
+            <if test="leastMoney != null and leastMoney != '' " >
+                a.least_money = #{leastMoney},
+            </if>
+            <if test="balance != null and balance != '' " >
+                a.balance = #{balance},
+            </if>
+            <if test="lockMoney != null and lockMoney != '' " >
+                a.lock_money = #{lockMoney},
+            </if>
+            <if test="totalProfit != null and totalProfit != '' " >
+                a.total_profit = #{totalProfit},
+            </if>
+            <if test="profit != null and profit != '' " >
+                a.profit = #{profit},
+            </if>
+            <if test="serviceCharge != null and serviceCharge != '' " >
+                a.service_charge = #{serviceCharge},
+            </if>
+            <if test="totalInMoney != null and totalInMoney != '' " >
+                a.total_in_money = #{totalInMoney},
+            </if>
+            <if test="totalOutMoney != null and totalOutMoney != '' " >
+                a.total_out_money = #{totalOutMoney},
+            </if>
+            <if test="transferMoney != null and transferMoney != '' " >
+                a.transfer_money = #{transferMoney},
+            </if>
+            <if test="interfaceAds != null and interfaceAds != '' " >
+                a.interface_ads = #{interfaceAds},
+            </if>
+            <if test="interfaceAds != null and interfaceAds != '' " >
+                a.interface_ads = #{interfaceAds},
+            </if>
+            <if test="secretKey != null and secretKey != '' " >
+                a.secret_key = #{secretKey},
+            </if>
+            <if test="whiteIp != null and whiteIp != '' " >
+                a.white_ip = #{whiteIp},
+            </if>
+            <if test="transferType != 0 and transferType >0 " >
+                a.transfer_type = #{transferType},
+            </if>
+            <if test="remark != null and remark != '' " >
+                a.remark = #{remark},
+            </if>
+            <if test="useStatus != 0 and useStatus >0 " >
+                a.use_status = #{useStatus},
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                a.create_user_id = #{createUserId},
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                a.create_role_id = #{createRoleId},
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                a.update_user_id = #{updateUserId},
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                a.update_role_id = #{updateRoleId},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_transfer a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="useStatus != 0 and useStatus >0 " >
+                a.use_status=#{useStatus},
+            </if>
+            a.update_time = NOW()
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_transfer a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+    <!-- 更新用户的密码 -->
+    <update id="updatePassWd" parameterType="Object">
+        UPDATE tb_fr_transfer a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="resetPassWd != null and resetPassWd != '' " >
+                a.pass_wd = #{resetPassWd},
+            </if>
+            <if test="resetWithdrawPassWd != null and resetWithdrawPassWd != '' " >
+                a.withdraw_pass_wd = #{resetWithdrawPassWd},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+</mapper>
