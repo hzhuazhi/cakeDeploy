@@ -229,6 +229,11 @@ public class MerchantModel extends BasePage {
      */
     private List<Long> merchantIdList;
 
+    /**
+     * 今日收益
+     */
+    private String todayProfit;
+
     public long getId() {
         return id;
     }
@@ -483,5 +488,13 @@ public class MerchantModel extends BasePage {
 
     public void setProfit(String profit) {
         this.profit = profit;
+    }
+
+    public String getTodayProfit() {
+        return todayProfit;
+    }
+
+    public void setTodayProfit(String todayProfit) {
+        this.todayProfit = todayProfit;
     }
 }

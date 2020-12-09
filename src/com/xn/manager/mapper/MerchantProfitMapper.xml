@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.MerchantProfitDao">
+    <!-- 属性映射 -->
+    <resultMap type="com.xn.manager.model.MerchantProfitModel" id="dataMap">
+        <id property="id" column="id" />
+        <result property="orderNo" column="order_no" />
+        <result property="orderType" column="order_type" />
+        <result property="orderMoney" column="order_money" />
+        <result property="distributionMoney" column="distribution_money" />
+        <result property="serviceCharge" column="service_charge" />
+        <result property="replenishType" column="replenish_type" />
+        <result property="profitRatio" column="profit_ratio" />
+        <result property="profit" column="profit" />
+        <result property="merchantId" column="merchant_id" />
+        <result property="dataExplain" column="data_explain" />
+        <result property="remark" column="remark" />
+        <result property="curday" column="curday" />
+        <result property="curhour" column="curhour" />
+        <result property="curminute" column="curminute" />
+        <result property="runNum" column="run_num" />
+        <result property="runStatus" column="run_status" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="yn" column="yn" />
+
+        <result property="merchantName" column="merchant_name" />
+        <result property="totalProfit" column="total_profit" />
+        <result property="totalMoney" column="total_money" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id,a.order_no,a.order_type,a.order_money,a.distribution_money,a.service_charge,a.replenish_type,
+        a.profit_ratio,a.profit,a.merchant_id,
+        a.data_explain,a.remark,
+        a.curday,a.curhour,a.curminute,a.run_num,a.run_status,
+        a.create_time,a.update_time,a.yn,
+        b.ac_name as merchant_name
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                and a.order_no = #{orderNo}
+            </if>
+            <if test="orderType != 0 and orderType >0 " >
+                and a.order_type = #{orderType}
+            </if>
+            <if test="replenishType != 0 and replenishType >0 " >
+                and a.replenish_type = #{replenishType}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="curdayStart != 0 and curdayStart >0 and curdayEnd != 0 and curdayEnd >0 " >
+                and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
+            </if>
+            <if test="merchantName != null and merchantName != '' " >
+                and b.ac_name = #{merchantName}
+            </if>
+            and a.yn = 0
+        </trim>
+    </sql>
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn = 0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_merchant_profit a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_profit a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_profit a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_profit a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_merchant_profit a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+
+    <!-- 获取订单的total信息 -->
+    <select id="getTotalData"  resultMap="dataMap" parameterType="Object">
+        select
+        ifnull(sum(convert(a.order_money,decimal(19,4))), '0.0000') as total_money,
+        ifnull(sum(convert(a.profit,decimal(19,4))), '0.0000') as total_profit
+        from tb_fr_merchant_profit a
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+</mapper>

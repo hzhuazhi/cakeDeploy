@@ -3,15 +3,15 @@ package com.xn.manager.controller;
 import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
 import com.xn.common.enums.ManagerEnum;
+import com.xn.common.util.DateUtil;
 import com.xn.common.util.HtmlUtil;
 import com.xn.common.util.MD5;
-import com.xn.manager.model.ChannelModel;
-import com.xn.manager.model.MerchantModel;
-import com.xn.manager.model.MerchantRechargeModel;
-import com.xn.manager.model.MerchantWithdrawModel;
+import com.xn.manager.model.*;
+import com.xn.manager.service.MerchantProfitService;
 import com.xn.manager.service.MerchantService;
 import com.xn.manager.service.MerchantWithdrawService;
 import com.xn.system.entity.Account;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,6 +41,10 @@ public class MerchantController extends BaseController {
 
     @Autowired
     private MerchantWithdrawService<MerchantWithdrawModel> merchantWithdrawService;
+
+
+    @Autowired
+    private MerchantProfitService<MerchantProfitModel> merchantProfitService;
 
     /**
      * 获取页面
@@ -70,8 +75,32 @@ public class MerchantController extends BaseController {
             }else if (account.getRoleId()==ManagerConstant.PUBLIC_CONSTANT.DF_CARD_SITE_VALUE){
                 model.setAccountNum(account.getAccountNum());
             }
-            dataList = merchantService.queryByList(model);
-            dataList = merchantService.queryListInfo(dataList);
+//            dataList = merchantService.queryByList(model);
+//            dataList = merchantService.queryListInfo(dataList);
+
+            List<MerchantModel> resList = new ArrayList<MerchantModel>();
+            resList = merchantService.queryByList(model);
+            resList = merchantService.queryListInfo(resList);
+
+            if (resList != null && resList.size() > 0){
+                for (MerchantModel merchantModel : resList){
+                    // 查询今日收益
+                    MerchantProfitModel merchantProfitQuery = new MerchantProfitModel();
+                    merchantProfitQuery.setCurdayStart(DateUtil.getDayNumber(new Date()));
+                    merchantProfitQuery.setCurdayEnd(DateUtil.getDayNumber(new Date()));
+                    merchantProfitQuery.setMerchantId(merchantModel.getId());
+                    MerchantProfitModel merchantProfitModel = merchantProfitService.getTotalData(merchantProfitQuery);
+                    if (merchantProfitModel != null){
+                        if (!StringUtils.isBlank(merchantProfitModel.getTotalProfit())){
+                            merchantModel.setTodayProfit(merchantProfitModel.getTotalProfit());
+                        }
+                    }
+                    dataList.add(merchantModel);
+                }
+
+            }
+
+
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);
     }
@@ -88,7 +117,7 @@ public class MerchantController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
-//                model.setAccountId(account.getId());
+                model.setId(account.getId());
             }
             dataList = merchantService.queryAllList(model);
         }

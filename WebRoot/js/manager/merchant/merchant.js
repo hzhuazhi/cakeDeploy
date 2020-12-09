@@ -62,6 +62,7 @@ var account = {
                 $(nTd).html(html);
             }
         },
+        {"data":"todayProfit",},
         {"data":"useStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
