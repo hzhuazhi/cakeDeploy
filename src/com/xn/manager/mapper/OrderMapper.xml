@@ -544,7 +544,7 @@
             a.bank_card,
             a.account_name,
             a.bank_name,
-            b.ac_name,
+            c.ac_name,
             a.curday,
             count( a.id ) task_num,
             sum( a.order_money ) task_money,
