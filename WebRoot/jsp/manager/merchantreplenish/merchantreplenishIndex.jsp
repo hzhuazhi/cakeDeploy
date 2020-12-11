@@ -11,15 +11,22 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl" style="width: 100%;">
+
+                <div class = "condQueryLabelDiv">渠道订单：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="channelOrderNo" name ="channelOrderNo">
+                </div>
+
+                <div class = "condQueryLabelDiv">平台订单：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="outTradeNo" name ="outTradeNo">
+                </div>
+
                 <div class = "condQueryLabelDiv">订单号：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="orderNo" name ="orderNo">
                 </div>
 
-                <div class = "condQueryLabelDiv">商家订单：</div>
-                <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="outTradeNo" name ="outTradeNo">
-                </div>
 
                 <div class = "condQueryLabelDiv">卡商：</div>
                 <div class="formCtrlDiv">
@@ -80,8 +87,9 @@
 
     <thead>
     <tr>
+        <th width="140">渠道订单</th>
+        <th width="140">平台订单</th>
         <th width="140">订单号</th>
-        <th width="140">商家订单</th>
         <th width="100">订单金额</th>
         <th width="100">派单金额</th>
         <th width="110">卡商</th>
@@ -90,7 +98,7 @@
         <th width="100">审核状态</th>
         <th width="100">处理状态</th>
         <th width="100">处理人</th>
-        <th width="160">创建时间</th>
+        <th width="150">创建时间</th>
         <th width="220">操作</th>
 
     </tr>

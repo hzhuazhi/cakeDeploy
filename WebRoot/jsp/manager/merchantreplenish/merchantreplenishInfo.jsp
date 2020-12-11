@@ -55,18 +55,28 @@
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
+                        <span class="require" >渠道订单</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="channelOrderNo" name="channelOrderNo" value="${dl.channelOrderNo}" 	maxlength="240" />
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" >平台订单</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="outTradeNo" name="outTradeNo" value="${dl.outTradeNo}" 	maxlength="240" />
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
                         <span class="require" >订单号</span>
                     </div>
                     <div class="formCtrlDiv">
                         <input type="text" class="formInput" id="orderNo" name="orderNo" value="${dl.orderNo}" 	maxlength="240" />
-                    </div>
-                </li>
-                <li style="border-top: none;">
-                    <div class="formTextDiv">
-                        <span class="require" >商家订单</span>
-                    </div>
-                    <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outTradeNo" name="outTradeNo" value="${dl.outTradeNo}" 	maxlength="240" />
                     </div>
                 </li>
 

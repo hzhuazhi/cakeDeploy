@@ -341,6 +341,11 @@ public class OrderModel extends BasePage {
      */
     private String  acName;
 
+    /**
+     * 渠道订单号
+     */
+    private String channelOrderNo;
+
 
 
     public Long getId() {
@@ -734,5 +739,13 @@ public class OrderModel extends BasePage {
 
     public void setCardSiteName(String cardSiteName) {
         this.cardSiteName = cardSiteName;
+    }
+
+    public String getChannelOrderNo() {
+        return channelOrderNo;
+    }
+
+    public void setChannelOrderNo(String channelOrderNo) {
+        this.channelOrderNo = channelOrderNo;
     }
 }

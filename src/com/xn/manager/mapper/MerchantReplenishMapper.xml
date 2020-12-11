@@ -10,6 +10,7 @@
         <result property="channelId" column="channel_id" />
         <result property="orderNo" column="order_no" />
         <result property="outTradeNo" column="out_trade_no" />
+        <result property="channelOrderNo" column="channel_order_no" />
         <result property="orderMoney" column="order_money" />
         <result property="distributionMoney" column="distribution_money" />
         <result property="channelMoney" column="channel_money" />
@@ -33,7 +34,7 @@
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
         a.id,a.link_id,a.merchant_id,a.merchant_site_id,a.channel_id,
-        a.order_no,a.out_trade_no,a.order_money,a.distribution_money,a.distribution_money,a.channel_money,a.picture_ads,
+        a.order_no,a.out_trade_no,a.channel_order_no,a.order_money,a.distribution_money,a.distribution_money,a.channel_money,a.picture_ads,
         a.check_money,a.check_picture_ads,a.check_status,a.check_info,
         a.handle_type,a.handle_people,a.remark,
         a.create_time,a.update_time,a.yn,
@@ -64,6 +65,9 @@
             </if>
             <if test="outTradeNo != null and outTradeNo != '' " >
                 and a.out_trade_no = #{outTradeNo}
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo != '' " >
+                and a.channel_order_no = #{channelOrderNo}
             </if>
             <if test="checkStatus != 0 and checkStatus >0 " >
                 and a.check_status = #{checkStatus}
@@ -183,6 +187,9 @@
             <if test="outTradeNo != null and outTradeNo != '' " >
                 out_trade_no,
             </if>
+            <if test="channelOrderNo != null and channelOrderNo != '' " >
+                channel_order_no,
+            </if>
             <if test="orderMoney != null and orderMoney != '' " >
                 order_money,
             </if>
@@ -237,6 +244,9 @@
             </if>
             <if test="outTradeNo != null and outTradeNo != '' " >
                 <![CDATA[  #{outTradeNo}, ]]>
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo != '' " >
+                <![CDATA[  #{channelOrderNo}, ]]>
             </if>
             <if test="orderMoney != null and orderMoney != '' " >
                 <![CDATA[  #{orderMoney}, ]]>
@@ -297,6 +307,9 @@
             </if>
             <if test="outTradeNo != null and outTradeNo != '' " >
                 a.out_trade_no = #{outTradeNo},
+            </if>
+            <if test="channelOrderNo != null and channelOrderNo != '' " >
+                a.channel_order_no = #{channelOrderNo},
             </if>
             <if test="orderMoney != null and orderMoney != '' " >
                 a.order_money = #{orderMoney},

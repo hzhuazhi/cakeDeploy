@@ -56,6 +56,11 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
     private String outTradeNo;
 
     /**
+     * 渠道订单号
+     */
+    private String channelOrderNo;
+
+    /**
      * 订单金额
      */
     private String orderMoney;
@@ -144,6 +149,7 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
      * 处理人名称
      */
     private String handlePeopleName;
+
 
     public long getId() {
         return id;
@@ -343,5 +349,13 @@ public class MerchantReplenishModel extends BasePage implements Serializable {
 
     public void setHandlePeopleName(String handlePeopleName) {
         this.handlePeopleName = handlePeopleName;
+    }
+
+    public String getChannelOrderNo() {
+        return channelOrderNo;
+    }
+
+    public void setChannelOrderNo(String channelOrderNo) {
+        this.channelOrderNo = channelOrderNo;
     }
 }

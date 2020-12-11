@@ -29,6 +29,25 @@
                 <input type="hidden" id="id" name="id" value="${dl.id}">
                 <input type="hidden" id="linkId" name="linkId" value="${dl.linkId}">
                 <li style="border-top: none;">
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" >渠道订单</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="channelOrderNo" name="channelOrderNo" value="${dl.channelOrderNo}" 	maxlength="240" disabled="disabled" />
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" >平台订单</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="outTradeNo" name="outTradeNo" value="${dl.outTradeNo}" 	maxlength="240" disabled="disabled" />
+                    </div>
+                </li>
+
                     <div class="formTextDiv">
                         <span class="require" >订单号</span>
                     </div>
@@ -36,14 +55,7 @@
                         <input type="text" class="formInput" id="orderNo" name="orderNo" value="${dl.orderNo}" 	maxlength="240" disabled="disabled" />
                     </div>
                 </li>
-                <li style="border-top: none;">
-                    <div class="formTextDiv">
-                        <span class="require" >商家订单</span>
-                    </div>
-                    <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="outTradeNo" name="outTradeNo" value="${dl.outTradeNo}" 	maxlength="240" disabled="disabled" />
-                    </div>
-                </li>
+
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">

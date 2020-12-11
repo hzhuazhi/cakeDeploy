@@ -13,6 +13,7 @@ var account = {
     },
     //列表显示参数
     list:[
+        {"data":"channelOrderNo",},
         {"data":"outTradeNo",},
         {"data":"orderNo",},
         {"data":"bankName",},
@@ -111,6 +112,7 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
+            account.condJsonData['channelOrderNo'] = $("#channelOrderNo").val();
             account.condJsonData['outTradeNo'] = $("#outTradeNo").val();
             account.condJsonData['orderNo'] = $("#orderNo").val();
             account.condJsonData['bankName'] = $("#bankName").val();
@@ -138,18 +140,39 @@ var account = {
 
         // 重置
         $("#butReset").click(function(){
+            account.condJsonData['channelOrderNo'] = "";
             account.condJsonData['outTradeNo'] = "";
             account.condJsonData['orderNo'] = "";
             account.condJsonData['bankName'] = "";
             account.condJsonData['bankCard'] = "";
             account.condJsonData['accountName'] = "";
             account.condJsonData['merchantName'] = "";
+            account.condJsonData['orderType'] = "0";
+            account.condJsonData['replenishType'] = "0";
+            account.condJsonData['workType'] = "0";
+            account.condJsonData['orderStatus'] = "0";
             account.condJsonData['distributionMoney'] = "";
             account.condJsonData['endCurday'] = "0";
             account.condJsonData['beginCurday'] = "0";
+
+            $("#channelOrderNo").val("");
+            $("#outTradeNo").val("");
+            $("#orderNo").val("");
+            $("#bankName").val("");
+            $("#bankCard").val("");
+            $("#accountName").val("");
+            $("#merchantName").val("");
             $("#orderType").val("0");
             $("#replenishType").val("0");
             $("#workType").val("0");
+            $("#orderStatus").val("0");
+            $("#distributionMoney").val("");
+            $("#endCurday").val("0");
+            $("#beginCurday").val("0");
+
+
+
+
             common.showDatas(account.condJsonData,account.list);
         });
         //删除

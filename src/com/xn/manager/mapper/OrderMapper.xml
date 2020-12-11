@@ -48,6 +48,8 @@
         <result column="num_money" property="numMoney" jdbcType="BIT" />
         <result column="task_money" property="taskMoney" jdbcType="BIT" />
         <result column="ac_name" property="acName" jdbcType="BIT" />
+
+        <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -55,7 +57,8 @@
         a.invalid_time, a.notify_url, a.bank_name, a.bank_card, a.subbranch_name, a.account_name, a.bank_code,
         a.mobile_card_id, a.phone_num, a.merchant_id, a.merchant_name, a.merchant_site_id, a.card_site_name, a.channel_id, a.channel_name, a.replenish_type,
         a.work_type, a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_num, a.run_status,
-        a.send_num, a.send_status, a.create_time, a.update_time, a.ts_time, a.yn,a.distribution_money
+        a.send_num, a.send_status, a.create_time, a.update_time, a.ts_time, a.yn, a.distribution_money,
+        b.out_trade_no as channel_order_no
     </sql>
 
     <!-- 查询条件 -->
@@ -112,6 +115,9 @@
             <if test="endCurday != 0 and endCurday >0 " >
                 and a.curday &lt;= #{endCurday}
             </if>
+            <if test="channelOrderNo != null and channelOrderNo != '' " >
+                and b.out_trade_no = #{channelOrderNo}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -137,8 +143,7 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_order a  left join  tb_fr_merchant b
-        on a.merchant_id =b.id
+        from cake.tb_fr_order a left join platform.tb_hz_channel_data b on a.out_trade_no = b.my_trade_no
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -146,7 +151,7 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from cake.tb_fr_order a left join platform.tb_hz_channel_data b on a.out_trade_no = b.my_trade_no
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -156,7 +161,7 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from cake.tb_fr_order a left join platform.tb_hz_channel_data b on a.out_trade_no = b.my_trade_no
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -166,7 +171,7 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from cake.tb_fr_order a left join platform.tb_hz_channel_data b on a.out_trade_no = b.my_trade_no
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -174,7 +179,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order a
+        from cake.tb_fr_order a left join platform.tb_hz_channel_data b on a.out_trade_no = b.my_trade_no
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

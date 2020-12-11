@@ -13,8 +13,9 @@ var account = {
     },
     //列表显示参数
     list:[
-        {"data":"orderNo",},
+        {"data":"channelOrderNo",},
         {"data":"outTradeNo",},
+        {"data":"orderNo",},
         {"data":"orderMoney",},
         {"data":"distributionMoney",},
         {"data":"merchantName",},
@@ -63,8 +64,9 @@ var account = {
     ],
     // 查询条件，aoData是必要的。其他的就是对应的实体类字段名，因为条件查询是把数据封装在实体类中的。
     condJsonData : {
-        orderNo:null,
+        channelOrderNo:null,
         outTradeNo:null,
+        orderNo:null,
         merchantName:null,
         merchantSiteName:null,
         channelName:null,
@@ -85,8 +87,9 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
-            account.condJsonData['orderNo'] = $("#orderNo").val();
+            account.condJsonData['channelOrderNo'] = $("#channelOrderNo").val();
             account.condJsonData['outTradeNo'] = $("#outTradeNo").val();
+            account.condJsonData['orderNo'] = $("#orderNo").val();
             account.condJsonData['merchantName'] = $("#merchantName").val();
             account.condJsonData['merchantSiteName'] = $("#merchantSiteName").val();
             account.condJsonData['channelName'] = $("#channelName").val();
@@ -99,10 +102,12 @@ var account = {
 
         // 重置
         $("#butReset").click(function(){
-            account.condJsonData['orderNo'] = "";
-            $("#orderNo").val("");
+            account.condJsonData['channelOrderNo'] = "";
+            $("#channelOrderNo").val("");
             account.condJsonData['outTradeNo'] = "";
             $("#outTradeNo").val("");
+            account.condJsonData['orderNo'] = "";
+            $("#orderNo").val("");
             account.condJsonData['merchantName'] = "";
             $("#merchantName").val("");
             account.condJsonData['merchantSiteName'] = "";
