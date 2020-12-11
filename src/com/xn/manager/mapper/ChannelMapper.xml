@@ -6,18 +6,27 @@
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="alias" property="alias" jdbcType="VARCHAR" />
         <result column="secret_key" property="secretKey" jdbcType="VARCHAR" />
+        <result column="bank_binding_type" property="bankBindingType" jdbcType="BIT" />
         <result column="channel_type" property="channelType" jdbcType="BIT" />
+
+        <result column="in_money_range" property="inMoneyRange" jdbcType="VARCHAR" />
+        <result column="out_money_range" property="outMoneyRange" jdbcType="VARCHAR" />
+        <result column="money_lock_time" property="moneyLockTime" jdbcType="BIT" />
+        <result column="invalid_time_num" property="invalidTimeNum" jdbcType="BIT" />
+
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="use_status" property="useStatus" jdbcType="BIT" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
-        <result column="bank_binding_type" property="bankBindingType" jdbcType="BIT" />
+
         <result column="yn" property="yn" jdbcType="BIT" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id, a.alias, a.secret_key, a.bank_binding_type, a.channel_type, a.remark, a.use_status, a.create_time, a.update_time, a.ts_time, a.yn
+        a.id,a.alias,a.secret_key,a.bank_binding_type,a.channel_type,a.in_money_range,a.out_money_range,a.money_lock_time,a.invalid_time_num,
+        a.remark,a.use_status,
+        a.create_time,a.update_time,a.yn
     </sql>
 
     <!-- 查询条件 -->
@@ -29,6 +38,9 @@
             </if>
             <if test="secretKey != null and secretKey != '' " >
                 and a.secret_key = #{secretKey}
+            </if>
+            <if test="bankBindingType != null and bankBindingType != '' " >
+                and a.bank_binding_type = #{bankBindingType}
             </if>
             <if test="channelType != null and channelType != '' " >
                 and a.channel_type = #{channelType}
@@ -117,17 +129,29 @@
             <if test="secretKey != null" >
                 secret_key,
             </if>
+            <if test="bankBindingType != null" >
+                bank_binding_type,
+            </if>
             <if test="channelType != null" >
                 channel_type,
+            </if>
+            <if test="inMoneyRange != null" >
+                in_money_range,
+            </if>
+            <if test="outMoneyRange != null" >
+                out_money_range,
+            </if>
+            <if test="moneyLockTime != null" >
+                money_lock_time,
+            </if>
+            <if test="invalidTimeNum != null" >
+                invalid_time_num,
             </if>
             <if test="remark != null" >
                 remark,
             </if>
             <if test="useStatus != null" >
                 use_status,
-            </if>
-            <if test="bankBindingType != null" >
-                bank_binding_type,
             </if>
             create_time,
         </trim>
@@ -142,8 +166,23 @@
             <if test="secretKey != null" >
                 #{secretKey,jdbcType=VARCHAR},
             </if>
+            <if test="bankBindingType != null" >
+                #{bankBindingType,jdbcType=BIT},
+            </if>
             <if test="channelType != null" >
                 #{channelType,jdbcType=BIT},
+            </if>
+            <if test="inMoneyRange != null" >
+                #{inMoneyRange,jdbcType=VARCHAR},
+            </if>
+            <if test="outMoneyRange != null" >
+                #{outMoneyRange,jdbcType=VARCHAR},
+            </if>
+            <if test="moneyLockTime != null" >
+                #{moneyLockTime,jdbcType=BIT},
+            </if>
+            <if test="invalidTimeNum != null" >
+                #{invalidTimeNum,jdbcType=BIT},
             </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
@@ -151,9 +190,7 @@
             <if test="useStatus != null" >
                 #{useStatus,jdbcType=BIT},
             </if>
-            <if test="bankBindingType != null" >
-                #{bankBindingType,jdbcType=BIT},
-            </if>
+
             <![CDATA[  NOW(), ]]>
         </trim>
     </insert>
@@ -169,17 +206,21 @@
             <if test="secretKey != null" >
                 secret_key = #{secretKey,jdbcType=VARCHAR},
             </if>
+            <if test="bankBindingType != null" >
+                bank_binding_type = #{bankBindingType,jdbcType=BIT},
+            </if>
             <if test="channelType != null" >
                 channel_type = #{channelType,jdbcType=BIT},
             </if>
+                in_money_range = #{inMoneyRange,jdbcType=VARCHAR},
+                out_money_range = #{outMoneyRange,jdbcType=VARCHAR},
+                money_lock_time = #{moneyLockTime,jdbcType=BIT},
+                invalid_time_num = #{invalidTimeNum,jdbcType=BIT},
             <if test="remark != null" >
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
             <if test="useStatus != null" >
                 use_status = #{useStatus,jdbcType=BIT},
-            </if>
-            <if test="bankBindingType != null" >
-                bank_binding_type = #{bankBindingType,jdbcType=BIT},
             </if>
             a.update_time = NOW(),
         </trim>

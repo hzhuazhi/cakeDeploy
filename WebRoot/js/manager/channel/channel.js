@@ -13,7 +13,6 @@ var account = {
     },
     //列表显示参数
     list:[
-        {"data":"id",},
         {"data":"alias",},
         {"data":"secretKey",},
         {"data":"bankBindingType",
@@ -40,6 +39,10 @@ var account = {
                 $(nTd).html(html);
             }
         },
+        {"data":"inMoneyRange",},
+        {"data":"outMoneyRange",},
+        {"data":"invalidTimeNum",},
+        {"data":"moneyLockTime",},
         {"data":"remark",},
         {"data":"useStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -83,6 +86,7 @@ var account = {
         $('#btnQuery').click(function() {
             account.condJsonData['alias'] = $("#alias").val();
             account.condJsonData['secretKey'] = $("#secretKey").val();
+            account.condJsonData['bankBindingType'] = $("#bankBindingType").val();
             account.condJsonData['channelType'] = $("#channelType").val();
             account.condJsonData['useStatus'] = $("#useStatus").val();
             common.showDatas(account.condJsonData,account.list);
@@ -92,10 +96,12 @@ var account = {
         $("#butReset").click(function(){
             account.condJsonData['alias'] = "";
             account.condJsonData['secretKey'] = "";
+            account.condJsonData['bankBindingType'] = "0";
             account.condJsonData['channelType'] = "0";
             account.condJsonData['useStatus'] = "0";
             $("#alias").val("");
             $("#secretKey").val("");
+            $("#bankBindingType").val("0");
             $("#channelType").val("0");
             $("#useStatus").val("0");
             common.showDatas(account.condJsonData,account.list);

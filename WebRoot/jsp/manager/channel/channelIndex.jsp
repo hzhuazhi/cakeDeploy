@@ -20,6 +20,15 @@
                     <input type ="text" class ="inputCommonSty" id="secretKey" name ="secretKey">
                 </div>
 
+                <div class = "condQueryLabelDiv">绑定类型：</div>
+                <div class="formCtrlDiv">
+                    <select id="bankBindingType" name="bankBindingType">
+                        <option value="0">===请选择===</option>
+                        <option value="1">无需绑定银行卡</option>
+                        <option value="2">需要绑定银行卡</option>
+                    </select>
+                </div>
+
                 <div class = "condQueryLabelDiv">商户类型：</div>
                 <div class="formCtrlDiv">
                     <select id="channelType" name="channelType">
@@ -55,11 +64,14 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <th width="150">主键ID</th>
-            <th width="150">商户名称</th>
+            <th width="120">商户名称</th>
             <th width="150">商户秘钥</th>
             <th width="150">绑定类型</th>
-            <th width="150">商户类型</th>
+            <th width="120">商户类型</th>
+            <th width="150">代收金额范围</th>
+            <th width="150">代付金额范围</th>
+            <th width="150">订单支付时间</th>
+            <th width="150">银行卡锁定时间</th>
             <th width="150">备注</th>
             <th width="150">使用状态</th>
             <th width="150">创建时间</th>

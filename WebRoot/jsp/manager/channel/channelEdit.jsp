@@ -90,6 +90,49 @@
                         </div>
                     </li>
 
+
+                    <li style="border-top: none;">
+                        <font color="red">
+                            代收金额订单范围：金额范围以“-”进行分割的
+                        </font>
+                        <div class="formTextDiv">
+                            <span class="require" >代收金额范围</span>
+                        </div>
+                        <div class="formCtrlDiv">
+                            <input type="text" class="formInput" id="inMoneyRange" name="inMoneyRange" value="${dl.inMoneyRange}"	maxlength="240" />
+                        </div>
+                    </li>
+
+                    <li style="border-top: none;">
+                        <font color="red">
+                            代付金额订单范围：金额范围以“-”进行分割的
+                        </font>
+                        <div class="formTextDiv">
+                            <span class="require" >代付金额范围</span>
+                        </div>
+                        <div class="formCtrlDiv">
+                            <input type="text" class="formInput" id="outMoneyRange" name="outMoneyRange" value="${dl.outMoneyRange}"	maxlength="240" />
+                        </div>
+                    </li>
+
+                    <li style="border-top: none;">
+                        <div class="formTextDiv">
+                            <span class="require" >订单支付时间</span>
+                        </div>
+                        <div class="formCtrlDiv">
+                            <input type="text" class="formInput" id="invalidTimeNum" name="invalidTimeNum" value="${dl.invalidTimeNum}"	maxlength="240" />
+                        </div>
+                    </li>
+
+                    <li style="border-top: none;">
+                        <div class="formTextDiv">
+                            <span class="require" >银行卡锁定时间</span>
+                        </div>
+                        <div class="formCtrlDiv">
+                            <input type="text" class="formInput" id="moneyLockTime" name="moneyLockTime" value="${dl.moneyLockTime}"	maxlength="240" />
+                        </div>
+                    </li>
+
                     <li style="border-top: none;">
                         <div class="formTextDiv">
                             <span class="require" >备注</span>
