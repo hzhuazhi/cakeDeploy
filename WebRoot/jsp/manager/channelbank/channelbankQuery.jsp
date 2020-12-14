@@ -44,6 +44,9 @@
             <th width="150">银行名称</th>
             <th width="150">银行卡号</th>
             <th width="150">开户人</th>
+            <th width="150">放量时间</th>
+            <th width="150">测试状态</th>
+            <th width="150">手机欠费状态</th>
             <th width="380">操作</th>
         </tr>
         </thead>

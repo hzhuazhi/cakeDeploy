@@ -17,6 +17,29 @@ var account = {
         {"data":"bankName",},
         {"data":"bankCard", },
         {"data":"accountName", },
+        {"data":"openTimeSlot", },
+        {"data":"isOk",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.isOk==1){
+                    html='<span style="color: #bb0000">未通过</span>';
+                }else if(oData.isOk==2){
+                    html='<span>通过</span>';
+                }
+                $(nTd).html(html);
+            }
+        },
+        {"data":"isArrears",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.isArrears==2){
+                    html='<span style="color: #bb0000">欠费</span>';
+                }else if(oData.isArrears==1){
+                    html='<span>未欠费</span>';
+                }
+                $(nTd).html(html);
+            }
+        },
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';

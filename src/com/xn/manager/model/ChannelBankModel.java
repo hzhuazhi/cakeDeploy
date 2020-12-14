@@ -62,11 +62,28 @@ public class ChannelBankModel extends BasePage {
     private Integer useStatus;
 
     /**
+     * 是否欠费
+     */
+    private Integer isArrears;
+
+    /**
+     *  是否测试通过
+     */
+    private Integer isOk;
+
+    /**
      * 创建时间
      *
      * @mbggenerated
      */
     private Date createTime;
+
+    /**
+     * 放量时间
+     *
+     * @mbggenerated
+     */
+    private String openTimeSlot;
 
     /**
      * 更新时间
@@ -257,5 +274,29 @@ public class ChannelBankModel extends BasePage {
 
     public void setAcName(String acName) {
         this.acName = acName;
+    }
+
+    public Integer getIsArrears() {
+        return isArrears;
+    }
+
+    public void setIsArrears(Integer isArrears) {
+        this.isArrears = isArrears;
+    }
+
+    public Integer getIsOk() {
+        return isOk;
+    }
+
+    public void setIsOk(Integer isOk) {
+        this.isOk = isOk;
+    }
+
+    public String getOpenTimeSlot() {
+        return openTimeSlot;
+    }
+
+    public void setOpenTimeSlot(String openTimeSlot) {
+        this.openTimeSlot = openTimeSlot;
     }
 }

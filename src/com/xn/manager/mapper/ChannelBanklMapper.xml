@@ -17,6 +17,9 @@
         <result column="bank_name" property="bankName" jdbcType="BIT" />
         <result column="account_name" property="accountName" jdbcType="VARCHAR" />
         <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+        <result column="open_time_slot" property="openTimeSlot" jdbcType="VARCHAR" />
+        <result column="is_ok" property="isOk" jdbcType="VARCHAR" />
+        <result column="is_arrears" property="isArrears" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -254,11 +257,17 @@
 
     <!-- 通过id 查询那些银行卡 -->
     <select id="byIdQueryBank" resultMap="dataMap"  parameterType="java.lang.Long">
-        select  a.id,c.ac_name,a.bank_id,b.bank_name,b.bank_card,b.account_name
+        select  a.id,c.ac_name,a.bank_id,b.bank_name,b.bank_card,b.account_name,d.open_time_slot,b.is_ok,e.is_arrears
          from tb_fr_channel_bank a left JOIN  tb_fr_bank b
          on  a.bank_id =b.id
          left join  tb_fr_merchant  c
 		  on  b.merchant_id = c.id
+		  LEFT  JOIN  tb_fr_bank_strategy  d
+			on   b.id=d.bank_id
+
+			LEFT  JOIN  tb_fr_mobile_card  e
+
+			on   b.mobile_card_id=e.id
        where  a.channel_id=#{channelId}
        and a.yn=0
     </select>
