@@ -262,7 +262,7 @@
                 },
                 lastNum:{
                     required:true,
-                    maxlength:4,
+                    maxlength:25,
                 },
                 bankCode:{
                     required:true,
@@ -316,7 +316,7 @@
                 },
                 lastNum:{
                     required : "凭证尾号不能为空!",
-                    maxlength : "凭证尾号长度最多是10个字符!"
+                    maxlength : "凭证尾号长度最多是25个字符!"
                 },
                 bankCode:{
                     required : "银行码不能为空!",
