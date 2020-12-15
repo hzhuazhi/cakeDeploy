@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xn.manager.dao.ChannelBankDao">
+<mapper namespace="com.xn.manager.dao.ChannelBankPoolDao">
     <!-- 属性映射 -->
-    <resultMap id="dataMap" type="com.xn.manager.model.ChannelBankModel" >
+    <resultMap id="dataMap" type="com.xn.manager.model.ChannelBankPoolModel" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="alias" property="alias" jdbcType="VARCHAR" />
         <result column="channel_id" property="channelId" jdbcType="BIGINT" />
@@ -27,8 +27,8 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        DISTINCT a.id,a.alias,a.use_status,a.create_time
-    <!-- a.use_status, a.create_time, a.update_time, a.ts_time, a.yn-->
+        DISTINCT a.id,a.alias,a.bank_id,a.use_status,a.create_time
+        <!-- a.use_status, a.create_time, a.update_time, a.ts_time, a.yn-->
 
     </sql>
 
@@ -40,7 +40,7 @@
         b.bank_card,b.id as bank_id, b.bank_name, b.account_name,c.ac_name
     </sql>
 
-<!-- 查询条件 -->
+    <!-- 查询条件 -->
     <sql id="Example_Where_Clause">
         where 1=1
         <trim  suffixOverrides="," >
@@ -94,7 +94,7 @@
     <select id="queryByAll" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List_All"/>
-        from tb_fr_channel_bank a inner JOIN  tb_fr_bank b
+        from tb_fr_channel_bank_pool a inner JOIN  tb_fr_bank b
         on  a.bank_id = b.id
         left join  tb_fr_merchant  c
         on  b.merchant_id = c.id
@@ -116,7 +116,7 @@
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(distinct a.id)
         from  tb_fr_channel  a left JOIN
-        tb_fr_channel_bank  b
+        tb_fr_channel_bank_pool  b
         on  a.id =b.channel_id
         <include refid="Example_Where_Clause"/>
     </select>
@@ -124,10 +124,10 @@
     <!-- 查询分页列表 -->
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
-        <include refid="Base_Column_List" />
+        DISTINCT a.id,a.alias,a.use_status,a.create_time
         from tb_fr_channel  a left JOIN
-              tb_fr_channel_bank  b
-              on  a.id =b.channel_id
+        tb_fr_channel_bank_pool  b
+        on  a.id =b.channel_id
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -137,7 +137,7 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_channel_bank a
+        from tb_fr_channel_bank_pool a
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -146,7 +146,7 @@
     <!-- 根据id查询记录 -->
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select  a.id,a.channel_id,a.bank_id,a.remark,a.create_time
-        from tb_fr_channel_bank a
+        from tb_fr_channel_bank_pool a
         where  a.channel_id=#{channelId}
     </select>
 
@@ -154,7 +154,7 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_channel_bank a
+        from tb_fr_channel_bank_pool a
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>
@@ -164,7 +164,7 @@
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() as id
         </selectKey>
-        insert into tb_fr_channel_bank
+        insert into tb_fr_channel_bank_pool
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
                 id,
@@ -213,7 +213,7 @@
 
     <!-- 更新记录 -->
     <update id="update" parameterType="Object">
-        UPDATE tb_fr_channel_bank a
+        UPDATE tb_fr_channel_bank_pool a
         <trim prefix="set" suffixOverrides=",">
             <if test="alias != null" >
                 alias = #{alias,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
 
     <!--逻辑删除数据 -->
     <update id="delete" parameterType="java.lang.Long">
-        UPDATE tb_fr_channel_bank a set a.yn = 1,
+        UPDATE tb_fr_channel_bank_pool a set a.yn = 1,
         a.update_time = now()
         where 1=1
         and a.id =#{id}
@@ -266,7 +266,7 @@
             e.use_status  as mb_use_status,
             b.use_status as  bk_use_status,
             b.check_status  as check_status
-         from tb_fr_channel_bank a left JOIN  tb_fr_bank b
+         from tb_fr_channel_bank_pool a left JOIN  tb_fr_bank b
          on  a.bank_id =b.id
          left join  tb_fr_merchant  c
 		  on  b.merchant_id = c.id
@@ -297,7 +297,7 @@
     <select id="byBankIdQueryBankCard" resultMap="dataMap"  parameterType="Object">
         select
         a.bank_card
-        from tb_fr_bank a
+        from tb_fr_channel_bank_pool a
         <include refid="Example_Where_Clause_BankId"/>
     </select>
 

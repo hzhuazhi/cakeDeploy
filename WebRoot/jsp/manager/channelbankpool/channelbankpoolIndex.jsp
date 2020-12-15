@@ -11,16 +11,16 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl">
-                <c:set var="dl" value="${account}"/>
-                <%--<input type="hidden" id="id" name="id" value="${dl.id}">--%>
-                <input type="hidden" id="channelId" name="channelId" value="${dl.channelId}">
-                <%--<input type="hidden" id="alias" name="alias" value="${dl.alias}">--%>
-
-                <div id="cardId" style="height: 300px;width: 100%">
-
+                <div class = "condQueryLabelDiv">名称/别名：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="alias" name ="alias">
+                </div>
+                <div class = "condQueryLabelDiv">已绑定银行卡：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="secretKey" name ="secretKey">
                 </div>
                 <div class="searchdiv">
-                    <input type = "button" id = "btnQuery" class = "buttonClass imginput" value = "添加" />
+                    <input type = "button" id = "btnQuery" class = "buttonClass imginput" value = "搜索" />
                 </div>
 
                 <div class="searchdiv">
@@ -39,18 +39,11 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <%--<th width="150">名称/别名</th>--%>
-            <th width="150">卡商名称</th>
-            <th width="150">银行名称</th>
-            <th width="150">银行卡号</th>
-            <th width="150">开户人</th>
-            <th width="150">放量时间</th>
-            <th width="150">测试状态</th>
-            <th width="150">手机欠费状态</th>
-            <th width="150">心跳</th>
-            <th width="150">手机状态</th>
-            <th width="150">卡检测状态</th>
-            <th width="150">卡使用状态</th>
+            <th width="150">商户ID</th>
+            <th width="150">名称/别名</th>
+            <th width="150">已绑定银行卡</th>
+            <%--<th width="150">创建时间</th>--%>
+            <th width="150">使用状态</th>
             <th width="380">操作</th>
         </tr>
         </thead>
@@ -59,6 +52,6 @@
     </table>
 </div>
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/common/common2.js'></script>
-<script type='text/javascript' charset="utf-8" src='${ctxData}js/manager/channelbank/channelbankQuery.js'></script>
+<script type='text/javascript' charset="utf-8" src='${ctxData}js/manager/channelbankpool/channelbankpool.js'></script>
 </body>
 </html>

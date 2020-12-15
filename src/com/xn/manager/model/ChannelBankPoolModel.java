@@ -3,9 +3,8 @@ package com.xn.manager.model;
 import com.xn.common.page.BasePage;
 
 import java.util.Date;
-import java.util.List;
 
-public class ChannelBankModel extends BasePage {
+public class ChannelBankPoolModel extends BasePage {
     /**
      * 自增主键ID
      *
@@ -19,13 +18,8 @@ public class ChannelBankModel extends BasePage {
      * @mbggenerated
      */
     private String alias;
-    /**
-     * 卡商/别名
-     *
-     * @mbggenerated
-     */
-    private String acName;
-
+    private String bankCardInfo;
+    private String bankCard;
     /**
      * 添加银行卡id
      *
@@ -53,7 +47,16 @@ public class ChannelBankModel extends BasePage {
      * @mbggenerated
      */
     private String remark;
-
+    private String openTimeSlot;
+    private String acName;
+    private String bankName;
+    private String accountName;
+    private Integer isOk;
+    private Integer isArrears;
+    private Integer heartbeatStatus;
+    private Integer mbUseStatus;
+    private Integer bkUseStatus;
+    private Integer checkStatus;
     /**
      * 使用状态:1初始化有效正常使用，2无效暂停使用
      *
@@ -62,18 +65,32 @@ public class ChannelBankModel extends BasePage {
     private Integer useStatus;
 
     /**
-     * 是否欠费
+     * 创建人ID
+     *
+     * @mbggenerated
      */
-    private Integer isArrears;
+    private Long createUserId;
 
     /**
-     *  是否测试通过
+     * 创建人归属角色ID
+     *
+     * @mbggenerated
      */
-    private Integer isOk;
-    private Integer heartbeatStatus;
-    private Integer mbUseStatus;
-    private Integer bkUseStatus;
-    private Integer checkStatus;
+    private Long createRoleId;
+
+    /**
+     * 更新人ID
+     *
+     * @mbggenerated
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人归属角色ID
+     *
+     * @mbggenerated
+     */
+    private Long updateRoleId;
 
     /**
      * 创建时间
@@ -81,13 +98,6 @@ public class ChannelBankModel extends BasePage {
      * @mbggenerated
      */
     private Date createTime;
-
-    /**
-     * 放量时间
-     *
-     * @mbggenerated
-     */
-    private String openTimeSlot;
 
     /**
      * 更新时间
@@ -109,39 +119,6 @@ public class ChannelBankModel extends BasePage {
      * @mbggenerated
      */
     private Integer yn;
-
-    /**
-     * 卡的信息
-     *
-     * @mbggenerated
-     */
-    private String  bankCardInfo;
-
-    /**
-     * 银行卡号
-     *
-     * @mbggenerated
-     */
-    private String  bankCard;
-    /**
-     * 银行名称
-     *
-     * @mbggenerated
-     */
-    private String  bankName;
-    /**
-     * 开户人
-     *
-     * @mbggenerated
-     */
-    private String  accountName;
-
-    /**
-     * 银行卡id集合
-     *
-     * @mbggenerated
-     */
-    private List<Long> bankIdList;
 
     public Long getId() {
         return id;
@@ -184,6 +161,39 @@ public class ChannelBankModel extends BasePage {
     }
 
 
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Long getCreateRoleId() {
+        return createRoleId;
+    }
+
+    public void setCreateRoleId(Long createRoleId) {
+        this.createRoleId = createRoleId;
+    }
+
+    public Long getUpdateUserId() {
+        return updateUserId;
+    }
+
+    public void setUpdateUserId(Long updateUserId) {
+        this.updateUserId = updateUserId;
+    }
+
+    public Long getUpdateRoleId() {
+        return updateRoleId;
+    }
+
+    public void setUpdateRoleId(Long updateRoleId) {
+        this.updateRoleId = updateRoleId;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -224,36 +234,36 @@ public class ChannelBankModel extends BasePage {
         this.yn = yn;
     }
 
-    public String getBankCardInfo() {
-        return bankCardInfo;
+    public String getOpenTimeSlot() {
+        return openTimeSlot;
     }
 
-    public void setBankCardInfo(String bankCardInfo) {
-        this.bankCardInfo = bankCardInfo;
+    public void setOpenTimeSlot(String openTimeSlot) {
+        this.openTimeSlot = openTimeSlot;
     }
 
-    public String getBankCard() {
-        return bankCard;
+    public Integer getIsOk() {
+        return isOk;
     }
 
-    public void setBankCard(String bankCard) {
-        this.bankCard = bankCard;
+    public void setIsOk(Integer isOk) {
+        this.isOk = isOk;
     }
 
-    public List<Long> getBankIdList() {
-        return bankIdList;
+    public Integer getIsArrears() {
+        return isArrears;
     }
 
-    public void setBankIdList(List<Long> bankIdList) {
-        this.bankIdList = bankIdList;
+    public void setIsArrears(Integer isArrears) {
+        this.isArrears = isArrears;
     }
 
-    public String getBankIds() {
-        return bankIds;
+    public String getAcName() {
+        return acName;
     }
 
-    public void setBankIds(String bankIds) {
-        this.bankIds = bankIds;
+    public void setAcName(String acName) {
+        this.acName = acName;
     }
 
     public String getBankName() {
@@ -272,36 +282,28 @@ public class ChannelBankModel extends BasePage {
         this.accountName = accountName;
     }
 
-    public String getAcName() {
-        return acName;
+    public String getBankCardInfo() {
+        return bankCardInfo;
     }
 
-    public void setAcName(String acName) {
-        this.acName = acName;
+    public void setBankCardInfo(String bankCardInfo) {
+        this.bankCardInfo = bankCardInfo;
     }
 
-    public Integer getIsArrears() {
-        return isArrears;
+    public String getBankCard() {
+        return bankCard;
     }
 
-    public void setIsArrears(Integer isArrears) {
-        this.isArrears = isArrears;
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
     }
 
-    public Integer getIsOk() {
-        return isOk;
+    public String getBankIds() {
+        return bankIds;
     }
 
-    public void setIsOk(Integer isOk) {
-        this.isOk = isOk;
-    }
-
-    public String getOpenTimeSlot() {
-        return openTimeSlot;
-    }
-
-    public void setOpenTimeSlot(String openTimeSlot) {
-        this.openTimeSlot = openTimeSlot;
+    public void setBankIds(String bankIds) {
+        this.bankIds = bankIds;
     }
 
     public Integer getHeartbeatStatus() {

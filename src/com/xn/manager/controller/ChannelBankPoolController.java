@@ -10,7 +10,6 @@ import com.xn.manager.model.ChannelModel;
 import com.xn.manager.service.BankPoolService;
 import com.xn.manager.service.ChannelBankPoolService;
 import com.xn.manager.service.ChannelBankService;
-import com.xn.manager.service.ChannelService;
 import com.xn.system.entity.Account;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -31,10 +30,10 @@ import java.util.List;
  * @Version 1.0
  */
 @Controller
-@RequestMapping("/channelbank")
-public class ChannelBankController extends BaseController {
+@RequestMapping("/channelbankpool")
+public class ChannelBankPoolController extends BaseController {
 
-    private static Logger log = Logger.getLogger(ChannelBankController.class);
+    private static Logger log = Logger.getLogger(ChannelBankPoolController.class);
 
     @Autowired
     private ChannelBankService<ChannelBankModel> channelBankService;
@@ -52,7 +51,7 @@ public class ChannelBankController extends BaseController {
      */
     @RequestMapping("/list")
     public String list() {
-        return "manager/channelbank/channelbankIndex";
+        return "manager/channelbankpool/channelbankpoolIndex";
     }
 
 
@@ -61,24 +60,17 @@ public class ChannelBankController extends BaseController {
      * 获取表格数据列表
      */
     @RequestMapping("/dataList")
-    public void dataList(HttpServletRequest request, HttpServletResponse response, ChannelBankModel model) throws Exception {
-        List<ChannelBankModel> dataList = new ArrayList<ChannelBankModel>();
+    public void dataList(HttpServletRequest request, HttpServletResponse response, ChannelBankPoolModel model) throws Exception {
+        List<ChannelBankPoolModel> dataList = new ArrayList<ChannelBankPoolModel>();
 //        model.setUseStatus(1);
 //        model.setIsEnable(ManagerConstant.PUBLIC_CONSTANT.IS_ENABLE_ZC);
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-//            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
-//                //不是管理员，只能查询自己的数据
-//                model.setId(account.getId());
-//            }
-            List<ChannelBankModel> dataListInfo = channelBankService.queryByList(model);
-
-
-            for(ChannelBankModel channelBankModel:dataListInfo){
-
-                String bankCardInfo  =  channelBankService.byIdQueryBankCard(channelBankModel.getId());
-                channelBankModel.setBankCardInfo(bankCardInfo);
-                dataList.add(channelBankModel);
+            List<ChannelBankPoolModel> dataListInfo = channelBankPoolService.queryByList(model);
+            for(ChannelBankPoolModel channelBankPoolModel:dataListInfo){
+                String bankCardInfo  =  channelBankPoolService.byIdQueryBankCard(channelBankPoolModel.getId());
+                channelBankPoolModel.setBankCardInfo(bankCardInfo);
+                dataList.add(channelBankPoolModel);
             }
 
         }
@@ -126,11 +118,11 @@ public class ChannelBankController extends BaseController {
      * 添加数据
      */
     @RequestMapping("/add")
-    public void add(HttpServletRequest request, HttpServletResponse response, ChannelBankModel bean) throws Exception {
+    public void add(HttpServletRequest request, HttpServletResponse response, ChannelBankPoolModel bean) throws Exception {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
 //            check是否有重复的账号
-            ChannelBankModel queryBean = new ChannelBankModel();
+            ChannelBankPoolModel queryBean = new ChannelBankPoolModel();
 
             if(StringUtils.isBlank(bean.getBankIds())){
                 sendFailureMessage(response,"请选中要添加的银行卡号，再进行添加！");
@@ -138,14 +130,14 @@ public class ChannelBankController extends BaseController {
                 String [] bankId = bean.getBankIds().split(",");
                 for(String str:bankId){
                     queryBean.setBankId(Long.parseLong(str));
-                    ChannelBankModel queryBean1=channelBankService.queryByCondition(queryBean);
+                    ChannelBankPoolModel queryBean1=channelBankPoolService.queryByCondition(queryBean);
                     if (queryBean1 != null && queryBean1.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
                         continue;
                     }else{
-                        ChannelBankModel addModel  =  new  ChannelBankModel();
+                        ChannelBankPoolModel addModel  =  new  ChannelBankPoolModel();
                         addModel.setBankId(Long.parseLong(str));
                         addModel.setChannelId(bean.getChannelId());
-                        channelBankService.add(addModel);
+                        channelBankPoolService.add(addModel);
                     }
                 }
             }
@@ -190,7 +182,7 @@ public class ChannelBankController extends BaseController {
     public void delete(HttpServletRequest request, HttpServletResponse response, ChannelBankModel bean) throws Exception {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            channelBankService.delete(bean);
+            channelBankPoolService.delete(bean);
             sendSuccessMessage(response, "删除成功");
         }else{
             sendFailureMessage(response, "登录超时,请重新登录在操作!");
@@ -221,7 +213,7 @@ public class ChannelBankController extends BaseController {
         ChannelBankModel atModel = new ChannelBankModel();
         atModel.setChannelId(id);
         model.addAttribute("account", atModel);
-        return "manager/channelbank/channelbankQuery";
+        return "manager/channelbankpool/channelbankpoolQuery";
     }
 
 
@@ -229,13 +221,13 @@ public class ChannelBankController extends BaseController {
      * 根据 条件查询 该条件下的银行卡信息
      */
     @RequestMapping("/queryIdList")
-    public void queryIdList(HttpServletRequest request, HttpServletResponse response, ChannelBankModel model) throws Exception {
-        List<ChannelBankModel> dataList = new ArrayList<ChannelBankModel>();
+    public void queryIdList(HttpServletRequest request, HttpServletResponse response, ChannelBankPoolModel model) throws Exception {
+        List<ChannelBankPoolModel> dataList = new ArrayList<ChannelBankPoolModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
-            ChannelBankModel  queryBean = new ChannelBankModel();
+            ChannelBankPoolModel  queryBean = new ChannelBankPoolModel();
             queryBean.setChannelId(model.getChannelId());
-            dataList = channelBankService.byIdQueryBank(queryBean);
+            dataList = channelBankPoolService.byIdQueryBank(queryBean);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);
     }
@@ -256,6 +248,7 @@ public class ChannelBankController extends BaseController {
             for(ChannelBankModel channelBankModel:dataList){
                 bankIdList.add(channelBankModel.getBankId());
             }
+
             List<BankPoolModel> bankPoolList = new ArrayList<BankPoolModel>(); //银行卡池子
             bankPoolList = bankPoolService.queryAllList();
 
@@ -270,7 +263,6 @@ public class ChannelBankController extends BaseController {
                 bankIdList.add(channelBankPoolModel.getBankId());
             }
             queryBean.setBankIdList(bankIdList);
-
             dataList = channelBankService.queryNotChannelBankAll(queryBean);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);

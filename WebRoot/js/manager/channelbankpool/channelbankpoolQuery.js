@@ -3,13 +3,13 @@ var datatable;
 var account = {
     //地址
     url:{
-        list_url : ctx + '/channelbank/list.do',
-        dataList_url : ctx + "/channelbank/queryIdList.do",
-        add_url : ctx+ "/channelbank/add.do",
-        update_url : ctx+ "/channelbank/update.do",
-        queryId_url: ctx+ "/channelbank/getId.do",
-        delete_url: ctx+ "/channelbank/delete.do",
-        manyOperation_url: ctx+ "/channelbank/manyOperation.do"
+        list_url : ctx + '/channelbankpool/list.do',
+        dataList_url : ctx + "/channelbankpool/queryIdList.do",
+        add_url : ctx+ "/channelbankpool/add.do",
+        update_url : ctx+ "/channelbankpool/update.do",
+        queryId_url: ctx+ "/channelbankpool/getId.do",
+        delete_url: ctx+ "/channelbankpool/delete.do",
+        manyOperation_url: ctx+ "/channelbankpool/manyOperation.do"
     },
     //列表显示参数
     list:[
@@ -39,8 +39,7 @@ var account = {
                 }
                 $(nTd).html(html);
             }
-        },
-        {"data":"heartbeatStatus",
+        },{"data":"heartbeatStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
                 if(oData.heartbeatStatus==1){
@@ -84,6 +83,8 @@ var account = {
                 $(nTd).html(html);
             }
         },
+
+
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
@@ -107,7 +108,7 @@ var account = {
         common.updateUrl(this.url);
         //添加
         $(".addbtn").live("click",function(){
-            window.location.href = ctx + "/channelbank/jumpAdd.do";
+            window.location.href = ctx + "/channelbankpool/jumpAdd.do";
         });
 
         // 初始化列表数据
@@ -164,7 +165,7 @@ $('#btnQuery').click(function() {
         }
     });
 
-    var url = ctx + "/channelbank/add.do";
+    var url = ctx + "/channelbankpool/add.do";
     var data = {
         "channelId":$("#channelId").val(),
         "bankIds":str
@@ -192,7 +193,7 @@ $("#butReset").click(function(){
 });
 //删除
 $(".dataTableResetBtn").live("click",function(){
-    var url = ctx + "/channelbank/delete.do";
+    var url = ctx + "/channelbankpool/delete.do";
     var id = $(this).attr('directkey');
     var data = {
         id:id,
