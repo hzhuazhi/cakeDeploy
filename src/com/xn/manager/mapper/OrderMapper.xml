@@ -98,6 +98,9 @@
             <if test="merchantId != 0 and merchantId >0 " >
                 and a.merchant_id = #{merchantId}
             </if>
+            <if test="channelName != null and channelName != '' " >
+                and a.channel_name = #{channelName}
+            </if>
 
 
             <if test="replenishType != 0 and replenishType >0 " >

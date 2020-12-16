@@ -13,6 +13,7 @@ var account = {
     },
     //列表显示参数
     list:[
+        {"data":"channelName",},
         {"data":"channelOrderNo",},
         {"data":"outTradeNo",},
         {"data":"orderNo",},
@@ -23,7 +24,7 @@ var account = {
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
                 if(oData.orderType==2){
-                    html+= '<span>支付宝转卡</span>';
+                    html+= '<span>支转卡</span>';
                 }else if(oData.orderType==3){
                     html+= '<span>卡转卡</span>';
                 }
@@ -115,6 +116,7 @@ var account = {
             account.condJsonData['channelOrderNo'] = $("#channelOrderNo").val();
             account.condJsonData['outTradeNo'] = $("#outTradeNo").val();
             account.condJsonData['orderNo'] = $("#orderNo").val();
+            account.condJsonData['channelName'] = $("#channelName").val();
             account.condJsonData['bankName'] = $("#bankName").val();
             account.condJsonData['bankCard'] = $("#bankCard").val();
             account.condJsonData['accountName'] = $("#accountName").val();
@@ -143,6 +145,7 @@ var account = {
             account.condJsonData['channelOrderNo'] = "";
             account.condJsonData['outTradeNo'] = "";
             account.condJsonData['orderNo'] = "";
+            account.condJsonData['channelName'] = "";
             account.condJsonData['bankName'] = "";
             account.condJsonData['bankCard'] = "";
             account.condJsonData['accountName'] = "";
@@ -158,6 +161,7 @@ var account = {
             $("#channelOrderNo").val("");
             $("#outTradeNo").val("");
             $("#orderNo").val("");
+            $("#channelName").val("");
             $("#bankName").val("");
             $("#bankCard").val("");
             $("#accountName").val("");

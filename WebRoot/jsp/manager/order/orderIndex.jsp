@@ -24,6 +24,10 @@
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="orderNo" name ="orderNo">
                 </div>
+                <div class = "condQueryLabelDiv">渠道名称：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="channelName" name ="channelName">
+                </div>
                 <div class = "condQueryLabelDiv">银行名称：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="bankName" name ="bankName">
@@ -112,10 +116,11 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <th width="150">渠道订单</th>
-            <th width="150">平台订单</th>
-            <th width="150">订单号</th>
-            <th width="150">银行名称</th>
+            <th width="110">渠道名称</th>
+            <th width="120">渠道订单</th>
+            <th width="120">平台订单</th>
+            <th width="120">订单号</th>
+            <th width="110">银行名称</th>
             <th width="150">银行卡账号</th>
             <th width="100">开户名</th>
             <th width="110">订单类型</th>
