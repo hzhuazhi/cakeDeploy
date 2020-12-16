@@ -122,7 +122,7 @@ var account = {
     //下拉框数据填充
     //查询所有代理-无分页-下拉框选项:
     queryBankAll:function(){
-        var url = ctx + "/channelbank/queryNotChannelBankList.do";
+        var url = ctx + "/channelbankpool/queryNotChannelBankList.do";
         var data = {
         };
         common.ajax(url,data,function(data){

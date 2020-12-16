@@ -130,6 +130,7 @@ public class ChannelBankPoolController extends BaseController {
                 String [] bankId = bean.getBankIds().split(",");
                 for(String str:bankId){
                     queryBean.setBankId(Long.parseLong(str));
+                    queryBean.setChannelId(bean.getChannelId());
                     ChannelBankPoolModel queryBean1=channelBankPoolService.queryByCondition(queryBean);
                     if (queryBean1 != null && queryBean1.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
                         continue;
@@ -256,12 +257,12 @@ public class ChannelBankPoolController extends BaseController {
                 bankIdList.add(bankPoolModel1.getBankId());
             }
 
-            List<ChannelBankPoolModel> channelBankPoolList = new ArrayList<ChannelBankPoolModel>(); //商务池子
-            channelBankPoolList = channelBankPoolService.queryAllList();
-
-            for(ChannelBankPoolModel channelBankPoolModel:channelBankPoolList){
-                bankIdList.add(channelBankPoolModel.getBankId());
-            }
+//            List<ChannelBankPoolModel> channelBankPoolList = new ArrayList<ChannelBankPoolModel>(); //商务池子
+//            channelBankPoolList = channelBankPoolService.queryAllList();
+//
+//            for(ChannelBankPoolModel channelBankPoolModel:channelBankPoolList){
+//                bankIdList.add(channelBankPoolModel.getBankId());
+//            }
             queryBean.setBankIdList(bankIdList);
             dataList = channelBankService.queryNotChannelBankAll(queryBean);
         }
