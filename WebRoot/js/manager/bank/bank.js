@@ -19,6 +19,7 @@ var account = {
         {"data":"merchantName",},
         {"data":"alias",},
         {"data":"phoneNum",},
+        {"data":"balance",},
         {"data":"bankCard",},
         {"data":"bankName",},
         {"data":"accountName",},

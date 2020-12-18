@@ -103,24 +103,25 @@
         <thead>
         <tr>
             <th width="150">卡id</th>
-            <th width="150">归属卡商</th>
+            <th width="120">归属卡商</th>
             <th width="150">手机卡别名</th>
             <th width="150">手机号</th>
+            <th width="80">余额</th>
             <th width="150">银行卡账号</th>
-            <th width="150">银行名称</th>
-            <th width="150">开户名</th>
-            <th width="150">凭证短信</th>
-            <th width="150">凭证尾号</th>
-            <th width="150">银行码</th>
+            <th width="120">银行名称</th>
+            <th width="120">开户名</th>
+            <th width="120">凭证短信</th>
+            <th width="120">凭证尾号</th>
+            <th width="100">银行码</th>
             <th width="150">收款日限金额</th>
             <th width="150">收款月限金额</th>
-            <th width="150">卡状态</th>
-            <th width="150">检测状态</th>
+            <th width="100">卡状态</th>
+            <th width="120">检测状态</th>
             <%--<th width="150">限制的原因</th>--%>
             <th width="150">创建时间</th>
-            <th width="150">测试状态</th>
-            <th width="150">使用状态</th>
-            <th width="380">操作</th>
+            <th width="120">测试状态</th>
+            <th width="120">使用状态</th>
+            <th width="200">操作</th>
         </tr>
         </thead>
         <tbody>

@@ -128,6 +128,11 @@ public class BankModel extends BasePage {
     private String lastNum;
 
     /**
+     * 银行卡余额
+     */
+    private String balance;
+
+    /**
      * 收款日限金额
      *
      * @mbggenerated
@@ -526,5 +531,13 @@ public class BankModel extends BasePage {
 
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 }

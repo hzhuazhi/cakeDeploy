@@ -18,6 +18,7 @@
         <result column="city" property="city" jdbcType="VARCHAR" />
         <result column="sms_num" property="smsNum" jdbcType="VARCHAR" />
         <result column="last_num" property="lastNum" jdbcType="VARCHAR" />
+        <result column="balance" property="balance" jdbcType="VARCHAR" />
         <result column="in_day_money" property="inDayMoney" jdbcType="VARCHAR" />
         <result column="in_month_money" property="inMonthMoney" jdbcType="VARCHAR" />
         <result column="out_day_money" property="outDayMoney" jdbcType="VARCHAR" />
@@ -41,7 +42,7 @@
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
         a.id, a.alias, a.mobile_card_id,  a.merchant_id,a.bank_type_id,  a.bank_name, a.bank_card, a.subbranch_name,
-        a.account_name, a.bank_code, a.province, a.city, a.sms_num, a.last_num, a.in_day_money, a.in_month_money,
+        a.account_name, a.bank_code, a.province, a.city, a.sms_num, a.last_num, a.balance, a.in_day_money, a.in_month_money,
         a.out_day_money, a.out_month_money, a.is_arrears, a.check_status, a.data_explain, a.is_ok, a.remark,
         a.use_status, a.create_time, a.update_time, a.ts_time, a.yn, a.phone_num,a.merchant_site_id,
         b.ac_name as merchant_name
@@ -189,8 +190,6 @@
             <if test="id != null" >
                 id,
             </if>
-
-
             <if test="alias != null" >
                 alias,
             </if>
@@ -226,6 +225,9 @@
             </if>
             <if test="lastNum != null" >
                 last_num,
+            </if>
+            <if test="balance != null" >
+                balance,
             </if>
             <if test="inDayMoney != null" >
                 in_day_money,
@@ -310,6 +312,9 @@
             <if test="lastNum != null" >
                 #{lastNum,jdbcType=VARCHAR},
             </if>
+            <if test="balance != null" >
+                #{balance,jdbcType=VARCHAR},
+            </if>
             <if test="inDayMoney != null" >
                 #{inDayMoney,jdbcType=VARCHAR},
             </if>
@@ -364,7 +369,6 @@
             <if test="bankTypeId != null" >
                 bank_type_id = #{bankTypeId,jdbcType=BIGINT},
             </if>
-
             <if test="bankName != null" >
                 bank_name = #{bankName,jdbcType=VARCHAR},
             </if>
@@ -391,6 +395,9 @@
             </if>
             <if test="lastNum != null" >
                 last_num = #{lastNum,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null" >
+                balance = #{balance,jdbcType=VARCHAR},
             </if>
             <if test="inDayMoney != null" >
                 in_day_money = #{inDayMoney,jdbcType=VARCHAR},
