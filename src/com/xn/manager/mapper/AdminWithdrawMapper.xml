@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.AdminWithdrawDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.AdminWithdrawModel" >
+        <id column="id" property="id" />
+        <result column="alias" property="alias" />
+        <result column="order_no" property="orderNo" />
+        <result column="out_trade_no" property="outTradeNo" />
+        <result column="order_money" property="orderMoney" />
+        <result column="withdraw_service_charge" property="withdrawServiceCharge" />
+        <result column="order_status" property="orderStatus" />
+        <result column="withdraw_type" property="withdrawType" />
+        <result column="channel_id" property="channelId"  />
+        <result column="channel_type" property="channelType"  />
+        <result column="out_type" property="outType" />
+        <result column="merchant_id" property="merchantId"  />
+        <result column="in_bank_card" property="inBankCard" />
+        <result column="in_bank_name" property="inBankName" />
+        <result column="in_account_name" property="inAccountName" />
+        <result column="out_bank_name" property="outBankName" />
+        <result column="out_bank_card" property="outBankCard" />
+        <result column="out_account_name" property="outAccountName" />
+        <result column="picture_ads" property="pictureAds" />
+        <result column="check_status" property="checkStatus" />
+        <result column="check_info" property="checkInfo" />
+        <result column="work_type" property="workType" />
+        <result column="data_explain" property="dataExplain" />
+        <result column="ac_name" property="acName" />
+        <result column="remark" property="remark" />
+        <result column="curday" property="curday"  />
+        <result column="curhour" property="curhour" />
+        <result column="curminute" property="curminute" />
+        <result column="run_num" property="runNum" />
+        <result column="run_status" property="runStatus" />
+        <result column="send_num" property="sendNum" />
+        <result column="send_status" property="sendStatus" />
+        <result column="create_user_id" property="createUserId"  />
+        <result column="create_role_id" property="createRoleId"  />
+        <result column="update_user_id" property="updateUserId"  />
+        <result column="update_role_id" property="updateRoleId"  />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" />
+
+
+        <result column="channel_name" property="channelName" />
+        <result column="merchant_name" property="merchantName" />
+    </resultMap>
+
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id,a.alias,a.order_no,a.out_trade_no,a.order_money,a.withdraw_service_charge,a.order_status,a.withdraw_type,a.channel_id,a.channel_type,
+        a.out_type,a.merchant_id,
+        a.in_bank_card,a.in_bank_name,a.in_account_name,a.out_bank_name,a.out_bank_card,a.out_account_name,a.picture_ads,
+        a.check_status,a.check_info,a.work_type,a.data_explain,a.remark,
+        a.curday,a.curhour,a.curminute,a.run_num,a.run_status,a.send_num,a.send_status,
+        a.create_time,a.update_time,a.yn,
+        b.alias as channel_name,
+        c.ac_name as merchant_name
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                and a.order_no = #{orderNo}
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                and a.out_trade_no = #{outTradeNo}
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                and a.order_status = #{orderStatus}
+            </if>
+            <if test="withdrawType != 0 and withdrawType >0 " >
+                and a.withdraw_type = #{withdrawType}
+            </if>
+            <if test="outType != 0 and outType >0 " >
+                and a.out_type = #{outType}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                and a.check_status = #{checkStatus}
+            </if>
+            <if test="workType != 0 and workType >0 " >
+                and a.work_type = #{workType}
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="curdayStart != 0 and curdayStart >0 and curdayEnd != 0 and curdayEnd >0 " >
+                and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
+            </if>
+
+            <if test="channelName != null and channelName != '' " >
+                and b.alias = #{channelName}
+            </if>
+            <if test="merchantName != null and merchantName != '' " >
+                and c.ac_name = #{merchantName}
+            </if>
+            and a.yn = 0
+        </trim>
+    </sql>
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn = 0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_withdraw a left join tb_fr_channel b on a.channel_id = b.id
+        left join tb_fr_merchant c on a.merchant_id = c.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_withdraw a left join tb_fr_channel b on a.channel_id = b.id
+        left join tb_fr_merchant c on a.merchant_id = c.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_withdraw a left join tb_fr_channel b on a.channel_id = b.id
+        left join tb_fr_merchant c on a.merchant_id = c.id
+        <include refid="Example_Where_Clause"/>
+        order by a.id desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_withdraw a left join tb_fr_channel b on a.channel_id = b.id
+        left join tb_fr_merchant c on a.merchant_id = c.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_withdraw a left join tb_fr_channel b on a.channel_id = b.id
+        left join tb_fr_merchant c on a.merchant_id = c.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_withdraw
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="alias != null and alias != '' " >
+                alias,
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                order_no,
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                out_trade_no,
+            </if>
+            <if test="orderMoney != null and orderMoney != '' " >
+                order_money,
+            </if>
+            <if test="withdrawServiceCharge != null and withdrawServiceCharge != '' " >
+                withdraw_service_charge,
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                order_status,
+            </if>
+            <if test="withdrawType != 0 and withdrawType >0 " >
+                withdraw_type,
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                channel_id,
+            </if>
+            <if test="channelType != 0 and channelType >0 " >
+                channel_type,
+            </if>
+            <if test="outType != 0 and outType >0 " >
+                out_type,
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                merchant_id,
+            </if>
+            <if test="inBankCard != null and inBankCard != '' " >
+                in_bank_card,
+            </if>
+            <if test="inBankName != null and inBankName != '' " >
+                in_bank_name,
+            </if>
+            <if test="inAccountName != null and inAccountName != '' " >
+                in_account_name,
+            </if>
+            <if test="outBankName != null and outBankName != '' " >
+                out_bank_name,
+            </if>
+            <if test="outBankCard != null and outBankCard != '' " >
+                out_bank_card,
+            </if>
+            <if test="outAccountName != null and outAccountName != '' " >
+                out_account_name,
+            </if>
+            <if test="pictureAds != null and pictureAds != '' " >
+                picture_ads,
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                check_status,
+            </if>
+            <if test="checkInfo != null and checkInfo != '' " >
+                check_info,
+            </if>
+            <if test="dataExplain != null and dataExplain != '' " >
+                data_explain,
+            </if>
+            <if test="remark != null and remark != '' " >
+                remark,
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                curday,
+            </if>
+            <if test="curhour != 0 and curhour >0 " >
+                curhour,
+            </if>
+            <if test="curminute != 0 and curminute >0 " >
+                curminute,
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                create_user_id,
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                create_role_id,
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                update_user_id,
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                update_role_id,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="alias != null and alias != '' " >
+                <![CDATA[  #{alias}, ]]>
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                <![CDATA[  #{orderNo}, ]]>
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                <![CDATA[  #{outTradeNo}, ]]>
+            </if>
+            <if test="orderMoney != null and orderMoney != '' " >
+                <![CDATA[  #{orderMoney}, ]]>
+            </if>
+            <if test="withdrawServiceCharge != null and withdrawServiceCharge != '' " >
+                <![CDATA[  #{withdrawServiceCharge}, ]]>
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                <![CDATA[  #{orderStatus}, ]]>
+            </if>
+            <if test="withdrawType != 0 and withdrawType >0 " >
+                <![CDATA[  #{withdrawType}, ]]>
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                <![CDATA[  #{channelId}, ]]>
+            </if>
+            <if test="channelType != 0 and channelType >0 " >
+                <![CDATA[  #{channelType}, ]]>
+            </if>
+            <if test="outType != 0 and outType >0 " >
+                <![CDATA[  #{outType}, ]]>
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                <![CDATA[  #{merchantId}, ]]>
+            </if>
+            <if test="inBankCard != null and inBankCard != '' " >
+                <![CDATA[  #{inBankCard}, ]]>
+            </if>
+            <if test="inBankName != null and inBankName != '' " >
+                <![CDATA[  #{inBankName}, ]]>
+            </if>
+            <if test="inAccountName != null and inAccountName != '' " >
+                <![CDATA[  #{inAccountName}, ]]>
+            </if>
+            <if test="outBankName != null and outBankName != '' " >
+                <![CDATA[  #{outBankName}, ]]>
+            </if>
+            <if test="outBankCard != null and outBankCard != '' " >
+                <![CDATA[  #{outBankCard}, ]]>
+            </if>
+            <if test="outAccountName != null and outAccountName != '' " >
+                <![CDATA[  #{outAccountName}, ]]>
+            </if>
+            <if test="pictureAds != null and pictureAds != '' " >
+                <![CDATA[  #{pictureAds}, ]]>
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                <![CDATA[  #{checkStatus}, ]]>
+            </if>
+            <if test="checkInfo != null and checkInfo != '' " >
+                <![CDATA[  #{checkInfo}, ]]>
+            </if>
+            <if test="dataExplain != null and dataExplain != '' " >
+                <![CDATA[  #{dataExplain}, ]]>
+            </if>
+            <if test="remark != null and remark != '' " >
+                <![CDATA[  #{remark}, ]]>
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                <![CDATA[  #{curday}, ]]>
+            </if>
+            <if test="curhour != 0 and curhour >0 " >
+                <![CDATA[  #{curhour}, ]]>
+            </if>
+            <if test="curminute != 0 and curminute >0 " >
+                <![CDATA[  #{curminute}, ]]>
+            </if>
+            <if test="createUserId != 0 and createUserId >0 " >
+                <![CDATA[  #{createUserId}, ]]>
+            </if>
+            <if test="createRoleId != 0 and createRoleId >0 " >
+                <![CDATA[  #{createRoleId}, ]]>
+            </if>
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                <![CDATA[  #{updateUserId}, ]]>
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                <![CDATA[  #{updateRoleId}, ]]>
+            </if>
+            NOW(),
+        </trim>
+    </insert>
+
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_withdraw a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="alias != null and alias != '' " >
+                a.alias = #{alias},
+            </if>
+            <if test="orderNo != null and orderNo != '' " >
+                a.order_no = #{orderNo},
+            </if>
+            <if test="outTradeNo != null and outTradeNo != '' " >
+                a.out_trade_no = #{outTradeNo},
+            </if>
+            <if test="orderMoney != null and orderMoney != '' " >
+                a.order_money = #{orderMoney},
+            </if>
+            <if test="withdrawServiceCharge != null and withdrawServiceCharge != '' " >
+                a.withdraw_service_charge = #{withdrawServiceCharge},
+            </if>
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                a.order_status = #{orderStatus},
+            </if>
+            <if test="withdrawType != 0 and withdrawType >0 " >
+                a.withdraw_type = #{withdrawType},
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                a.channel_id = #{channelId},
+            </if>
+            <if test="channelType != 0 and channelType >0 " >
+                a.channel_type = #{channelType},
+            </if>
+            <if test="outType != 0 and outType >0 " >
+                a.out_type = #{outType},
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                a.merchant_id = #{merchantId},
+            </if>
+            <if test="inBankCard != null and inBankCard != '' " >
+                a.in_bank_card = #{inBankCard},
+            </if>
+            <if test="inBankName != null and inBankName != '' " >
+                a.in_bank_name = #{inBankName},
+            </if>
+            <if test="inAccountName != null and inAccountName != '' " >
+                a.in_account_name = #{inAccountName},
+            </if>
+            <if test="outBankName != null and outBankName != '' " >
+                a.out_bank_name = #{outBankName},
+            </if>
+            <if test="outBankCard != null and outBankCard != '' " >
+                a.out_bank_card = #{outBankCard},
+            </if>
+            <if test="outAccountName != null and outAccountName != '' " >
+                a.out_account_name = #{outAccountName},
+            </if>
+            <if test="pictureAds != null and pictureAds != '' " >
+                a.picture_ads = #{pictureAds},
+            </if>
+            <if test="checkStatus != 0 and checkStatus >0 " >
+                a.check_status = #{checkStatus},
+            </if>
+            a.check_info = #{checkInfo},
+            <if test="workType != 0 and workType >0 " >
+                a.work_type = #{workType},
+            </if>
+            a.data_explain = #{dataExplain},
+            a.remark = #{remark},
+            <if test="updateUserId != 0 and updateUserId >0 " >
+                a.update_user_id = #{updateUserId},
+            </if>
+            <if test="updateRoleId != 0 and updateRoleId >0 " >
+                a.update_role_id = #{updateRoleId},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_withdraw a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn = #{yn},
+            a.update_time = NOW()
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_withdraw a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+    <!-- 更新分配下发订单 -->
+    <update id="updateOutType" parameterType="Object">
+        update tb_fr_withdraw a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="outType != 0 and outType >0 " >
+                a.out_type = #{outType},
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                a.merchant_id = #{merchantId},
+            </if>
+            <if test="workType != 0 and workType >0 " >
+                a.work_type = #{workType},
+            </if>
+            a.update_time = NOW()
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+</mapper>
