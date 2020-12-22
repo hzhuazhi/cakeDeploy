@@ -2,6 +2,7 @@ package com.xn.manager.controller;
 
 import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
+import com.xn.common.util.DateUtil;
 import com.xn.common.util.HtmlUtil;
 import com.xn.manager.model.BankPoolModel;
 import com.xn.manager.model.ChannelBankModel;
@@ -22,6 +23,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,7 +70,9 @@ public class ChannelBankPoolController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             List<ChannelBankPoolModel> dataListInfo = channelBankPoolService.queryByList(model);
             for(ChannelBankPoolModel channelBankPoolModel:dataListInfo){
-                String bankCardInfo  =  channelBankPoolService.byIdQueryBankCard(channelBankPoolModel.getId());
+                channelBankPoolModel.setChannelId(channelBankPoolModel.getId());
+                channelBankPoolModel.setCurday(DateUtil.getDayNumber(new Date()));
+                String bankCardInfo  =  channelBankPoolService.byIdQueryBankCard(channelBankPoolModel);
                 channelBankPoolModel.setBankCardInfo(bankCardInfo);
                 dataList.add(channelBankPoolModel);
             }
@@ -228,6 +232,7 @@ public class ChannelBankPoolController extends BaseController {
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             ChannelBankPoolModel  queryBean = new ChannelBankPoolModel();
             queryBean.setChannelId(model.getChannelId());
+            queryBean.setCurday(DateUtil.getDayNumber(new Date()));
             dataList = channelBankPoolService.byIdQueryBank(queryBean);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);

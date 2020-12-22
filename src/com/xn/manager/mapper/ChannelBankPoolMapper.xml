@@ -24,6 +24,7 @@
         <result column="mb_use_status" property="mbUseStatus" jdbcType="BIT" />
         <result column="bk_use_status" property="bkUseStatus" jdbcType="BIT" />
         <result column="check_status" property="checkStatus" jdbcType="BIT" />
+        <result column="smoney" property="smoney" jdbcType="BIT" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -260,12 +261,13 @@
 
 
     <!-- 通过id 查询那些银行卡 -->
-    <select id="byIdQueryBank" resultMap="dataMap"  parameterType="java.lang.Long">
+    <select id="byIdQueryBank" resultMap="dataMap"  parameterType="Object" >
         select  a.id,c.ac_name,a.bank_id,b.bank_name,b.bank_card,b.account_name,d.open_time_slot,b.is_ok,e.is_arrears,
             e.heartbeat_status,
             e.use_status  as mb_use_status,
             b.use_status as  bk_use_status,
-            b.check_status  as check_status
+            b.check_status  as check_status,
+            (select  sum(money)  from  tb_fr_bank_collection  where curday=#{curday} and bank_id=b.id ) smoney
          from tb_fr_channel_bank_pool a left JOIN  tb_fr_bank b
          on  a.bank_id =b.id
          left join  tb_fr_merchant  c

@@ -2,6 +2,7 @@ package com.xn.manager.service.impl;
 
 import com.xn.common.dao.BaseDao;
 import com.xn.common.service.impl.BaseServiceImpl;
+import com.xn.common.util.DateUtil;
 import com.xn.manager.dao.BankTypeDao;
 import com.xn.manager.dao.ChannelBankDao;
 import com.xn.manager.model.ChannelBankModel;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,9 +33,9 @@ public class ChannelBankServiceImpl<T> extends BaseServiceImpl<T> implements Cha
     }
 
     @Override
-    public String byIdQueryBankCard(Long id) {
+    public String byIdQueryBankCard(ChannelBankModel channelBankModel) {
         String    rsString = "";
-        List<ChannelBankModel> list = channelBankDao.byIdQueryBank(id);
+        List<ChannelBankModel> list = channelBankDao.byIdQueryBank(channelBankModel);
         if(list.size()==0){
             return rsString;
         }else{
@@ -64,6 +66,6 @@ public class ChannelBankServiceImpl<T> extends BaseServiceImpl<T> implements Cha
 
     @Override
     public List<ChannelBankModel> byIdQueryBank(ChannelBankModel channelBankModel) {
-        return channelBankDao.byIdQueryBank(channelBankModel.getChannelId());
+        return channelBankDao.byIdQueryBank(channelBankModel);
     }
 }

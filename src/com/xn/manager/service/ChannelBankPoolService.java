@@ -16,7 +16,7 @@ public interface ChannelBankPoolService<T> extends BaseService<T> {
      * @param id
      * @return
      */
-    public String   byIdQueryBankCard(Long id);
+    public String   byIdQueryBankCard(ChannelBankPoolModel channelBankModel);
 
     /***
      * 根据查询所有的id

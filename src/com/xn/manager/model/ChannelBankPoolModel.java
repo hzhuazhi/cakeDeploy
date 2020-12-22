@@ -51,12 +51,14 @@ public class ChannelBankPoolModel extends BasePage {
     private String acName;
     private String bankName;
     private String accountName;
+    private String smoney;
     private Integer isOk;
     private Integer isArrears;
     private Integer heartbeatStatus;
     private Integer mbUseStatus;
     private Integer bkUseStatus;
     private Integer checkStatus;
+    private Integer curday;
     /**
      * 使用状态:1初始化有效正常使用，2无效暂停使用
      *
@@ -330,11 +332,27 @@ public class ChannelBankPoolModel extends BasePage {
         this.bkUseStatus = bkUseStatus;
     }
 
+    public Integer getCurday() {
+        return curday;
+    }
+
+    public void setCurday(Integer curday) {
+        this.curday = curday;
+    }
+
     public Integer getCheckStatus() {
         return checkStatus;
     }
 
     public void setCheckStatus(Integer checkStatus) {
         this.checkStatus = checkStatus;
+    }
+
+    public String getSmoney() {
+        return smoney;
+    }
+
+    public void setSmoney(String smoney) {
+        this.smoney = smoney;
     }
 }

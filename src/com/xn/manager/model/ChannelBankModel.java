@@ -32,6 +32,10 @@ public class ChannelBankModel extends BasePage {
      * @mbggenerated
      */
     private String bankIds;
+    /**
+     * 当日放量金额
+     */
+    private String smoney;
 
     /**
      * 商户ID：对应表tb_fr_channel的主键ID
@@ -65,6 +69,7 @@ public class ChannelBankModel extends BasePage {
      * 是否欠费
      */
     private Integer isArrears;
+    private Integer curday;
 
     /**
      *  是否测试通过
@@ -326,6 +331,22 @@ public class ChannelBankModel extends BasePage {
 
     public void setBkUseStatus(Integer bkUseStatus) {
         this.bkUseStatus = bkUseStatus;
+    }
+
+    public String getSmoney() {
+        return smoney;
+    }
+
+    public void setSmoney(String smoney) {
+        this.smoney = smoney;
+    }
+
+    public Integer getCurday() {
+        return curday;
+    }
+
+    public void setCurday(Integer curday) {
+        this.curday = curday;
     }
 
     public Integer getCheckStatus() {

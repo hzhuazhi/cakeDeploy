@@ -32,9 +32,9 @@ public class ChannelBankPoolServiceImpl<T> extends BaseServiceImpl<T> implements
     }
 
     @Override
-    public String byIdQueryBankCard(Long id) {
+    public String byIdQueryBankCard(ChannelBankPoolModel channelBankModel) {
         String    rsString = "";
-        List<ChannelBankPoolModel> list = channelBankPoolDao.byIdQueryBank(id);
+        List<ChannelBankPoolModel> list = channelBankPoolDao.byIdQueryBank(channelBankModel);
         if(list.size()==0){
             return rsString;
         }else{
@@ -65,6 +65,6 @@ public class ChannelBankPoolServiceImpl<T> extends BaseServiceImpl<T> implements
 
     @Override
     public List<ChannelBankPoolModel> byIdQueryBank(ChannelBankPoolModel channelBankModel) {
-        return channelBankPoolDao.byIdQueryBank(channelBankModel.getChannelId());
+        return channelBankPoolDao.byIdQueryBank(channelBankModel);
     }
 }

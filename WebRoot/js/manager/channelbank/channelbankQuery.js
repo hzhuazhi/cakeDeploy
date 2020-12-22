@@ -18,6 +18,7 @@ var account = {
         {"data":"bankCard", },
         {"data":"accountName", },
         {"data":"openTimeSlot", },
+        {"data":"smoney", },
         {"data":"isOk",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';

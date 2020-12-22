@@ -13,10 +13,10 @@ import java.util.List;
 public interface ChannelBankPoolDao<T> extends BaseDao<T> {
     /***
      * 根据id 查询对应多少张卡
-     * @param id
+     * @param  channelBankModel
      * @return
      */
-    public List<ChannelBankPoolModel> byIdQueryBank(Long id);
+    public List<ChannelBankPoolModel> byIdQueryBank(ChannelBankPoolModel channelBankModel);
 
     /***
      * 根据卡id 集合 查询 卡信息

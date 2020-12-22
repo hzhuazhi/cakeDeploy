@@ -12,10 +12,10 @@ import java.util.List;
 public interface ChannelBankService<T> extends BaseService<T> {
     /***
      * 根据id 查询该id 下对应的银行卡，并且组成一个String 出来
-     * @param id
+     * @param channelBankModel
      * @return
      */
-    public String   byIdQueryBankCard(Long id);
+    public String   byIdQueryBankCard(ChannelBankModel channelBankModel);
 
     /***
      * 根据查询所有的id
