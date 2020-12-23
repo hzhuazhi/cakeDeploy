@@ -126,6 +126,26 @@ public class MerchantController extends BaseController {
 
 
     /**
+     *
+     * 获取表格数据列表-无分页
+     */
+    @RequestMapping("/dataJsonAllList")
+    public void dataJsonAllList(HttpServletRequest request, HttpServletResponse response, MerchantModel model) throws Exception {
+        List<MerchantModel> dataList = new ArrayList<MerchantModel>();
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                //不是管理员，只能查询自己的数据
+                model.setId(account.getId());
+            }
+            dataList = merchantService.queryAllList(model);
+        }
+//        HtmlUtil.writerJson(response, dataList);
+        sendSuccessMessage(response, "", dataList);
+    }
+
+
+    /**
      * 获取新增页面
      */
     @RequestMapping("/jumpAdd")

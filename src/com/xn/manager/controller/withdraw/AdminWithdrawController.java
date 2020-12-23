@@ -4,7 +4,10 @@ import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
 import com.xn.common.util.HtmlUtil;
 import com.xn.manager.model.AdminWithdrawModel;
+import com.xn.manager.model.MerchantModel;
 import com.xn.manager.service.AdminWithdrawService;
+import com.xn.manager.service.MerchantService;
+import com.xn.manager.util.PublicMethod;
 import com.xn.system.entity.Account;
 import com.xn.system.model.AccountModel;
 import com.xn.system.service.AccountService;
@@ -40,7 +43,7 @@ public class AdminWithdrawController extends BaseController {
 
 
     @Autowired
-    private AccountService<AccountModel> accountService;
+    private MerchantService<MerchantModel> merchantService;
 
 
     /**
@@ -122,13 +125,45 @@ public class AdminWithdrawController extends BaseController {
                 sendFailureMessage(response, "您无权分派订单提现订单!");
                 return;
             }
+
+            bean.setOutType(1);// 默认赋值卡商
+
             AdminWithdrawModel updateModel = new AdminWithdrawModel();
             updateModel.setId(bean.getId());
             updateModel.setOutType(bean.getOutType());
             if (bean.getOutType() == 1){
                 // check卡商是否有充足的余额来进行下发
 
-                updateModel.setMerchantId(bean.getMerchantId());
+                // 首先获取卡商的余额
+                MerchantModel merchantQuery = new MerchantModel();
+                merchantQuery.setId(bean.getMerchantId());
+                MerchantModel merchantModel = merchantService.queryByCondition(merchantQuery);
+
+                // 获取卡商未下发完成的订单总额
+                AdminWithdrawModel withdrawQuery = PublicMethod.assembleWithdrawQuery(0,null,null,1,0,0,0,
+                        1,merchantModel.getId(),0,0,0);
+                String withdrawMoney = adminWithdrawService.sumMoney(withdrawQuery);
+
+                // 查询此次要分配的信息提现订单
+                AdminWithdrawModel adminWithdrawQuery = new AdminWithdrawModel();
+                adminWithdrawQuery.setId(bean.getId());
+                AdminWithdrawModel adminWithdrawModel = adminWithdrawService.queryByCondition(adminWithdrawQuery);
+                if (adminWithdrawModel == null || adminWithdrawModel.getId() <= 0){
+                    sendFailureMessage(response, "错误,请重试!");
+                    return;
+                }
+
+                // check卡商余额是否充足
+                boolean flag_money = PublicMethod.checkMerchantMoney(merchantModel.getBalance(), adminWithdrawModel.getOrderMoney(), withdrawMoney);
+                if (flag_money){
+                    updateModel.setMerchantId(bean.getMerchantId());
+                }else{
+                    sendFailureMessage(response, "您选的卡商余额不足,请重新选择其它卡商!");
+                    return;
+                }
+
+
+
             }
             updateModel.setWorkType(3);
             adminWithdrawService.updateOutType(updateModel);

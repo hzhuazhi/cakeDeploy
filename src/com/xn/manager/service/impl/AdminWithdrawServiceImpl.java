@@ -32,4 +32,9 @@ public class AdminWithdrawServiceImpl<T> extends BaseServiceImpl<T> implements A
     public int updateOutType(AdminWithdrawModel model) {
         return adminWithdrawDao.updateOutType(model);
     }
+
+    @Override
+    public String sumMoney(AdminWithdrawModel model) {
+        return adminWithdrawDao.sumMoney(model);
+    }
 }

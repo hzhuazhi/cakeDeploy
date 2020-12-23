@@ -487,4 +487,21 @@
         and a.yn = 0
     </update>
 
+
+    <!-- 根据条件查询下发的金额总和-->
+    <select id="sumMoney" parameterType="Object" resultType="java.lang.String">
+        select ifnull(sum(convert(a.order_money,decimal(19,2))), '0.00') as money from tb_fr_withdraw a
+        where 1=1
+        <if test="orderStatus != 0 and orderStatus >0 " >
+            and a.order_status = #{orderStatus}
+        </if>
+        <if test="outType != 0 and outType >0 " >
+            and a.out_type = #{outType}
+        </if>
+        <if test="merchantId != 0 and merchantId >0 " >
+            and a.merchant_id = #{merchantId}
+        </if>
+        and a.yn = 0
+    </select>
+
 </mapper>

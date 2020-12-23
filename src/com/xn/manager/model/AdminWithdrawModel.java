@@ -536,4 +536,20 @@ public class AdminWithdrawModel extends BasePage implements Serializable {
     public void setCurdayEnd(int curdayEnd) {
         this.curdayEnd = curdayEnd;
     }
+
+    public String getMerchantName() {
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
 }

@@ -19,4 +19,14 @@ public interface AdminWithdrawService<T> extends BaseService<T> {
      * @date 2020/12/19 14:06
      */
     public int updateOutType(AdminWithdrawModel model);
+
+
+    /**
+     * @Description: 根据条件查询下发的金额总和
+     * @param model
+     * @return
+     * @author yoko
+     * @date 2020/12/2 16:28
+     */
+    public String sumMoney(AdminWithdrawModel model);
 }
