@@ -19,6 +19,7 @@ var account = {
         {"data":"accountName", },
         {"data":"openTimeSlot", },
         {"data":"smoney", },
+        {"data":"snum", },
         {"data":"isOk",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';

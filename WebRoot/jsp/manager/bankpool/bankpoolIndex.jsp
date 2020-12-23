@@ -61,6 +61,6 @@
     </table>
 </div>
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/common/common2.js'></script>
-<script type='text/javascript' charset="utf-8" src='${ctxData}js/manager/channelbankpool/channelbankpoolQuery.js'></script>
+<script type='text/javascript' charset="utf-8" src='${ctxData}js/manager/bankpool/bankpool.js'></script>
 </body>
 </html>

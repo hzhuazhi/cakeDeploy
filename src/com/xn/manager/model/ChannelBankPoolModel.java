@@ -52,6 +52,7 @@ public class ChannelBankPoolModel extends BasePage {
     private String bankName;
     private String accountName;
     private String smoney;
+    private Integer snum;
     private Integer isOk;
     private Integer isArrears;
     private Integer heartbeatStatus;
@@ -354,5 +355,13 @@ public class ChannelBankPoolModel extends BasePage {
 
     public void setSmoney(String smoney) {
         this.smoney = smoney;
+    }
+
+    public Integer getSnum() {
+        return snum;
+    }
+
+    public void setSnum(Integer snum) {
+        this.snum = snum;
     }
 }

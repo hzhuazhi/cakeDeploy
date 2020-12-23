@@ -36,6 +36,7 @@ public class ChannelBankModel extends BasePage {
      * 当日放量金额
      */
     private String smoney;
+    private String snum;
 
     /**
      * 商户ID：对应表tb_fr_channel的主键ID
@@ -347,6 +348,14 @@ public class ChannelBankModel extends BasePage {
 
     public void setCurday(Integer curday) {
         this.curday = curday;
+    }
+
+    public String getSnum() {
+        return snum;
+    }
+
+    public void setSnum(String snum) {
+        this.snum = snum;
     }
 
     public Integer getCheckStatus() {
