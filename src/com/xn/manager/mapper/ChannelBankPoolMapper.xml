@@ -25,6 +25,7 @@
         <result column="bk_use_status" property="bkUseStatus" jdbcType="BIT" />
         <result column="check_status" property="checkStatus" jdbcType="BIT" />
         <result column="smoney" property="smoney" jdbcType="BIT" />
+        <result column="snum" property="snum" jdbcType="BIT" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -267,7 +268,8 @@
             e.use_status  as mb_use_status,
             b.use_status as  bk_use_status,
             b.check_status  as check_status,
-            (select  sum(money)  from  tb_fr_bank_collection  where curday=#{curday} and bank_id=b.id ) smoney
+            (select  sum(money)  from  tb_fr_bank_collection  where curday=#{curday} and bank_id=b.id ) smoney,
+            (select  count(id)  from  tb_fr_bank_collection  where curday=#{curday} and bank_id=b.id ) snum
          from tb_fr_channel_bank_pool a left JOIN  tb_fr_bank b
          on  a.bank_id =b.id
          left join  tb_fr_merchant  c

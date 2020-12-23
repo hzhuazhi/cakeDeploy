@@ -16,6 +16,19 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
         <result column="yn" property="yn" jdbcType="BIT" />
+        <result column="bank_card" property="bankCard" jdbcType="BIT" />
+        <result column="bank_name" property="bankName" jdbcType="BIT" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="ac_name" property="acName" jdbcType="VARCHAR" />
+        <result column="open_time_slot" property="openTimeSlot" jdbcType="VARCHAR" />
+        <result column="is_ok" property="isOk" jdbcType="VARCHAR" />
+        <result column="is_arrears" property="isArrears" jdbcType="VARCHAR" />
+        <result column="heartbeat_status" property="heartbeatStatus" jdbcType="BIT" />
+        <result column="mb_use_status" property="mbUseStatus" jdbcType="BIT" />
+        <result column="bk_use_status" property="bkUseStatus" jdbcType="BIT" />
+        <result column="check_status" property="checkStatus" jdbcType="BIT" />
+        <result column="smoney" property="smoney" jdbcType="BIT" />
+        <result column="snum" property="snum" jdbcType="BIT" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -29,6 +42,9 @@
         <trim  suffixOverrides="," >
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
+            </if>
+            <if test="bankId != 0 and bankId >0 " >
+                and a.bank_id = #{bankId}
             </if>
             and a.yn =  0
         </trim>
@@ -239,6 +255,46 @@
     </update>
 
 
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause_A">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="acName != null and acName != '' " >
+                and c.ac_name = #{acName}
+            </if>
+            <if test="bankName != null and bankName != '' " >
+                and b.bank_name = #{bankName}
+            </if>
+            <if test="bankCard != null and bankCard != '' " >
+                and b.bank_card = #{bankCard}
+            </if>
+            <if test="accountName != null and accountName != '' " >
+                and a.account_name = #{accountName}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 通过id 查询那些银行卡 -->
+    <select id="byIdQueryBank" resultMap="dataMap"  parameterType="Object" >
+        select  a.id,c.ac_name,a.bank_id,b.bank_name,b.bank_card,b.account_name,d.open_time_slot,b.is_ok,e.is_arrears,
+            e.heartbeat_status,
+            e.use_status  as mb_use_status,
+            b.use_status as  bk_use_status,
+            b.check_status  as check_status,
+            (select  sum(money)  from  tb_fr_bank_collection  where curday=#{curday} and bank_id=b.id ) smoney,
+            (select  count(id)  from  tb_fr_bank_collection  where curday=#{curday} and bank_id=b.id ) snum
+         from tb_fr_bank_pool a left JOIN  tb_fr_bank b
+         on  a.bank_id =b.id
+         left join  tb_fr_merchant  c
+		  on  b.merchant_id = c.id
+		  LEFT  JOIN  tb_fr_bank_strategy  d
+			on   b.id=d.bank_id
+			LEFT  JOIN  tb_fr_mobile_card  e
+			on   b.mobile_card_id=e.id
+        <include refid="Example_Where_Clause_A"/>
+    </select>
 
 
 </mapper>

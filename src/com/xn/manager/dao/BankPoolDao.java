@@ -2,6 +2,7 @@ package com.xn.manager.dao;
 
 import com.xn.common.dao.BaseDao;
 import com.xn.manager.model.BankModel;
+import com.xn.manager.model.BankPoolModel;
 
 import java.util.List;
 
@@ -10,4 +11,5 @@ import java.util.List;
  * @create 2018-09-11 14:42
  **/
 public interface BankPoolDao<T> extends BaseDao<T> {
+    List<BankPoolModel>  byIdQueryBank(BankPoolModel bankPoolModel);
 }

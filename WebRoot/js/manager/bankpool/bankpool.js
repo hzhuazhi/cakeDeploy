@@ -3,13 +3,13 @@ var datatable;
 var account = {
     //地址
     url:{
-        list_url : ctx + '/channelbank/list.do',
-        dataList_url : ctx + "/channelbank/queryIdList.do",
-        add_url : ctx+ "/channelbank/add.do",
-        update_url : ctx+ "/channelbank/update.do",
-        queryId_url: ctx+ "/channelbank/getId.do",
-        delete_url: ctx+ "/channelbank/delete.do",
-        manyOperation_url: ctx+ "/channelbank/manyOperation.do"
+        list_url : ctx + '/bankpool/list.do',
+        dataList_url : ctx + "/bankpool/dataList.do",
+        add_url : ctx+ "/bankpool/add.do",
+        update_url : ctx+ "/bankpool/update.do",
+        queryId_url: ctx+ "/bankpool/getId.do",
+        delete_url: ctx+ "/bankpool/delete.do",
+        manyOperation_url: ctx+ "/bankpool/manyOperation.do"
     },
     //列表显示参数
     list:[
@@ -109,7 +109,7 @@ var account = {
         common.updateUrl(this.url);
         //添加
         $(".addbtn").live("click",function(){
-            window.location.href = ctx + "/channelbank/jumpAdd.do";
+            window.location.href = ctx + "/bankpool/jumpAdd.do";
         });
 
         // 初始化列表数据
@@ -123,7 +123,7 @@ var account = {
     //下拉框数据填充
     //查询所有代理-无分页-下拉框选项:
     queryBankAll:function(){
-        var url = ctx + "/channelbank/queryNotChannelBankList.do";
+        var url = ctx + "/bankpool/queryNotChannelBankList.do";
         var data = {
         };
         common.ajax(url,data,function(data){
@@ -166,7 +166,7 @@ $('#btnQuery').click(function() {
         }
     });
 
-    var url = ctx + "/channelbank/add.do";
+    var url = ctx + "/bankpool/add.do";
     var data = {
         "channelId":$("#channelId").val(),
         "bankIds":str
@@ -194,7 +194,7 @@ $("#butReset").click(function(){
 });
 //删除
 $(".dataTableResetBtn").live("click",function(){
-    var url = ctx + "/channelbank/delete.do";
+    var url = ctx + "/bankpool/delete.do";
     var id = $(this).attr('directkey');
     var data = {
         id:id,

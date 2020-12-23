@@ -46,6 +46,7 @@
             <th width="150">开户人</th>
             <th width="150">放量时间</th>
             <th width="150">成功金额</th>
+            <th width="150">成功条数</th>
             <th width="150">测试状态</th>
             <th width="150">手机欠费状态</th>
             <th width="150">心跳</th>
