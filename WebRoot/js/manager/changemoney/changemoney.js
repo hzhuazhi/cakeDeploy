@@ -41,12 +41,12 @@ var account = {
                 $(nTd).html(html);
             }
         },
-        {"data":"changeField",
+        {"data":"changeType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
-                if(oData.changeField==1){
+                if(oData.changeType==1){
                     html+= '<span style="color: #2f9833">加金额</span>';
-                }else if(oData.changeField==2){
+                }else if(oData.changeType==2){
                     html+= '<span style="color: #ff3710">减金额</span>';
                 }
                 $(nTd).html(html);

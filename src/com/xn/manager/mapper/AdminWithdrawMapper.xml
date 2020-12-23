@@ -86,6 +86,17 @@
             <if test="merchantId != 0 and merchantId >0 " >
                 and a.merchant_id = #{merchantId}
             </if>
+
+            <if test="inBankName != null and inBankName != '' " >
+                and a.in_bank_name = #{inBankName}
+            </if>
+            <if test="inBankCard != null and inBankCard != '' " >
+                and a.in_bank_card = #{inBankCard}
+            </if>
+            <if test="inAccountName != null and inAccountName != '' " >
+                and a.in_account_name = #{inAccountName}
+            </if>
+
             <if test="checkStatus != 0 and checkStatus >0 " >
                 and a.check_status = #{checkStatus}
             </if>

@@ -77,7 +77,8 @@
                     <div class="formCtrlDiv">
                         <div class="formCtrlDiv">
                             <select id="changeType" name="changeType" onchange="queryBankAll()">
-                                <option value="1" selected>加金额</option>
+                                <option value="0" selected="selected">=请选择=</option>
+                                <option value="1">加金额</option>
                                 <option value="2">减金额</option>
                             </select>
                         </div>

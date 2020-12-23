@@ -98,7 +98,7 @@
             <th width="150">订单状态</th>
             <th width="150">是否分配</th>
             <th width="150">创建日期</th>
-            <th width="380">操作</th>
+            <th width="200">操作</th>
 
         </tr>
         </thead>
