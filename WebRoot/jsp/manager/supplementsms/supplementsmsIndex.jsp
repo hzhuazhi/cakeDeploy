@@ -52,18 +52,20 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <th width="150">订单号</th>
-            <th width="150">卡商</th>
-            <th width="150">银行名称</th>
+
+            <th width="130">订单号</th>
+            <th width="130">卡商</th>
+            <th width="110">银行名称</th>
             <th width="150">银行卡账号</th>
-            <th width="150">开户名</th>
-            <th width="150">短信内容</th>
-            <th width="150">订单金额</th>
-            <th width="150">日期</th>
-            <th width="150">小时</th>
-            <th width="150">分钟</th>
-            <th width="150">处理状态</th>
-            <th width="150">操作</th>
+            <th width="110">开户名</th>
+            <th width="130">短信来源</th>
+            <th width="220">短信内容</th>
+            <th width="120">订单金额</th>
+            <th width="120">日期</th>
+            <th width="70">小时</th>
+            <th width="70">分钟</th>
+            <th width="120">处理状态</th>
+            <th width="120">操作</th>
         </tr>
         </thead>
         <tbody>

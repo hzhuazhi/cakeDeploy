@@ -13,6 +13,7 @@ var account = {
         {"data":"bankName",},
         {"data":"bankCard",},
         {"data":"accountName",},
+        {"data":"smsNum",},
         {"data":"smsContent",},
         {"data":"money",},
         {"data":"curday",},
