@@ -40,20 +40,20 @@
         <thead>
         <tr>
             <%--<th width="150">名称/别名</th>--%>
-            <th width="150">卡商名称</th>
-            <th width="150">银行名称</th>
+            <th width="120">卡商名称</th>
+            <th width="110">银行名称</th>
             <th width="150">银行卡号</th>
-            <th width="150">开户人</th>
-            <th width="150">放量时间</th>
-            <th width="150">成功金额</th>
-            <th width="150">成功条数</th>
-            <th width="150">测试状态</th>
-            <th width="150">手机欠费状态</th>
-            <th width="150">心跳</th>
-            <th width="150">手机状态</th>
-            <th width="150">卡检测状态</th>
-            <th width="150">卡使用状态</th>
-            <th width="380">操作</th>
+            <th width="100">开户人</th>
+            <th width="220">放量时间</th>
+            <th width="120">成功金额</th>
+            <th width="110">成功条数</th>
+            <th width="110">测试状态</th>
+            <th width="160">手机欠费状态</th>
+            <th width="80">心跳</th>
+            <th width="100">手机状态</th>
+            <th width="130">卡检测状态</th>
+            <th width="130">卡使用状态</th>
+            <th width="100">操作</th>
         </tr>
         </thead>
         <tbody>
