@@ -10,6 +10,16 @@ import java.util.List;
  * @create 2018-09-11 14:42
  **/
 public interface OrderDao<T> extends BaseDao<T> {
+
+    /**
+     * @Description: 分页-每张卡的成功率情况的数据总数
+     * @param model
+     * @return
+     * @author yoko
+     * @date 2020/8/25 20:50
+     */
+    public int queryByListReleaseCount(OrderModel model);
+
     /**
      * 每张卡的成功率情况
      * @param orderModel

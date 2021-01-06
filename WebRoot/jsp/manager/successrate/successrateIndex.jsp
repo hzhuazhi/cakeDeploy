@@ -16,6 +16,11 @@
                     <div id="divAccount">
                     </div>
                 </div>
+                <div class = "condQueryLabelDiv">商户：</div>
+                <div class="formCtrlDiv">
+                    <div id="divChannel">
+                    </div>
+                </div>
                 <div class = "condQueryLabelDiv">银行卡号：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="bankCard" name ="bankCard">
@@ -27,6 +32,16 @@
                 <div class = "condQueryLabelDiv">日期：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="curday" name ="curday" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" >
+                </div>
+
+                <div class = "condQueryLabelDiv">开始时间：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="startTime" name ="startTime" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
+                </div>
+
+                <div class = "condQueryLabelDiv">截止时间：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="endTime" name ="endTime" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" >
                 </div>
 
                 <div class="searchdiv">
@@ -51,12 +66,12 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <th width="150">银行id</th>
-            <th width="150">银行卡号</th>
-            <th width="150">收款人</th>
-            <th width="150">银卡类型</th>
-            <th width="150">卡商</th>
-            <th width="150">时间</th>
+            <th width="120">银行id</th>
+            <th width="180">银行卡号</th>
+            <th width="120">收款人</th>
+            <th width="130">银卡类型</th>
+            <th width="130">卡商</th>
+            <%--<th width="150">时间</th>--%>
             <th width="150">任务数</th>
             <th width="150">成功数</th>
             <th width="150">任务成功率</th>

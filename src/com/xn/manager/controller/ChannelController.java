@@ -82,6 +82,22 @@ public class ChannelController extends BaseController {
         HtmlUtil.writerJson(response, dataList);
     }
 
+
+    /**
+     *
+     * 获取表格数据列表-无分页-统计成功率给卡商查询
+     */
+    @RequestMapping("/dataAllListByMerchant")
+    public void dataAllListByMerchant(HttpServletRequest request, HttpServletResponse response, ChannelModel model) throws Exception {
+        List<ChannelModel> dataList = new ArrayList<ChannelModel>();
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            dataList = channelService.queryAllList(model);
+        }
+        HtmlUtil.writerJson(response, dataList);
+    }
+
+
     /**
      * 获取新增页面
      */

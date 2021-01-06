@@ -36,22 +36,27 @@ public class OrderServiceImpl<T> extends BaseServiceImpl<T> implements OrderServ
 
     @Override
     public List<OrderModel> queryByListRelease(OrderModel orderModel) {
-        List<OrderModel>  listRs = new ArrayList<>();
-        List<OrderModel>  countlist =orderDao.queryByListReleaseByCount(orderModel);
-        orderModel.getPage().setRowCount(countlist.size());
-        orderModel.setRowCount(countlist.size());
-        List<OrderModel>  list =orderDao.queryByListRelease(orderModel);
+//        List<OrderModel>  listRs = new ArrayList<>();
+//        List<OrderModel>  countlist =orderDao.queryByListReleaseByCount(orderModel);
+//        orderModel.getPage().setRowCount(countlist.size());
+//        orderModel.setRowCount(countlist.size());
+//        List<OrderModel>  list =orderDao.queryByListRelease(orderModel);
+//
+//        for(OrderModel orderModel1:list){
+//            String  successRateTask =PublicMethod.accuracy(orderModel1.getSuccessNum()*1.0,orderModel1.getTaskNum()*1.0,2);
+//            orderModel1.setSuccessRateTask(successRateTask);
+//            String  successRateMoney =PublicMethod.accuracy(orderModel1.getNumMoney()*1.0,orderModel1.getTaskMoney()*1.0,2);
+//            orderModel1.setSuccessRateMoney(successRateMoney);
+//            listRs.add(orderModel1);
+//        }
 
 
-        for(OrderModel orderModel1:list){
-            String  successRateTask =PublicMethod.accuracy(orderModel1.getSuccessNum()*1.0,orderModel1.getTaskNum()*1.0,2);
-            orderModel1.setSuccessRateTask(successRateTask);
-            String  successRateMoney =PublicMethod.accuracy(orderModel1.getNumMoney()*1.0,orderModel1.getTaskMoney()*1.0,2);
-            orderModel1.setSuccessRateMoney(successRateMoney);
-            listRs.add(orderModel1);
-        }
-        return list;
+        Integer rowCount = orderDao.queryByListReleaseCount(orderModel);
+        orderModel.setRowCount(rowCount);
+        return orderDao.queryByListRelease(orderModel);
     }
+
+
 
     @Override
     public List<OrderModel> queryByListReleaseByCount(OrderModel orderModel) {

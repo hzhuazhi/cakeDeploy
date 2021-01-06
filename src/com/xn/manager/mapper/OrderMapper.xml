@@ -50,6 +50,9 @@
         <result column="ac_name" property="acName" jdbcType="BIT" />
 
         <result column="channel_order_no" property="channelOrderNo" jdbcType="VARCHAR" />
+
+        <result column="success_rate_task" property="successRateTask" jdbcType="VARCHAR" />
+        <result column="success_rate_money" property="successRateMoney" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
@@ -521,63 +524,194 @@
     </update>
 
 
+    <!--<sql id="Example_Where_Clause_Release">-->
+        <!--where 1=1-->
+        <!--<trim  suffixOverrides="," >-->
+            <!--<if test="bankCard != null and bankCard != '' " >-->
+                <!--and a.bank_card = #{bankCard}-->
+            <!--</if>-->
+            <!--<if test="accountName != null and accountName != ''  " >-->
+                <!--and a.account_name = #{accountName}-->
+            <!--</if>-->
+            <!--<if test="merchantId != 0 and merchantId >0 " >-->
+                <!--and a.merchant_id = #{merchantId}-->
+            <!--</if>-->
+            <!--<if test="merchantSiteId != 0 and merchantSiteId >0 " >-->
+                <!--and a.merchant_site_id = #{merchantSiteId}-->
+            <!--</if>-->
+            <!--<if test="curday != 0 and curday >0 " >-->
+                <!--and a.curday = #{curday}-->
+            <!--</if>-->
+
+            <!--and a.yn =  0-->
+        <!--</trim>-->
+    <!--</sql>-->
+
+
     <sql id="Example_Where_Clause_Release">
         where 1=1
         <trim  suffixOverrides="," >
+            <if test="curday != 0 and curday >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="channelId != 0 and channelId >0 " >
+                and a.channel_id = #{channelId}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
+            </if>
             <if test="bankCard != null and bankCard != '' " >
                 and a.bank_card = #{bankCard}
             </if>
             <if test="accountName != null and accountName != ''  " >
                 and a.account_name = #{accountName}
             </if>
-            <if test="merchantId != 0 and merchantId >0 " >
-                and a.merchant_id = #{merchantId}
-            </if>
-            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
-                and a.merchant_site_id = #{merchantSiteId}
-            </if>
-            <if test="curday != 0 and curday >0 " >
-                and a.curday = #{curday}
+            <if test="startTime != null and startTime != '' and  endTime != null and endTime != '' " >
+                and a.create_time>= #{startTime} and a.create_time &lt;= #{endTime}
             </if>
 
-            and a.yn =  0
         </trim>
     </sql>
 
 
+    <!-- 分页-每张卡的成功率情况的数据总数-->
+    <select id="queryByListReleaseCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1) from(
+        select a3.id as bank_id,
+        a3.bank_card,
+        a3.account_name,
+        a3.bank_name,a3.ac_name,
+        a3.task_num,a3.task_money,
+        a4.success_num,a4.num_money
+        from (
+        select a1.id,
+        a1.bank_card,
+        a1.account_name,
+        a1.bank_name,a1.ac_name,
+        a2.task_num,a2.task_money from (
+        select a.id,
+        a.bank_card,
+        a.account_name,
+        a.bank_name,b.ac_name from tb_fr_bank a left join tb_fr_merchant b on a.merchant_id = b.id
+        where 1=1 and a.id in(
+        select a.bank_id from tb_fr_order a
+        <include refid="Example_Where_Clause_Release"/>
+        and a.order_status > 1
+        and a.yn = 0
+        group by a.bank_id
+        ) and a.yn = 0
+        ) a1
+        left join (
+        select a.bank_id,count(a.id) as task_num,sum(a.order_money) as task_money from tb_fr_order a
+        <include refid="Example_Where_Clause_Release"/>
+        and a.order_status > 1
+        and a.yn = 0
+        group by a.bank_id
+        )a2
+        on a1.id = a2.bank_id
+        )a3
+        left join (
+        select a.bank_id,count(a.id) as success_num,ifnull(sum(a.order_money), '0.00') as num_money from tb_fr_order a
+        <include refid="Example_Where_Clause_Release"/>
+        and a.order_status = 4
+        and a.yn = 0
+        group by a.bank_id
+        )a4
+        on a3.id = a4.bank_id
+        order by a3.id asc
+        )a
+
+    </select>
+
+
+
     <!-- 查询分页列表 -->
     <select id="queryByListRelease" resultMap="dataMap"  parameterType="Object">
-       SELECT
-            a.bank_id,
-            a.bank_card,
-            a.account_name,
-            a.bank_name,
-            c.ac_name,
-            a.curday,
-            count( a.id ) task_num,
-            sum( a.order_money ) task_money,
-        IFNULL((SELECT count(id) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  success_num,
-        IFNULL(( SELECT sum(money) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  num_money
-        FROM
-            tb_fr_order a
-            LEFT JOIN  tb_fr_merchant  c
-            on  a.merchant_id = c.id
-            <include refid="Example_Where_Clause_Release"/>
-            GROUP BY a.bank_id
-            limit #{startIndex},#{pageSize}
+       <!--SELECT-->
+            <!--a.bank_id,-->
+            <!--a.bank_card,-->
+            <!--a.account_name,-->
+            <!--a.bank_name,-->
+            <!--c.ac_name,-->
+            <!--a.curday,-->
+            <!--count( a.id ) task_num,-->
+            <!--sum( a.order_money ) task_money,-->
+        <!--IFNULL((SELECT count(id) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  success_num,-->
+        <!--IFNULL(( SELECT sum(money) FROM tb_fr_bank_collection where bank_id=a.bank_id and  curday=#{curday}),0)  num_money-->
+        <!--FROM-->
+            <!--tb_fr_order a-->
+            <!--LEFT JOIN  tb_fr_merchant  c-->
+            <!--on  a.merchant_id = c.id-->
+            <!--<include refid="Example_Where_Clause_Release"/>-->
+            <!--GROUP BY a.bank_id-->
+            <!--limit #{startIndex},#{pageSize}-->
+
+
+
+
+        select a3.id as bank_id,
+        a3.bank_card,
+        a3.account_name,
+        a3.bank_name,a3.ac_name,
+        a3.task_num,a3.task_money,
+        a4.success_num,a4.num_money,
+        concat(round(a4.success_num/a3.task_num*100,2),'%') as success_rate_task,
+        concat(round(a4.num_money/a3.task_money*100,2),'%') as success_rate_money
+        from (
+        select a1.id,
+        a1.bank_card,
+        a1.account_name,
+        a1.bank_name,a1.ac_name,
+        a2.task_num,a2.task_money from (
+        select a.id,
+        a.bank_card,
+        a.account_name,
+        a.bank_name,b.ac_name from tb_fr_bank a left join tb_fr_merchant b on a.merchant_id = b.id
+        where 1=1 and a.id in(
+        select a.bank_id from tb_fr_order a
+        <include refid="Example_Where_Clause_Release"/>
+        and a.order_status > 1
+        and a.yn = 0
+        group by a.bank_id
+        ) and a.yn = 0
+        ) a1
+        left join (
+        select a.bank_id,count(a.id) as task_num,sum(a.order_money) as task_money from tb_fr_order a
+        <include refid="Example_Where_Clause_Release"/>
+        and a.order_status > 1
+        and a.yn = 0
+        group by a.bank_id
+        )a2
+        on a1.id = a2.bank_id
+        )a3
+        left join (
+        select a.bank_id,count(a.id) as success_num,ifnull(sum(a.order_money), '0.00') as num_money from tb_fr_order a
+        <include refid="Example_Where_Clause_Release"/>
+        and a.order_status = 4
+        and a.yn = 0
+        group by a.bank_id
+        )a4
+        on a3.id = a4.bank_id
+        order by a3.id asc
+        limit #{startIndex},#{pageSize}
     </select>
 
 
 
 
     <select id="queryByListReleaseByCount" resultMap="dataMap"  parameterType="Object">
-        SELECT
-        a.bank_id,
-        count( a.id ) task_num
-        FROM
-        tb_fr_order a
+        <!--SELECT-->
+        <!--a.bank_id,-->
+        <!--count( a.id ) task_num-->
+        <!--FROM-->
+        <!--tb_fr_order a-->
+        <!--<include refid="Example_Where_Clause_Release"/>-->
+        <!--GROUP BY a.bank_id-->
+
+        select a.bank_id,count( a.bank_id ) task_num from tb_fr_order a
         <include refid="Example_Where_Clause_Release"/>
-        GROUP BY a.bank_id
+        and a.order_status > 1
+        and a.yn = 0
     </select>
 
 </mapper>

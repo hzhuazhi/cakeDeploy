@@ -10,6 +10,7 @@ import com.xn.manager.model.OrderReplenishModel;
 import com.xn.manager.service.OrderReplenishService;
 import com.xn.manager.service.OrderService;
 import com.xn.system.entity.Account;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -82,8 +83,9 @@ public class OrderController extends BaseController {
     @RequestMapping("/dataListBankCard")
     public void dataListBankCard(HttpServletRequest request, HttpServletResponse response, OrderModel model) throws Exception {
         List<OrderModel> dataList = new ArrayList<OrderModel>();
-        if (model.getCurday()==null||model.getCurday() == 0 ){
-            model.setCurday(DateUtil.getDayNumber(new Date()));
+        if (!StringUtils.isBlank(model.getStartTime()) || !StringUtils.isBlank(model.getEndTime())){
+            // 无需做任何操作
+        }else if (model.getCurday()==null||model.getCurday() == 0 ){
             model.setCurday(DateUtil.getDayNumber(new Date()));
         }
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
@@ -110,8 +112,9 @@ public class OrderController extends BaseController {
     @RequestMapping("/dataListBankCardByCount")
     public void dataListBankCardByCount(HttpServletRequest request, HttpServletResponse response, OrderModel model) throws Exception {
         List<OrderModel> dataList = new ArrayList<OrderModel>();
-        if (model.getCurday()==null||model.getCurday() == 0 ){
-            model.setCurday(DateUtil.getDayNumber(new Date()));
+        if (!StringUtils.isBlank(model.getStartTime()) || !StringUtils.isBlank(model.getEndTime())){
+            // 无需做任何操作
+        }else if (model.getCurday()==null||model.getCurday() == 0 ){
             model.setCurday(DateUtil.getDayNumber(new Date()));
         }
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);

@@ -346,6 +346,16 @@ public class OrderModel extends BasePage {
      */
     private String channelOrderNo;
 
+    /**
+     * SQL-创建开始时间
+     */
+    private String startTime;
+
+    /**
+     * SQL-创建结束时间
+     */
+    private String endTime;
+
 
 
     public Long getId() {
@@ -747,5 +757,21 @@ public class OrderModel extends BasePage {
 
     public void setChannelOrderNo(String channelOrderNo) {
         this.channelOrderNo = channelOrderNo;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

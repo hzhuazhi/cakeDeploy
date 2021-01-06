@@ -13,7 +13,7 @@ var account = {
         {"data":"accountName",},
         {"data":"bankName",},
         {"data":"acName",},
-        {"data":"curday",},
+        // {"data":"curday",},
         {"data":"taskNum",},
         {"data":"successNum",},
         {"data":"successRateTask",},
@@ -38,9 +38,12 @@ var account = {
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
             account.condJsonData['merchantId'] = $("#merchantId").val();
+            account.condJsonData['channelId'] = $("#channelId").val();
             account.condJsonData['bankCard'] = $("#bankCard").val();
             account.condJsonData['accountName'] = $("#accountName").val();
             account.condJsonData['curday'] = $("#curday").val();
+            account.condJsonData['startTime'] = $("#startTime").val();
+            account.condJsonData['endTime'] = $("#endTime").val();
             common.showDatas(account.condJsonData,account.list);
         });
 
@@ -50,8 +53,8 @@ var account = {
             account.condJsonData['bankCard'] = "";
             account.condJsonData['accountName'] = "";
             account.condJsonData['curday'] = "";
-            account.condJsonData['curhour'] = "";
-            account.condJsonData['curminute'] = "";
+            account.condJsonData['startTime'] = "";
+            account.condJsonData['endTime'] = "";
             common.showDatas(account.condJsonData,account.list);
         });
         //删除
@@ -128,7 +131,30 @@ function queryAccountAll(){
         $("#divAccount").html(shtml);
     });
 }
+
+//下拉框数据填充
+//查询所有商户-无分页-下拉框选项:
+//商户-无分页-下拉框选项:
+function queryChannelAll(){
+    var url = ctx + "/channel/dataAllListByMerchant.do";
+    var data = {
+    };
+    common.ajax(url,data,function(data){
+        var dataList=data;
+        var shtml="";
+        shtml += "<select id='channelId' name='channelId'  class='text-input medium-input'>";
+        shtml +="<option value=''>===请选择===</option>";
+        for (var i=0;i<dataList.length>0;i++) {
+            shtml +="<option value="+dataList[i].id+">"+dataList[i].alias+"</option>";
+        }
+        shtml +="</select>";
+        $("#divChannel").html(shtml);
+    });
+}
+
+
 queryAccountAll();
+queryChannelAll();
 $(function(){
     account.indexInit();
 })
