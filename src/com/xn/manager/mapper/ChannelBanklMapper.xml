@@ -263,6 +263,7 @@
 
     <!-- 通过id 查询那些银行卡 -->
     <select id="byIdQueryBank" resultMap="dataMap"  parameterType="Object" >
+        <!--
         select  a.id,c.ac_name,a.bank_id,b.bank_name,b.bank_card,b.account_name,d.open_time_slot,b.is_ok,e.is_arrears,
             e.heartbeat_status,
             e.use_status  as mb_use_status,
@@ -280,6 +281,50 @@
 			on   b.mobile_card_id=e.id
        where  a.channel_id=#{channelId}
        and a.yn=0
+       -->
+
+
+       select a3.id,a3.bank_id,
+        a3.bank_name,a3.bank_card,a3.account_name,a3.is_ok,a3.bk_use_status,a3.check_status,
+        a3.ac_name,
+        a3.open_time_slot,
+        a3.is_arrears,a3.heartbeat_status,a3.mb_use_status,
+        a3.smoney,
+        ifnull(a4.snum, '0') as snum from (
+        select a1.id,a1.bank_id,
+        a1.bank_name,a1.bank_card,a1.account_name,a1.is_ok,a1.bk_use_status,a1.check_status,
+        a1.ac_name,
+        a1.open_time_slot,
+        a1.is_arrears,a1.heartbeat_status,a1.mb_use_status,
+        ifnull(a2.smoney, '0.00') as smoney
+        from (
+        select a.id,a.bank_id,
+        b.bank_name,b.bank_card,b.account_name,b.is_ok,b.use_status as bk_use_status,b.check_status as check_status,
+        c.ac_name,
+        d.open_time_slot,
+        e.is_arrears,e.heartbeat_status,e.use_status as mb_use_status
+        from tb_fr_channel_bank a left join tb_fr_bank b on a.bank_id = b.id
+        left join tb_fr_merchant c on b.merchant_id = c.id
+        left join tb_fr_bank_strategy d on b.id = d.bank_id and d.yn = 0
+        left join tb_fr_mobile_card e on b.mobile_card_id = e.id
+        where 1=1
+        and a.channel_id = #{channelId}
+        and a.yn = 0
+        )a1
+        left join (
+        select a.bank_id,
+        ifnull(sum(convert(a.money,decimal(19,2))), '0.00') as smoney
+        from tb_fr_bank_collection a
+        where 1=1 and a.curday = #{curday} and a.yn = 0
+        group by a.bank_id
+        )a2 on a1.bank_id = a2.bank_id
+        )a3 left join (
+        select a.bank_id,count(a.id) as snum
+        from tb_fr_bank_collection a
+        where 1=1 and a.curday = #{curday} and a.yn = 0
+        group by a.bank_id
+        )a4 on a3.bank_id = a4.bank_id
+
     </select>
 
 
