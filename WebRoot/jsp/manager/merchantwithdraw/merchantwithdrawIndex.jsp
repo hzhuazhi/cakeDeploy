@@ -44,10 +44,10 @@
             <th width="150">银行卡账号</th>
             <th width="150">开户名</th>
             <th width="150">提现金额</th>
-            <th width="150">订单状态</th>
-            <th width="150">审核状态</th>
+            <%--<th width="150">订单状态</th>--%>
+            <%--<th width="150">审核状态</th>--%>
             <th width="150">创建时间</th>
-            <th width="150">操作</th>
+            <%--<th width="150">操作</th>--%>
         </tr>
         </thead>
         <tbody>

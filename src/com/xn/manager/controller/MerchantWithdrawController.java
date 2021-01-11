@@ -134,7 +134,7 @@ public class MerchantWithdrawController extends BaseController {
 
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             bean.setOrderNo("TX"+ DateUtil.getNowPlusTimeMill());
-            bean.setWithdrawServiceCharge("5.00");
+//            bean.setWithdrawServiceCharge("5.00");
             bean.setCreateRoleId(account.getRoleId());
             bean.setCreateUserId(account.getId());
             bean.setCurday(Integer.parseInt(DateUtil.getNowShortDate()));

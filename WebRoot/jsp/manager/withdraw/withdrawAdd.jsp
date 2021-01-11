@@ -63,14 +63,14 @@
                     </div>
                 </li>
 
-                <li style="border-top: none;">
-                    <div class="formTextDiv">
-                        <span class="require" ><font color="red">*</font>提现手续费（元）</span>
-                    </div>
-                    <div class="formCtrlDiv">
-                        <input type="text" class="formInput" disabled id="withdrawServiceCharge" name="withdrawServiceCharge" value="5"	maxlength="240" />
-                    </div>
-                </li>
+                <%--<li style="border-top: none;">--%>
+                    <%--<div class="formTextDiv">--%>
+                        <%--<span class="require" ><font color="red">*</font>提现手续费（元）</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="formCtrlDiv">--%>
+                        <%--<input type="text" class="formInput" disabled id="withdrawServiceCharge" name="withdrawServiceCharge" value="5"	maxlength="240" />--%>
+                    <%--</div>--%>
+                <%--</li>--%>
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">

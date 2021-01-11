@@ -19,53 +19,53 @@ var account = {
         {"data":"outBankCard",},
         {"data":"outAccountName",},
         {"data":"money",},
-        {"data":"orderStatus",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                if(oData.orderStatus==1){
-                    html="<span>初始化</span>";
-                }else if(oData.orderStatus==2){
-                    html="<span>失败</span>";
-                }else if(oData.orderStatus==3){
-                    html="<span>失败</span>";
-                }else if(oData.orderStatus==4){
-                    html="<span style='color: #bb0000'>成功</span>";
-                }
-                $(nTd).html(html);
-            }
-        },
-        {"data":"checkStatus",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                if(oData.checkStatus==1){
-                    html="<span>初始化</span>";
-                }else if(oData.checkStatus==2){
-                    html="<span>失败</span>";
-                }else if(oData.checkStatus==3){
-                    html="<span>失败</span>";
-                }else if(oData.checkStatus==4){
-                    html="<span style='color: #bb0000'>成功</span>";
-                }
-                $(nTd).html(html);
-            }
-        },
-        {"data":"createTime",},
-        {"data":"id",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                if(oData.checkStatus!=4){
-                    html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchantwithdraw/jumpUpdate.do?id='+oData.id+'"> 审核 </a>';
-                }else{
-                    html="完成";
-                }
-
-                // if($('#roleId').val()==1){
-                //     html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchant/jumpUpdate.do?op=1&id='+oData.id+'"> 编辑 </a>'
-                //     html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
-                // }
-                $(nTd).html(html);
-            }
-        }
+        // {"data":"orderStatus",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html = '';
+        //         if(oData.orderStatus==1){
+        //             html="<span>初始化</span>";
+        //         }else if(oData.orderStatus==2){
+        //             html="<span>失败</span>";
+        //         }else if(oData.orderStatus==3){
+        //             html="<span>失败</span>";
+        //         }else if(oData.orderStatus==4){
+        //             html="<span style='color: #bb0000'>成功</span>";
+        //         }
+        //         $(nTd).html(html);
+        //     }
+        // },
+        // {"data":"checkStatus",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html = '';
+        //         if(oData.checkStatus==1){
+        //             html="<span>初始化</span>";
+        //         }else if(oData.checkStatus==2){
+        //             html="<span>失败</span>";
+        //         }else if(oData.checkStatus==3){
+        //             html="<span>失败</span>";
+        //         }else if(oData.checkStatus==4){
+        //             html="<span style='color: #bb0000'>成功</span>";
+        //         }
+        //         $(nTd).html(html);
+        //     }
+        // },
+        {"data":"createTime",}
+        // {"data":"id",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html = '';
+        //         if(oData.checkStatus!=4){
+        //             html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchantwithdraw/jumpUpdate.do?id='+oData.id+'"> 审核 </a>';
+        //         }else{
+        //             html="完成";
+        //         }
+        //
+        //         // if($('#roleId').val()==1){
+        //         //     html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/merchant/jumpUpdate.do?op=1&id='+oData.id+'"> 编辑 </a>'
+        //         //     html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
+        //         // }
+        //         $(nTd).html(html);
+        //     }
+        // }
 
     ],
     // 查询条件，aoData是必要的。其他的就是对应的实体类字段名，因为条件查询是把数据封装在实体类中的。

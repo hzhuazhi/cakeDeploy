@@ -22,13 +22,14 @@ var account = {
         {"data":"balance",},
         {"data":"lockMoney",},
         {"data":"totalProfit",},
-        {"data":"availableMoney",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
-                    html+= '<span style="color: #bb0000">'+oData.availableMoney+'</span>';
-                $(nTd).html(html);
-            }
-        },
+        // {"data":"availableMoney",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html = '';
+        //             html+= '<span style="color: #bb0000">'+oData.availableMoney+'</span>';
+        //         $(nTd).html(html);
+        //     }
+        // },
+        {"data":"profit",},
         {"data":"merchantType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
