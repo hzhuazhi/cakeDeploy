@@ -104,7 +104,7 @@
                         <span class="require" >备注</span>
                     </div>
                     <div class="formCtrlDiv">
-                        <input type="text" class="formInput" id="dataExplain" name="dataExplain"	maxlength="240" />
+                        <textarea id="remark" name="remark" cols="70" rows="9"></textarea>
                     </div>
                 </li>
 

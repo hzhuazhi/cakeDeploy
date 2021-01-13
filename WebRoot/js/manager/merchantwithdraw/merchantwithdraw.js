@@ -19,21 +19,21 @@ var account = {
         {"data":"outBankCard",},
         {"data":"outAccountName",},
         {"data":"money",},
-        // {"data":"orderStatus",
-        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-        //         var html = '';
-        //         if(oData.orderStatus==1){
-        //             html="<span>初始化</span>";
-        //         }else if(oData.orderStatus==2){
-        //             html="<span>失败</span>";
-        //         }else if(oData.orderStatus==3){
-        //             html="<span>失败</span>";
-        //         }else if(oData.orderStatus==4){
-        //             html="<span style='color: #bb0000'>成功</span>";
-        //         }
-        //         $(nTd).html(html);
-        //     }
-        // },
+        {"data":"orderStatus",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.orderStatus==1){
+                    html="<span>初始化</span>";
+                }else if(oData.orderStatus==2){
+                    html="<span>失败</span>";
+                }else if(oData.orderStatus==3){
+                    html="<span>失败</span>";
+                }else if(oData.orderStatus==4){
+                    html="<span style='color: #bb0000'>成功</span>";
+                }
+                $(nTd).html(html);
+            }
+        },
         // {"data":"checkStatus",
         //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
         //         var html = '';
@@ -49,6 +49,8 @@ var account = {
         //         $(nTd).html(html);
         //     }
         // },
+        {"data":"remark",},
+        {"data":"dataExplain",},
         {"data":"createTime",}
         // {"data":"id",
         //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

@@ -38,14 +38,16 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <th width="150">订单号</th>
-            <th width="150">归属卡商</th>
-            <th width="150">银行名称</th>
-            <th width="150">银行卡账号</th>
-            <th width="150">开户名</th>
-            <th width="150">提现金额</th>
-            <%--<th width="150">订单状态</th>--%>
+            <th width="130">订单号</th>
+            <th width="110">归属卡商</th>
+            <th width="110">银行名称</th>
+            <th width="130">银行卡账号</th>
+            <th width="110">开户名</th>
+            <th width="110">提现金额</th>
+            <th width="100">订单状态</th>
             <%--<th width="150">审核状态</th>--%>
+            <th width="170">备注</th>
+            <th width="200">数据说明</th>
             <th width="150">创建时间</th>
             <%--<th width="150">操作</th>--%>
         </tr>
