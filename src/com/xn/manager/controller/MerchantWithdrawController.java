@@ -124,13 +124,16 @@ public class MerchantWithdrawController extends BaseController {
         if(list.size()<=0||list.get(0).getAvailableMoney().equals("")){
             sendFailureMessage(response,"当前不能提现，请稍后再试！");
             return;
-        }else if(list.get(0).getAvailableMoney().indexOf("-")>=0){
-            sendFailureMessage(response,"没有可用余额进行提现！");
-            return;
-        } else if(!StringUtil.getBigDecimalSubtract(list.get(0).getAvailableMoney(),bean.getMoney())){
-            sendFailureMessage(response,"可提现金额少于提现金额，请修改金额以后再试！");
-            return;
         }
+
+//        else if(list.get(0).getAvailableMoney().indexOf("-")>=0){
+//            sendFailureMessage(response,"没有可用余额进行提现！");
+//            return;
+//        }
+//        else if(!StringUtil.getBigDecimalSubtract(list.get(0).getAvailableMoney(),bean.getMoney())){
+//            sendFailureMessage(response,"可提现金额少于提现金额，请修改金额以后再试！");
+//            return;
+//        }
 
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             bean.setOrderNo("TX"+ DateUtil.getNowPlusTimeMill());

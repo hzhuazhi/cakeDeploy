@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.BankLeadLinkDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.BankLeadLinkModel" >
+        <id column="id" property="id" />
+        <result column="alias" property="alias"/>
+        <result column="bank_lead_id" property="bankLeadId"/>
+        <result column="bank_id" property="bankId" />
+        <result column="bank_name" property="bankName" />
+        <result column="bank_card" property="bankCard" />
+        <result column="subbranch_name" property="subbranchName" />
+        <result column="account_name" property="accountName" />
+        <result column="bank_code" property="bankCode" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="remark" property="remark" />
+        <result column="use_status" property="useStatus" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="ts_time" property="tsTime" />
+        <result column="yn" property="yn" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="merchant_name" property="merchantName" />
+        <result column="mobile_card_id" property="mobileCardId" />
+        <result column="phone_num" property="phoneNum" />
+        <result column="bank_lead_card" property="bankLeadCard" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+        a.id,a.alias,a.bank_lead_id,a.bank_id,
+        b.bank_card as bank_lead_card,
+        c.bank_name,c.bank_card,c.subbranch_name,c.account_name,c.bank_code,
+        d.alias as merchant_name,
+        e.phone_num
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="bankLeadId != 0 and bankLeadId >0 " >
+                and a.bank_lead_id = #{bankLeadId}
+            </if>
+            <if test="bankId != 0 and bankId >0 " >
+                and a.bank_id = #{bankId}
+            </if>
+            <if test="bankLeadCard != null and bankLeadCard != '' " >
+                and b.bank_card = #{bankLeadCard}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and b.merchant_id = #{merchantId}
+            </if>
+            <if test="bankCard != null and bankCard != '' " >
+                and c.bank_card = #{bankCard}
+            </if>
+            <if test="accountName != null and accountName != '' " >
+                and c.account_name = #{accountName}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and c.merchant_id = #{merchantId}
+            </if>
+            <if test="merchantName != null and merchantName !='' " >
+                and d.alias = #{merchantName}
+            </if>
+            <if test="phoneNum != null and phoneNum != '' " >
+                and e.phone_num = #{phoneNum}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_bank_lead_link a left join tb_fr_bank_lead b on a.bank_lead_id = b.id
+        left join tb_fr_bank c on a.bank_id = c.id
+        left join tb_fr_merchant d on c.merchant_id = d.id
+        left join tb_fr_mobile_card e on c.mobile_card_id = e.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_lead_link a left join tb_fr_bank_lead b on a.bank_lead_id = b.id
+        left join tb_fr_bank c on a.bank_id = c.id
+        left join tb_fr_merchant d on c.merchant_id = d.id
+        left join tb_fr_mobile_card e on c.mobile_card_id = e.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_lead_link a left join tb_fr_bank_lead b on a.bank_lead_id = b.id
+        left join tb_fr_bank c on a.bank_id = c.id
+        left join tb_fr_merchant d on c.merchant_id = d.id
+        left join tb_fr_mobile_card e on c.mobile_card_id = e.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+    </select>
+
+
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_lead_link a left join tb_fr_bank_lead b on a.bank_lead_id = b.id
+        left join tb_fr_bank c on a.bank_id = c.id
+        left join tb_fr_merchant d on c.merchant_id = d.id
+        left join tb_fr_mobile_card e on c.mobile_card_id = e.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank_lead_link a left join tb_fr_bank_lead b on a.bank_lead_id = b.id
+        left join tb_fr_bank c on a.bank_id = c.id
+        left join tb_fr_merchant d on c.merchant_id = d.id
+        left join tb_fr_mobile_card e on c.mobile_card_id = e.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_bank_lead
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="alias != null and alias != ''" >
+                alias,
+            </if>
+            <if test="bankLeadId != 0 and bankLeadId >0" >
+                bank_lead_id,
+            </if>
+            <if test="bankId != 0 and bankId >0" >
+                bank_id,
+            </if>
+            <if test="remark != null and remark != ''" >
+                remark,
+            </if>
+            <if test="useStatus != 0 and useStatus >0" >
+                use_status,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="alias != null and alias != ''" >
+                <![CDATA[  #{alias}, ]]>
+            </if>
+            <if test="bankLeadId != 0 and bankLeadId >0" >
+                <![CDATA[  #{bankLeadId}, ]]>
+            </if>
+            <if test="bankId != 0 and bankId >0" >
+                <![CDATA[  #{bankId}, ]]>
+            </if>
+            <if test="remark != null and remark != ''" >
+                <![CDATA[  #{remark}, ]]>
+            </if>
+            <if test="useStatus != 0 and useStatus >0" >
+                <![CDATA[  #{useStatus}, ]]>
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_bank_lead a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="alias != null" >
+                a.alias = #{alias},
+            </if>
+            <if test="bankLeadId != 0 and bankLeadId >0" >
+                a.bank_lead_id = #{bankLeadId},
+            </if>
+            <if test="bankId != 0 and bankId >0" >
+                a.bank_id = #{bankId},
+            </if>
+            <if test="remark != null and remark != ''" >
+                a.remark = #{remark},
+            </if>
+            <if test="useStatus != 0 and useStatus >0" >
+                a.use_status = #{useStatus},
+            </if>
+            <if test="phoneNum != null and phoneNum != ''" >
+                a.phone_num = #{phoneNum},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_bank_lead a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="useStatus != 0 and useStatus >0 " >
+                a.use_status=#{useStatus},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_bank_lead a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+</mapper>
