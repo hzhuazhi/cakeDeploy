@@ -39,11 +39,12 @@
 
         <div class="h_wrap">
             <div class="h_item " id="div_phone" style="font-size: 20px;color: #110302" onclick="queryPhone()"><strong id="sphone">手机号异常数:0</strong></div>
-            <div class="h_item " id="div_merchantReplenish" style="font-size: 20px;color: #110302" onclick="queryMerchantReplenish()"><strong id="sbank">失效的银行卡:0</strong></div>
+            <%--<div class="h_item " id="div_merchantReplenish" style="font-size: 20px;color: #110302" onclick="queryMerchantReplenish()"><strong id="sbank">失效的银行卡:0</strong></div>--%>
             <%--<c:if test="${ACCOUNT.roleId==1}">--%>
                 <%--<div class="h_item " id="div_sms" style="font-size: 20px;color: #110302;" onclick="querySmsMessageNum()"><strong id="ssms">短信未匹配数:0</strong></div>--%>
             <%--</c:if>--%>
             <div class="h_item " id="div_withdraw" style="font-size: 20px;color: #110302;" onclick="queryWithdraw()"><strong id="spaymentnum">未处理下发条数:0</strong></div>
+            <div class="h_item " id="div_bank" style="font-size: 20px;color: #110302;" onclick="queryBank()"><strong id="banknum">需要换卡条数:0</strong></div>
         </div>
     </div>
 

@@ -26,6 +26,9 @@
         <result column="is_arrears" property="isArrears" jdbcType="BIT" />
         <result column="check_status" property="checkStatus" jdbcType="BIT" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="check_change" property="checkChange" jdbcType="VARCHAR" />
+        <result column="phone_device_num" property="phoneDeviceNum" jdbcType="VARCHAR" />
+        <result column="lead_bank_card" property="leadBankCard" jdbcType="VARCHAR" />
         <result column="is_ok" property="isOk" jdbcType="BIT" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="use_status" property="useStatus" jdbcType="BIT" />
@@ -36,7 +39,6 @@
         <result column="phone_num" property="phoneNum" jdbcType="BIT" />
         <result column="card_site_id" property="cardSiteId" jdbcType="BIT" />
         <result column="account_id" property="cardSiteId" jdbcType="BIT" />
-
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
@@ -44,7 +46,7 @@
         a.id, a.alias, a.mobile_card_id,  a.merchant_id,a.bank_type_id,  a.bank_name, a.bank_card, a.subbranch_name,
         a.account_name, a.bank_code, a.province, a.city, a.sms_num, a.last_num, a.balance, a.in_day_money, a.in_month_money,
         a.out_day_money, a.out_month_money, a.is_arrears, a.check_status, a.data_explain, a.is_ok, a.remark,
-        a.use_status, a.create_time, a.update_time, a.ts_time, a.yn, a.phone_num,a.merchant_site_id,
+        a.use_status, a.create_time, a.update_time, a.lead_bank_card,a.ts_time,a.check_change,a.phone_device_num, a.yn, a.phone_num,a.merchant_site_id,
         b.ac_name as merchant_name
     </sql>
 
@@ -96,6 +98,14 @@
 
             <if test="merchantName != null and merchantName !='' " >
                 and b.ac_name = #{merchantName}
+            </if>
+
+            <if test="statusTwo != 0 and statusTwo >0 and  statusThree != 0 and statusThree >0 " >
+                and (a.change_status = #{statusTwo}  or a.change_status = #{statusThree} )
+            </if>
+
+            <if test="changeTime != null and changeTime != '' " >
+                and (a.change_time = #{changeTime} or a.change_time is  null )
             </if>
 
             and a.yn =  0
@@ -268,6 +278,9 @@
             <if test="merchantSiteId != null" >
                 merchant_site_id,
             </if>
+            <if test="leadBankCard != null" >
+                lead_bank_card,
+            </if>
             create_time,
         </trim>
         values
@@ -354,6 +367,9 @@
             <if test="merchantSiteId != null" >
                 #{merchantSiteId,jdbcType=BIT},
             </if>
+            <if test="leadBankCard != null" >
+                #{leadBankCard,jdbcType=BIT},
+            </if>
             <![CDATA[  NOW(), ]]>
         </trim>
     </insert>
@@ -431,6 +447,18 @@
             </if>
             <if test="phoneNum != null" >
                 phone_num = #{phoneNum,jdbcType=BIT},
+            </if>
+            <if test="phoneDeviceNum != null" >
+                phone_device_num = #{phoneDeviceNum,jdbcType=VARCHAR},
+            </if>
+            <if test="changeStatus != null" >
+                change_status = #{changeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="checkChange != null" >
+                check_change = #{checkChange,jdbcType=VARCHAR},
+            </if>
+            <if test="leadBankCard != null" >
+                lead_bank_card = #{leadBankCard,jdbcType=VARCHAR},
             </if>
             a.update_time = NOW(),
         </trim>

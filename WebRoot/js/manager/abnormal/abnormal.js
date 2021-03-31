@@ -33,11 +33,11 @@ function  queryList(){
                 $('#div_phone').attr("class","h_item h_item1");
             }
 
-            if(data.merchantReplenishNum==0){
-                $('#div_merchantReplenish').attr("class","h_item");
-            }else if(data.bankNum!=0){
-                $('#div_merchantReplenish').attr("class","h_item h_item1");
-            }
+            // if(data.merchantReplenishNum==0){
+            //     $('#div_merchantReplenish').attr("class","h_item");
+            // }else if(data.bankNum!=0){
+            //     $('#div_merchantReplenish').attr("class","h_item h_item1");
+            // }
 
             if(data.withdrawNum==0){
                 $('#div_withdraw').attr("class","h_item");
@@ -45,9 +45,17 @@ function  queryList(){
                 $('#div_withdraw').attr("class","h_item h_item1");
             }
 
+
+            if(data.bankNum==0){
+                $('#div_bank').attr("class","h_item");
+            }else if(data.bankNum!=0){
+                $('#div_bank').attr("class","h_item h_item1");
+            }
+
             $("#sphone").text("手机号异常数:"+data.phoneNum);
-            $("#sbank").text("需要补单数据:"+data.merchantReplenishNum);
+            // $("#sbank").text("需要补单数据:"+data.merchantReplenishNum);
             $("#spaymentnum").text("未处理下发条数:"+data.withdrawNum);
+            $("#banknum").text("需要换卡条数:"+data.bankNum);
 
             if(data.phoneNum!=0||data.merchantReplenishNum!=0||data.withdrawNum!=0){
                 audioPlay();
@@ -155,6 +163,51 @@ function  queryWithdraw(){
 
         }
     })
+}
+
+
+function queryBank(){
+    var condJsonData={
+    }
+    let  table='';
+    $.ajax({
+        url: ctx+ '/bank/queryReplaceList.do',
+        type: 'post',
+        data:condJsonData,
+        // 成功执行
+        success (data) {
+            // alert(data.rows.length);
+            table+='<table class="datatable tables">';
+            table+='<thead>';
+            table+='<tr>';
+            table+='<td><b>银行名称</b></td>';
+            table+='<td><b>银行卡账号</b></td>';
+            table+='<td><b>原卡号后4位</b></td>';
+            table+='<td><b>开户名</b></td>';
+            table+='<td><b>换卡原因</b></td>';
+            table+='<td><b>绑定设备号</b></td>';
+            table+='<td><b>操作</b></td>';
+            table+='</tr>';
+            table+='</thead>';
+            for (var i=0;i<data.rows.length;i++){
+                table+='<tr>';
+                table+='<td>'+data.rows[i].bankName+'</td>';
+                table+='<td>'+data.rows[i].bankCard+'</td>';
+                table+='<td>'+data.rows[i].leadBankCard+'</td>';
+                table+='<td>'+data.rows[i].accountName+'</td>';
+                table+='<td><strong style="color: #bb0000">'+data.rows[i].checkChange+'</strong></td>';
+                table+='<td><strong style="color: #bb0000">'+data.rows[i].phoneDeviceNum+'</strong></td>';
+                table+='<td> <a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/bank/jumpBankUpdate.do?id='+data.rows[i].id+'"> 修改卡号 </a></td>';
+                table+='</tr>';
+            }
+            table+='</table>';
+            $("#tables").html(table);
+        }
+    })
+
+
+
+
 }
 
 /***

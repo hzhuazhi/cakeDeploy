@@ -102,6 +102,7 @@ public class BankServiceImpl<T> extends BaseServiceImpl<T> implements BankServic
                     bankModel.setBankCode(queryBean1.getBankCode());
                     bankModel.setSmsNum(queryBean1.getSmsNum());
                     bankModel.setPhoneNum(bean.getPhoneNum());
+                    bankModel.setLeadBankCard(bean.getLeadBankCard());
                     map.put("type",type);
                     map.put("bankModel",bankModel);
                     return map;

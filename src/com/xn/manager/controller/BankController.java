@@ -6,10 +6,7 @@ import com.xn.common.controller.BaseController;
 import com.xn.common.util.*;
 import com.xn.manager.model.*;
 import com.xn.manager.model.excel.BankExcelModel;
-import com.xn.manager.service.BankService;
-import com.xn.manager.service.BankTypeService;
-import com.xn.manager.service.MerchantService;
-import com.xn.manager.service.MobileCardService;
+import com.xn.manager.service.*;
 import com.xn.system.entity.Account;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -43,6 +40,9 @@ public class BankController extends BaseController {
 
     @Autowired
     private BankService<BankModel> bankService;
+
+    @Autowired
+    private BankChangeService<BankChangeModel> bankChangeService;
 
     @Autowired
     private MobileCardService<MobileCardModel> mobileCardService;
@@ -102,6 +102,32 @@ public class BankController extends BaseController {
         }
         HtmlUtil.writerJson(response, dataList);
     }
+
+
+
+
+    /**
+     *
+     * 获取需要替换的卡表格数据列表
+     */
+    @RequestMapping("/queryReplaceList")
+    public void queryReplaceList(HttpServletRequest request, HttpServletResponse response, BankModel model) throws Exception {
+        List<BankModel> dataList = new ArrayList<BankModel>();
+//        model.setUseStatus(1);
+//        model.setIsEnable(ManagerConstant.PUBLIC_CONSTANT.IS_ENABLE_ZC);
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                model.setMerchantId(account.getId());
+            }
+            model.setStatusTwo(2);
+            model.setStatusThree(3);
+            model.setChangeTime(DateUtil.getNowPlusTime());
+            dataList = bankService.queryByList(model);
+        }
+        HtmlUtil.writerJson(response, model.getPage(), dataList);
+    }
+
 
     /**
      * 获取新增页面
@@ -185,6 +211,83 @@ public class BankController extends BaseController {
         return "manager/bank/bankEdit";
     }
 
+
+
+
+
+    /**
+     * 获取修改页面
+     */
+    @RequestMapping("/jumpBankUpdate")
+    public String jumpBankUpdate(HttpServletRequest request, HttpServletResponse response, Model model, long id, Integer op) {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        BankModel atModel = new BankModel();
+        atModel.setId(id);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            MobileCardModel  mobileCardModel = new  MobileCardModel();
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                mobileCardModel.setMerchantId(account.getId());
+            }
+            model.addAttribute("mobile",mobileCardService.queryAllList(mobileCardModel));
+            model.addAttribute("account", bankService.queryById(atModel));
+            model.addAttribute("op", op);
+            model.addAttribute("type",bankTypeService.queryAllList());
+        }else {
+            sendFailureMessage(response,"登录超时,请重新登录在操作!");
+        }
+
+        return "manager/abnormal/bankEdit";
+    }
+
+    /**
+     * 修改卡号数据
+     */
+    @RequestMapping("/updateBank")
+    public void updateBank(HttpServletRequest request, HttpServletResponse response,BankModel bean, String op) throws Exception {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+//
+            BankChangeModel   bankChangeModel  = new  BankChangeModel();
+            bankChangeModel.setBankCard(bean.getBankCard());
+            BankChangeModel queryBean1 =  bankChangeService.queryByCondition(bankChangeModel);
+            if(queryBean1 != null && queryBean1.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+                sendFailureMessage(response, "该卡已经部署过了，不能重复保存，请重新换卡");
+            }else{
+
+                BankTypeModel bankTypeModel =new  BankTypeModel();
+                bankTypeModel.setId(bean.getBankTypeId());
+                List<BankTypeModel> typeList = bankTypeService.queryAllList(bankTypeModel);
+                //修改卡状态，修改卡号，和尾号、设备号
+                BankModel    bankModel   =new BankModel();
+                bankModel.setId(bean.getId());
+                bankModel.setBankCard(bean.getBankCard());
+                String  lastNum =bean.getBankCard().substring((bean.getBankCard().length()-4),bean.getBankCard().length());
+                bankModel.setLastNum(lastNum);
+                bankModel.setPhoneDeviceNum(bean.getPhoneDeviceNum());
+                bankModel.setChangeStatus(4);
+                bankModel.setCheckChange("");
+
+                BankChangeModel  addBankChangeModel  = new  BankChangeModel();
+                addBankChangeModel.setMerchantId(account.getId());
+                addBankChangeModel.setBankId(bean.getId());
+                addBankChangeModel.setBankCard(bean.getBankCard());
+                addBankChangeModel.setBankName(typeList.get(0).getBankName());
+                addBankChangeModel.setAccountName(bean.getAccountName());
+                addBankChangeModel.setPhoneDeviceNum(bean.getPhoneDeviceNum());
+                addBankChangeModel.setCurday(DateUtil.getDayNumber(new Date()));
+                addBankChangeModel.setCurhour(DateUtil.getHour(new Date()));
+                addBankChangeModel.setCurminute(DateUtil.getCurminute(new Date()));
+                bankService.update(bankModel);
+                bankChangeService.add(addBankChangeModel);
+                sendSuccessMessage(response, "保存成功~");
+            }
+        }else {
+            sendFailureMessage(response, "登录超时,请重新登录在操作!");
+        }
+
+    }
+
+
     /**
      * 修改数据
      */
@@ -224,6 +327,8 @@ public class BankController extends BaseController {
         }
 
     }
+
+
     /**
      * 删除数据
      */

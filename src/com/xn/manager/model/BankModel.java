@@ -42,6 +42,30 @@ public class BankModel extends BasePage {
      */
     private String phoneNum;
     private String accountNum;
+    private String leadBankCard;
+
+
+
+    /**
+     * 换卡时间：比如卡在2021-03-29 18:29:47下线，但是挂了有订单不允许立即让人换卡，在此时间延迟几分钟在换卡
+     *
+     * @mbggenerated
+     */
+    private String changeTime;
+
+    /**
+     * 手机绑定设备号
+     *
+     * @mbggenerated
+     */
+    private String phoneDeviceNum;
+
+    /**
+     * 换卡原因
+     *
+     * @mbggenerated
+     */
+    private String checkChange;
 
     /**
      * 银行卡归属类型：对应表tb_fr_bank_type的主键ID
@@ -50,6 +74,14 @@ public class BankModel extends BasePage {
      */
     private Long bankTypeId;
 
+
+    public String getCheckChange() {
+        return checkChange;
+    }
+
+    public void setCheckChange(String checkChange) {
+        this.checkChange = checkChange;
+    }
 
     /**
      * 卡站点id
@@ -173,6 +205,7 @@ public class BankModel extends BasePage {
      * @mbggenerated
      */
     private Integer checkStatus;
+    private Integer changeStatus;
 
     /**
      * 数据说明：检测被限制的原因:task跑日月总限制，如果被限制，连续给出订单失败会填充被限制的原因
@@ -187,6 +220,18 @@ public class BankModel extends BasePage {
      * @mbggenerated
      */
     private Integer isOk;
+    /**
+     * 状态为2 的 检测结果
+     *
+     * @mbggenerated
+     */
+    private Integer statusTwo;
+    /**
+     * 状态为3 的 检测结果
+     *
+     * @mbggenerated
+     */
+    private Integer statusThree;
 
     /**
      * 备注
@@ -539,5 +584,53 @@ public class BankModel extends BasePage {
 
     public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    public Integer getStatusTwo() {
+        return statusTwo;
+    }
+
+    public void setStatusTwo(Integer statusTwo) {
+        this.statusTwo = statusTwo;
+    }
+
+    public Integer getStatusThree() {
+        return statusThree;
+    }
+
+    public void setStatusThree(Integer statusThree) {
+        this.statusThree = statusThree;
+    }
+
+    public String getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(String changeTime) {
+        this.changeTime = changeTime;
+    }
+
+    public String getPhoneDeviceNum() {
+        return phoneDeviceNum;
+    }
+
+    public void setPhoneDeviceNum(String phoneDeviceNum) {
+        this.phoneDeviceNum = phoneDeviceNum;
+    }
+
+    public String getLeadBankCard() {
+        return leadBankCard;
+    }
+
+    public void setLeadBankCard(String leadBankCard) {
+        this.leadBankCard = leadBankCard;
+    }
+
+    public Integer getChangeStatus() {
+        return changeStatus;
+    }
+
+    public void setChangeStatus(Integer changeStatus) {
+        this.changeStatus = changeStatus;
     }
 }

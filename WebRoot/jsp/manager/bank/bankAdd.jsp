@@ -84,6 +84,17 @@
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
+                        <span class="require" >原始卡尾号后4位</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <div class="formCtrlDiv">
+                            <input type="text" class="formInput" id="leadBankCard" name="leadBankCard"	maxlength="240" />
+                        </div>
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
                         <span class="require"><font color="red">*</font>收款日限金额</span>
                     </div>
                     <div class="formCtrlDiv">

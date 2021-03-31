@@ -57,10 +57,9 @@ public class AbnormalController extends BaseController {
     public void dataList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         AbnormalModel abnormalModel = new AbnormalModel();
-
         MobileCardModel  mobileCardModel = new MobileCardModel(); //手机监听
-
         WithdrawModel    withdrawModel =new  WithdrawModel();   //下发信息
+        BankModel    bankModel =new  BankModel();   //需要换的银行卡信息
 
         MerchantReplenishModel  merchantReplenishModel = new  MerchantReplenishModel();// 补单信息
 
@@ -69,25 +68,31 @@ public class AbnormalController extends BaseController {
         mobileCardModel.setHeartbeatStatus(1);
         withdrawModel.setOrderStatus(1);
         merchantReplenishModel.setCheckStatus(1);
+        bankModel.setStatusTwo(2);
+        bankModel.setStatusThree(3);
+        bankModel.setChangeTime(DateUtil.getNowPlusTime());
 
         List<BankCollectionModel> dataList = new ArrayList<BankCollectionModel>();
         List<WithdrawModel> withdrawModelList  = new ArrayList<WithdrawModel>();
         List<MerchantReplenishModel> merchantReplenishlList  = new ArrayList<MerchantReplenishModel>();
+        List<BankModel> bankList  = new ArrayList<BankModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 mobileCardModel.setMerchantId(account.getId());
                 withdrawModel.setMerchantId(account.getId());
                 merchantReplenishModel.setMerchantId(account.getId());
-
+                bankModel.setMerchantId(account.getId());
             }
-            merchantReplenishlList = modelMerchantReplenishService.queryAllList(merchantReplenishModel);
+//            merchantReplenishlList = modelMerchantReplenishService.queryAllList(merchantReplenishModel);
             mobileCardModelList  = mobileCardService.queryAllList(mobileCardModel);
             withdrawModelList = withdrawService.queryAllList(withdrawModel);
+            bankList = bankService.queryAllList(bankModel);
 
             abnormalModel.setPhoneNum(mobileCardModelList.size());
             abnormalModel.setWithdrawNum(withdrawModelList.size());
-            abnormalModel.setMerchantReplenishNum(merchantReplenishlList.size());
+//            abnormalModel.setMerchantReplenishNum(merchantReplenishlList.size());
+            abnormalModel.setBankNum(bankList.size());
         }
         HtmlUtil.writerJson(response, abnormalModel);
     }
