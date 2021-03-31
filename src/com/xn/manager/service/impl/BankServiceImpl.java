@@ -188,4 +188,15 @@ public class BankServiceImpl<T> extends BaseServiceImpl<T> implements BankServic
 //
 //
 //    }
+
+
+    @Override
+    public List<BankModel> queryUqAllList(BankModel bankModel) {
+        return bankDao.queryUqAllList(bankModel);
+    }
+
+    @Override
+    public List<BankModel> queryUpByList(BankModel bankModel) {
+        return bankDao.queryUpByList(bankModel);
+    }
 }

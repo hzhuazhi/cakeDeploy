@@ -11,4 +11,9 @@ import java.util.List;
  **/
 public interface BankDao<T> extends BaseDao<T> {
    public List<BankModel> queryAllListImport(BankModel bankModel);
+
+   public List<BankModel>  queryUqAllList(BankModel bankModel);
+
+   public List<BankModel>  queryUpByList(BankModel bankModel);
+
 }

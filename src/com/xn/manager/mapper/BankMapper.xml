@@ -165,6 +165,27 @@
     </select>
 
 
+
+    <!-- 查询分页列表 -->
+    <select id="queryUpByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.update_time asc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryUqAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_bank a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.update_time desc
+    </select>
+
+
     <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />

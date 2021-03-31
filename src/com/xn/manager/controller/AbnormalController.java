@@ -87,7 +87,7 @@ public class AbnormalController extends BaseController {
 //            merchantReplenishlList = modelMerchantReplenishService.queryAllList(merchantReplenishModel);
             mobileCardModelList  = mobileCardService.queryAllList(mobileCardModel);
             withdrawModelList = withdrawService.queryAllList(withdrawModel);
-            bankList = bankService.queryAllList(bankModel);
+            bankList = bankService.queryUqAllList(bankModel);
 
             abnormalModel.setPhoneNum(mobileCardModelList.size());
             abnormalModel.setWithdrawNum(withdrawModelList.size());

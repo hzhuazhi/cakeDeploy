@@ -22,6 +22,11 @@ public interface BankService<T> extends BaseService<T> {
 
     public List<BankModel> queryAllListImport(BankModel bankModel);
 
+    public List<BankModel> queryUqAllList(BankModel bankModel);
+
+
+    public List<BankModel> queryUpByList(BankModel bankModel);
+
 
 //    /**
 //     * 添加形式的

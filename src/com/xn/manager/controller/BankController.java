@@ -123,7 +123,7 @@ public class BankController extends BaseController {
             model.setStatusTwo(2);
             model.setStatusThree(3);
             model.setChangeTime(DateUtil.getNowPlusTime());
-            dataList = bankService.queryByList(model);
+            dataList = bankService.queryUpByList(model);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);
     }
