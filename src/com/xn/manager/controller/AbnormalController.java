@@ -71,6 +71,7 @@ public class AbnormalController extends BaseController {
         bankModel.setStatusTwo(2);
         bankModel.setStatusThree(3);
         bankModel.setChangeTime(DateUtil.getNowPlusTime());
+        bankModel.setUseStatus(2);
 
         List<BankCollectionModel> dataList = new ArrayList<BankCollectionModel>();
         List<WithdrawModel> withdrawModelList  = new ArrayList<WithdrawModel>();

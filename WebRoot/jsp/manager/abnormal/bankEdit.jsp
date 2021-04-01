@@ -28,28 +28,38 @@
                     <input type="hidden" id="id" name="id" value="${dl.id}">
                     <input type="hidden" id="op" name="op" value="1">
 
+
                     <li style="border-top: none;">
                         <div class="formTextDiv">
-                            <span class="require" ><font color="red">*</font>手机号</span>
+                            <span class="require"><font color="red">*</font>开户名</span>
                         </div>
                         <div class="formCtrlDiv">
-                            <select id="mobileCardId"  name="mobileCardId" class='text-input medium-input' >
-                                <option value="" >===请选择===</option>
-                                <c:forEach items="${mobile}" var="dataList">
-                                    <c:choose>
-                                        <c:when test="${dl.mobileCardId == dataList.id}">
-                                            <option selected="selected" value="${dataList.id}">${dataList.phoneNum}</option>
-                                        </c:when>
-                                        <c:when test="${dl.mobileCardId != dataList.id}">
-                                            <option value="${dataList.id}">${dataList.phoneNum}</option>
-                                        </c:when>
-                                    </c:choose>
-                                </c:forEach>
-                            </select>
-
-                            <%--<input type="text" class="formInput" id="phoneNum" name="phoneNum" value="${dl.phoneNum}"	maxlength="240" />--%>
+                            <input type="text" class="formInput"  id="accountName1" name="accountName1" disabled value="${dl.accountName}" 	maxlength="240" />
                         </div>
                     </li>
+
+                    <%--<li style="border-top: none;">--%>
+                        <%--<div class="formTextDiv">--%>
+                            <%--<span class="require" ><font color="red">*</font>手机号</span>--%>
+                        <%--</div>--%>
+                        <%--<div class="formCtrlDiv">--%>
+                            <%--<select id="mobileCardId"  name="mobileCardId" class='text-input medium-input' >--%>
+                                <%--<option value="" >===请选择===</option>--%>
+                                <%--<c:forEach items="${mobile}" var="dataList">--%>
+                                    <%--<c:choose>--%>
+                                        <%--<c:when test="${dl.mobileCardId == dataList.id}">--%>
+                                            <%--<option selected="selected" value="${dataList.id}">${dataList.phoneNum}</option>--%>
+                                        <%--</c:when>--%>
+                                        <%--<c:when test="${dl.mobileCardId != dataList.id}">--%>
+                                            <%--<option value="${dataList.id}">${dataList.phoneNum}</option>--%>
+                                        <%--</c:when>--%>
+                                    <%--</c:choose>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select>--%>
+
+                            <%--&lt;%&ndash;<input type="text" class="formInput" id="phoneNum" name="phoneNum" value="${dl.phoneNum}"	maxlength="240" />&ndash;%&gt;--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
                     <li style="border-top: none;">
                         <div class="formTextDiv">
                             <span class="require"><font color="red">*</font>银行卡账号</span>
@@ -58,8 +68,8 @@
                             <input type="text" class="formInput" id="bankCard" name="bankCard" value="${dl.bankCard}" 	maxlength="240" />
                         </div>
                     </li>
-                    <li style="border-top: none;">
-                        <div class="formTextDiv">
+                    <li style="border-top: none;display: none">
+                        <div class="formTextDiv" >
                             <span class="require"><font color="red">*</font>银行名称</span>
                         </div>
                         <div class="formCtrlDiv">
@@ -79,7 +89,7 @@
                             <%--<input type="text" class="formInput" id="bankName" name="bankName" value="${dl.bankName}" disabled maxlength="240" />--%>
                         </div>
                     </li>
-                    <li style="border-top: none;">
+                    <li style="border-top: none;display: none">
                         <div class="formTextDiv">
                             <span class="require"><font color="red">*</font>开户名</span>
                         </div>
@@ -87,6 +97,8 @@
                             <input type="text" class="formInput"  id="accountName" name="accountName" value="${dl.accountName}" 	maxlength="240" />
                         </div>
                     </li>
+
+
 
                     <li style="border-top: none;">
                         <div class="formTextDiv">

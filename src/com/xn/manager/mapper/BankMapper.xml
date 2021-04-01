@@ -100,14 +100,16 @@
                 and b.ac_name = #{merchantName}
             </if>
 
-            <if test="statusTwo != 0 and statusTwo >0 and  statusThree != 0 and statusThree >0 " >
-                and (a.change_status = #{statusTwo}  or a.change_status = #{statusThree} )
+            <if test="statusTwo != 0 and statusTwo >0" >
+                and a.change_status >1
             </if>
 
+            <if test="  statusThree != 0 and statusThree >0 " >
+                and  a.change_status &lt;  4
+            </if>
             <if test="changeTime != null and changeTime != '' " >
-                and (a.change_time = #{changeTime} or a.change_time is  null )
+                and (a.change_time &lt;= #{changeTime} or a.change_time is  null )
             </if>
-
             and a.yn =  0
         </trim>
     </sql>
