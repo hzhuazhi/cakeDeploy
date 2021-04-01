@@ -11,6 +11,10 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl" style="width: 100%;">
+                <div class = "condQueryLabelDiv">渠道：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="channelName" name ="channelName">
+                </div>
                 <div class = "condQueryLabelDiv">卡商：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="merchantName" name ="merchantName">
@@ -87,6 +91,7 @@
 
         <thead>
         <tr>
+            <th width="130">渠道</th>
             <th width="150">订单号</th>
             <th width="150">订单金额</th>
             <th width="150">提现类型</th>

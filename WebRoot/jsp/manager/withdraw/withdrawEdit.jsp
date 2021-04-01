@@ -28,6 +28,14 @@
                 <c:set var="dl" value="${account}"/>
                 <input type="hidden" id="id" name="id" value="${dl.id}">
 
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require" ><font color="red">*</font>渠道</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="channelName" name="channelName"  value="${dl.channelName}" disabled	maxlength="240" />
+                    </div>
+                </li>
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">

@@ -69,6 +69,11 @@ public class WithdrawModel extends BasePage{
     private Long ascriptionId;
 
     /**
+     * 商户名称/渠道名称
+     */
+    private String channelName;
+
+    /**
      * 指派由谁进行转账给提现人：1卡商，2平台，3中转站
      *
      * @mbggenerated
@@ -608,5 +613,13 @@ public class WithdrawModel extends BasePage{
 
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 }

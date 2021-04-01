@@ -13,6 +13,7 @@ var account = {
     },
     //列表显示参数
     list:[
+        {"data":"channelName",},
         {"data":"orderNo",},
         {"data":"orderMoney",},
         {"data":"outTradeNo",},
@@ -116,6 +117,7 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
+            account.condJsonData['channelName'] = $("#channelName").val();
             account.condJsonData['orderNo'] = $("#orderNo").val();
             account.condJsonData['acName'] = $("#acName").val();
             account.condJsonData['outBankName'] = $("#outBankName").val();
@@ -129,6 +131,7 @@ var account = {
 
         // 重置
         $("#butReset").click(function(){
+            account.condJsonData['channelName'] = "";
             account.condJsonData['orderNo'] = "";
             account.condJsonData['acName'] = "";
             account.condJsonData['outBankName'] = "";
@@ -137,6 +140,7 @@ var account = {
             account.condJsonData['orderMoney'] = "";
             account.condJsonData['beginCurday'] = 0;
             account.condJsonData['endCurday'] = 0;
+            $("#channelName").val("");
             $("#orderNo").val("");
             $("#acName").val("");
             $("#outBankName").val("");

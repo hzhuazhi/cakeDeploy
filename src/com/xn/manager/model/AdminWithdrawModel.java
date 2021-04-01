@@ -59,6 +59,11 @@ public class AdminWithdrawModel extends BasePage implements Serializable {
     private long channelId;
 
     /**
+     * 商户名称/渠道名称
+     */
+    private String channelName;
+
+    /**
      * 渠道类型：1代收，2大包，3代付
      */
     private int channelType;
@@ -211,11 +216,6 @@ public class AdminWithdrawModel extends BasePage implements Serializable {
      * 卡商名称
      */
     private String merchantName;
-
-    /**
-     * 渠道名称
-     */
-    private String channelName;
 
     public long getId() {
         return id;

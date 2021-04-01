@@ -51,6 +51,7 @@ var account = {
 
     //列表显示参数
     list:[
+        {"data":"channelName",},
         {"data":"orderNo",},
         {"data":"orderMoney",},
         {"data":"withdrawType",
@@ -127,6 +128,7 @@ var account = {
     ],
     // 查询条件，aoData是必要的。其他的就是对应的实体类字段名，因为条件查询是把数据封装在实体类中的。
     condJsonData : {
+        channelName:null,
         merchantName:null,
         orderNo:null,
         inBankName:null,
@@ -148,6 +150,7 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
+            account.condJsonData['channelName'] = $("#channelName").val();
             account.condJsonData['merchantName'] = $("#merchantName").val();
             account.condJsonData['orderNo'] = $("#orderNo").val();
             account.condJsonData['inBankName'] = $("#inBankName").val();
@@ -166,6 +169,8 @@ var account = {
         // 重置
         $("#butReset").click(function(){
 
+            account.condJsonData['channelName'] = "";
+            $("#channelName").val("");
             account.condJsonData['merchantName'] = "";
             $("#merchantName").val("");
             account.condJsonData['orderNo'] = "";

@@ -38,6 +38,15 @@
 
                 <li style="border-top: none;">
                     <div class="formTextDiv">
+                        <span class="require" >渠道</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="orderNo" name="orderNo" value="${dl.channelName}" 	maxlength="240" />
+                    </div>
+                </li>
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
                         <span class="require" >订单号</span>
                     </div>
                     <div class="formCtrlDiv">

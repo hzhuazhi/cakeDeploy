@@ -11,6 +11,12 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl" style="width: 100%">
+
+                <div class = "condQueryLabelDiv">渠道：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="channelName" name ="channelName">
+                </div>
+
                 <div class = "condQueryLabelDiv">订单号：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="orderNo" name ="orderNo">
@@ -61,23 +67,24 @@
     <table class="datatable tables">
         <thead>
         <tr>
+            <th width="110">渠道</th>
             <th width="150">订单号</th>
-            <th width="150">订单金额</th>
+            <th width="130">订单金额</th>
             <th width="150">中转站订单号</th>
 
-            <th width="150">提现类型</th>
+            <th width="120">提现类型</th>
             <th width="150">提现归属人账户ID</th>
             <th width="150">指派类型</th>
             <th width="150">指派卡商</th>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
             <th width="150">付款开户名</th>
-            <th width="150">订单状态</th>
+            <th width="120">订单状态</th>
             <%--<th width="150">审核状态</th>--%>
-            <th width="150">数据说明</th>
+            <th width="120">数据说明</th>
             <th width="200">转账凭证</th>
             <th width="150">创建日期</th>
-            <th width="380">操作</th>
+            <th width="300">操作</th>
         </tr>
         </thead>
         <tbody>
