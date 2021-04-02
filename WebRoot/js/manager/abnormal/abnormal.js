@@ -57,7 +57,7 @@ function  queryList(){
             $("#spaymentnum").text("未处理下发条数:"+data.withdrawNum);
             $("#banknum").text("需要换卡条数:"+data.bankNum);
 
-            if(data.phoneNum!=0||data.merchantReplenishNum!=0||data.withdrawNum!=0){
+            if(data.phoneNum!=0||data.bankNum!=0||data.withdrawNum!=0){
                 audioPlay();
             }
 
