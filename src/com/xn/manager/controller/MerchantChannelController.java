@@ -110,7 +110,31 @@ public class MerchantChannelController extends BaseController {
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             String  []  merchantIdStr = bean.getMerchantStr().split(",");
+
+            int icount= 0;
             for(String merchantId:merchantIdStr){
+                MerchantModel  merchantModel = new MerchantModel();
+                merchantModel.setId(Long.parseLong(merchantId));
+                MerchantModel   queryModel = merchantlService.queryByCondition(merchantModel);
+                if(queryModel==null){
+                    icount++;
+                    break;
+                }
+            }
+
+            if(icount!=0){
+                sendSuccessMessage(response, "数据异常，请联系管理员！");
+                return;
+            }
+
+
+
+            for(String merchantId:merchantIdStr){
+
+                MerchantModel  merchantModel = new MerchantModel();
+                merchantModel.setId(Long.parseLong(merchantId));
+                MerchantModel   queryModel = merchantlService.queryByCondition(merchantModel);
+
                 MerchantChannelModel  merchantChannelModel  = new MerchantChannelModel();
                 merchantChannelModel.setMerchantId(Long.parseLong(merchantId));
                 merchantChannelModel.setChannelId(bean.getChannelId());
@@ -119,6 +143,7 @@ public class MerchantChannelController extends BaseController {
                     continue;
                 }
                 merchantChannelModel.setCreateRoleId(account.getRoleId());
+                merchantChannelModel.setLinkType(queryModel.getOperateType());
                 merchantChannelModel.setCreateUserId(account.getId());
                 merchantChannelService.add(merchantChannelModel);
                 sendSuccessMessage(response, "保存成功~");

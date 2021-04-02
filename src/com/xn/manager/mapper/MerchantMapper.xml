@@ -118,7 +118,7 @@
                     #{item}
                 </foreach>
             </if>
-            and operate_type=2
+
             and a.yn =  0
         </trim>
     </sql>

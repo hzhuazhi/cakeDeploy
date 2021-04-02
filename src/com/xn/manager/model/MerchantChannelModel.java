@@ -61,6 +61,12 @@ public class MerchantChannelModel extends BasePage {
      * @mbggenerated
      */
     private Integer useStatus;
+    /**
+     * 绑定类型 1收， 2付
+     *
+     * @mbggenerated
+     */
+    private Integer linkType;
 
     /**
      * 创建人ID
@@ -261,5 +267,13 @@ public class MerchantChannelModel extends BasePage {
 
     public void setAcName(String acName) {
         this.acName = acName;
+    }
+
+    public Integer getLinkType() {
+        return linkType;
+    }
+
+    public void setLinkType(Integer linkType) {
+        this.linkType = linkType;
     }
 }

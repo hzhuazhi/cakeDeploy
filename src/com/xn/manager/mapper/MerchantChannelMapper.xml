@@ -202,6 +202,7 @@
             <if test="useStatus != null" >
                 use_status,
             </if>
+
             <if test="createUserId != null" >
                 create_user_id,
             </if>
@@ -213,6 +214,9 @@
             </if>
             <if test="updateRoleId != null" >
                 update_role_id,
+            </if>
+            <if test="linkType != null" >
+                link_type,
             </if>
             create_time,
         </trim>
@@ -250,6 +254,9 @@
             </if>
             <if test="updateRoleId != null" >
                 #{updateRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="linkType != null" >
+                #{linkType,jdbcType=BIGINT},
             </if>
             <![CDATA[  NOW(), ]]>
         </trim>
