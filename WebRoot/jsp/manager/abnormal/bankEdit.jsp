@@ -19,7 +19,7 @@
 <body>
 <div class="col_main">
         <div class="formHeadDiv">
-            <h2>编辑账号</h2>
+            <h2><font color="red">修改卡号</font></h2>
         </div>
         <div class="formContentDiv">
             <form id="addSupplierForm">
