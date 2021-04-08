@@ -139,6 +139,12 @@
             },
 
             submitHandler : function() {
+                var bankCard = $("#bankCard").val();
+
+                if(bankCard.length!=19){
+                    alert("卡号位数不对，请核对卡号信息在进行提交！");
+                    return;
+                }
                 var formData = $("#addSupplierForm").serialize();
                 $.ajax({
                     url : ctx+ "/bank/updateBank.do",
