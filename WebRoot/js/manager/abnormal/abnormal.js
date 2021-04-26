@@ -135,17 +135,20 @@ function  queryWithdraw(){
             table+='<table class="datatable tables">';
             table+='<thead>';
             table+='<tr>';
+            table+='<td><b>渠道名称</b></td>';
             table+='<td><b>下发表的订单号</b></td>';
             table+='<td><b>银行名称</b></td>';
             table+='<td><b>银行卡账号</b></td>';
             table+='<td><b>开户名</b></td>';
             table+='<td><b>订单金额</b></td>';
             table+='<td><b>订单状态</b></td>';
+            table+='<td><b>创建时间</b></td>';
             table+='<td><b>操作</b></td>';
             table+='</tr>';
             table+='</thead>';
             for (var i=0;i<data.rows.length;i++){
                 table+='<tr>';
+                table+='<td>'+data.rows[i].channelName+'</td>';
                 table+='<td>'+data.rows[i].orderNo+'</td>';
                 table+='<td>'+data.rows[i].inBankName+'</td>';
                 table+='<td>'+data.rows[i].inBankCard+'</td>';
@@ -154,6 +157,7 @@ function  queryWithdraw(){
                 if(data.rows[i].orderStatus==1){
                     table+='<td>初始化</td>';
                 }
+                table+='<td>'+data.rows[i].createTime+'</td>';
                 table+='<td> <a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/withdraw/jumpUpdate.do?id='+data.rows[i].id+'"> 审核 </a></td>';
                 table+='</tr>';
             }

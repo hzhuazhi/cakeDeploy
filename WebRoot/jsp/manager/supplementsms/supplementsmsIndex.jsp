@@ -24,6 +24,10 @@
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="accountName" name ="accountName">
                 </div>
+                <div class = "condQueryLabelDiv">手机号码：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="phoneNum" name ="phoneNum">
+                </div>
                 <div class = "condQueryLabelDiv">日期：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="curday" name ="curday" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" >

@@ -622,4 +622,5 @@ public class WithdrawModel extends BasePage{
     public void setChannelName(String channelName) {
         this.channelName = channelName;
     }
+
 }
