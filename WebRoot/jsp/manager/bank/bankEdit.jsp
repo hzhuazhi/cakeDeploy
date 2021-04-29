@@ -45,10 +45,10 @@
                                 <c:forEach items="${mobile}" var="dataList">
                                     <c:choose>
                                         <c:when test="${dl.mobileCardId == dataList.id}">
-                                            <option selected="selected" value="${dataList.id}">${dataList.phoneNum}</option>
+                                            <option selected="selected" value="${dataList.id}">${dataList.cardName}==${dataList.phoneNum}</option>
                                         </c:when>
                                         <c:when test="${dl.mobileCardId != dataList.id}">
-                                            <option value="${dataList.id}">${dataList.phoneNum}</option>
+                                            <option value="${dataList.id}">${dataList.cardName}==${dataList.phoneNum}</option>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>

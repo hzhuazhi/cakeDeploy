@@ -40,7 +40,7 @@
                         <select id="phoneNum" name="phoneNum" class='text-input medium-input' >
                             <option value="">===请选择===</option>
                             <c:forEach items="${mobile}" var="dataList">
-                                <option value="${dataList.phoneNum}">${dataList.phoneNum}</option>
+                                <option value="${dataList.phoneNum}">${dataList.cardName}==${dataList.phoneNum}</option>
                             </c:forEach>
                         </select>
 
