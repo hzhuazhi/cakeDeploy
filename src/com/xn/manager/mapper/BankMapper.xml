@@ -411,6 +411,9 @@
             <if test="bankName != null" >
                 bank_name = #{bankName,jdbcType=VARCHAR},
             </if>
+            <if test="mobileCardId != null" >
+                mobile_card_id = #{mobileCardId,jdbcType=VARCHAR},
+            </if>
             <if test="bankCard != null" >
                 bank_card = #{bankCard,jdbcType=VARCHAR},
             </if>
