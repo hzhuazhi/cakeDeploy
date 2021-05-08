@@ -28,13 +28,17 @@
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="phoneNum" name ="phoneNum">
                 </div>
-                <div class = "condQueryLabelDiv">日期：</div>
+                <div class = "condQueryLabelDiv">打款人：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="curday" name ="curday" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" >
+                    <input type ="text" class ="inputCommonSty" id="transferUser" name ="transferUser"  >
                 </div>
             </div>
 
             <div class = "condQueryCtrl">
+                <div class = "condQueryLabelDiv">日期：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="curday" name ="curday" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" >
+                </div>
                 <div class = "condQueryLabelDiv">小时：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="curhour" name ="curhour">
@@ -62,6 +66,7 @@
             <th width="110">银行名称</th>
             <th width="150">银行卡账号</th>
             <th width="110">开户名</th>
+            <th width="110">打款人</th>
             <th width="130">短信来源</th>
             <th width="220">短信内容</th>
             <th width="120">订单金额</th>

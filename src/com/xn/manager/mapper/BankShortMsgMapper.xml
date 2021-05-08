@@ -16,6 +16,7 @@
         <result column="order_status" property="orderStatus" jdbcType="BIT" />
         <result column="work_type" property="workType" jdbcType="BIT" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="transfer_user" property="transferUser" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="curday" property="curday" jdbcType="INTEGER" />
         <result column="curhour" property="curhour" jdbcType="BIT" />
@@ -36,7 +37,7 @@
     <sql id="Base_Column_List">
         a.id, a.order_no, a.mobile_card_id, a.phone_num, a.bank_id, a.bank_type_id, a.sms_num, a.sms_content,
         a.money, a.last_num, a.order_status, a.work_type, a.data_explain, a.remark, a.curday, a.curhour,
-        a.curminute, a.run_num, a.run_status, a.create_time, a.update_time,a.handle_type, a.ts_time, a.yn
+        a.curminute, a.run_num, a.run_status, a.create_time, a.update_time,a.handle_type, a.ts_time, a.yn,, a.transfer_user
     </sql>
 
     <!-- 查询条件 -->
@@ -66,9 +67,9 @@
             </if>
 
 
-            <!--<if test="alias != null and alias != '' " >-->
-                <!--and a.alias = #{alias}-->
-            <!--</if>-->
+            <if test="transferUser != null and transferUser != '' " >
+                and a.transfer_user = #{transferUser}
+            </if>
 
             and a.yn =  0
         </trim>
@@ -396,13 +397,16 @@
             <if test="curminute != 0 and curminute  >0 " >
                 and a.curminute &gt;= #{curminute}
             </if>
+            <if test="transferUser != null and transferUser != '' " >
+                and a.transfer_user = #{transferUser}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
 
     <select id="querySmsOrderNo" resultMap="dataMap"  parameterType="Object">
         select  a.id,a.order_no,a.money,a.mobile_card_id,a.phone_num,a.sms_num,a.sms_content,a.curday,
-        a.curhour,a.curminute,b.bank_card,b.bank_name,b.account_name,c.alias,a.handle_type
+        a.curhour,a.curminute,b.bank_card,b.bank_name,b.account_name,c.alias,a.handle_type,a.transfer_user
         from  tb_fr_bank_short_msg  a left JOIN tb_fr_bank b on  a.bank_id=b.id
         left JOIN tb_fr_merchant c  on  b.merchant_id=c.id
         <include refid="Example_Where_Clause_Sms"/>

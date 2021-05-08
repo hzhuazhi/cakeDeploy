@@ -13,6 +13,7 @@ var account = {
         {"data":"bankName",},
         {"data":"bankCard",},
         {"data":"accountName",},
+        {"data":"transferUser",},
         {"data":"smsNum",},
         {"data":"smsContent",},
         {"data":"money",},
@@ -62,6 +63,7 @@ var account = {
             account.condJsonData['curday'] = $("#curday").val();
             account.condJsonData['curhour'] = $("#curhour").val();
             account.condJsonData['curminute'] = $("#curminute").val();
+            account.condJsonData['transferUser'] = $("#transferUser").val();
             common.showDatas(account.condJsonData,account.list);
         });
 

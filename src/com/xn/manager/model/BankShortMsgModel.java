@@ -20,6 +20,13 @@ public class BankShortMsgModel extends BasePage {
     private String orderNo;
 
     /**
+     * 打款人
+     *
+     * @mbggenerated
+     */
+    private String transferUser;
+
+    /**
      * 归属手机号ID：对应表tb_fn_mobile_card的主键ID
      *
      * @mbggenerated
@@ -427,5 +434,13 @@ public class BankShortMsgModel extends BasePage {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getTransferUser() {
+        return transferUser;
+    }
+
+    public void setTransferUser(String transferUser) {
+        this.transferUser = transferUser;
     }
 }
