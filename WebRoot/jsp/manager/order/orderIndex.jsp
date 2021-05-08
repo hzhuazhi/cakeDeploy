@@ -53,6 +53,11 @@
                     <input type ="text" class ="inputCommonSty" id="merchantName" name ="merchantName">
                 </div>
 
+                <div class = "condQueryLabelDiv">打款人：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="transferUser" name ="transferUser">
+                </div>
+
                 <div class = "condQueryLabelDiv">开始日期：</div>
                 <div class="formCtrlDiv">
                     <input type="text" class ="inputCommonSty" name="beginCurday" id="beginCurday" size="10" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" />
@@ -123,6 +128,7 @@
             <th width="110">银行名称</th>
             <th width="150">银行卡账号</th>
             <th width="100">开户名</th>
+            <th width="100">打款人</th>
             <th width="110">订单类型</th>
             <th width="110">订单金额</th>
             <th width="110">派发金额</th>

@@ -32,6 +32,7 @@
         <result column="work_type" property="workType" jdbcType="BIT" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="transfer_user" property="transferUser" jdbcType="VARCHAR" />
         <result column="curday" property="curday" jdbcType="INTEGER" />
         <result column="curhour" property="curhour" jdbcType="BIT" />
         <result column="curminute" property="curminute" jdbcType="BIT" />
@@ -60,7 +61,7 @@
         a.invalid_time, a.notify_url, a.bank_name, a.bank_card, a.subbranch_name, a.account_name, a.bank_code,
         a.mobile_card_id, a.phone_num, a.merchant_id, a.merchant_name, a.merchant_site_id, a.card_site_name, a.channel_id, a.channel_name, a.replenish_type,
         a.work_type, a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_num, a.run_status,
-        a.send_num, a.send_status, a.create_time, a.update_time, a.ts_time, a.yn, a.distribution_money,
+        a.send_num, a.send_status, a.create_time, a.update_time, a.ts_time, a.yn, a.distribution_money,a.transfer_user,
         b.out_trade_no as channel_order_no
     </sql>
 
@@ -104,6 +105,10 @@
             <if test="channelName != null and channelName != '' " >
                 and a.channel_name = #{channelName}
             </if>
+            <if test="transferUser != null and transferUser != '' " >
+                and a.transfer_user = #{transferUser}
+            </if>
+
 
 
             <if test="replenishType != 0 and replenishType >0 " >

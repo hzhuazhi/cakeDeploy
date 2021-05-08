@@ -25,6 +25,7 @@ public class OrderModel extends BasePage {
      * @mbggenerated
      */
     private String orderNo;
+    private String transferUser;
     /**
      * 卡商账号
      *
@@ -773,5 +774,13 @@ public class OrderModel extends BasePage {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getTransferUser() {
+        return transferUser;
+    }
+
+    public void setTransferUser(String transferUser) {
+        this.transferUser = transferUser;
     }
 }

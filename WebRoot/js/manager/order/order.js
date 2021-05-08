@@ -20,6 +20,7 @@ var account = {
         {"data":"bankName",},
         {"data":"bankCard",},
         {"data":"accountName",},
+        {"data":"transferUser",},
         {"data":"orderType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
@@ -125,6 +126,7 @@ var account = {
             account.condJsonData['replenishType'] = $("#replenishType").val();
             account.condJsonData['workType'] = $("#workType").val();
             account.condJsonData['orderStatus'] = $("#orderStatus").val();
+            account.condJsonData['transferUser'] = $("#transferUser").val();
             account.condJsonData['distributionMoney'] = $("#distributionMoney").val();
             if($("#endCurday").val()==undefined||$("#endCurday").val()==""){
                 account.condJsonData['endCurday'] =0;
@@ -150,6 +152,7 @@ var account = {
             account.condJsonData['bankCard'] = "";
             account.condJsonData['accountName'] = "";
             account.condJsonData['merchantName'] = "";
+            account.condJsonData['transferUser'] = "";
             account.condJsonData['orderType'] = "0";
             account.condJsonData['replenishType'] = "0";
             account.condJsonData['workType'] = "0";
@@ -166,6 +169,7 @@ var account = {
             $("#bankCard").val("");
             $("#accountName").val("");
             $("#merchantName").val("");
+            $("#transferUser").val("");
             $("#orderType").val("0");
             $("#replenishType").val("0");
             $("#workType").val("0");
