@@ -68,6 +68,11 @@ public class AdminMerchantServiceChargeController extends BaseController {
             if (account.getRoleType() != 1 ){
                 HtmlUtil.writerJson(response, model.getPage(), dataList);
             }
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
+                //不是管理员，只能查询自己的数据
+//                model.setAccountName(account.getAccountNum());
+                model.setMerchantId(account.getId());
+            }
             dataList = merchantServiceChargeService.queryByList(model);
         }
         HtmlUtil.writerJson(response, model.getPage(), dataList);

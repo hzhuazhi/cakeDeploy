@@ -223,4 +223,29 @@ public class FileUtils {
 			   output.close();
 		  }
 	}
+
+
+	/**
+	 * 写文件
+	 * @param is    输入的文件流
+	 * @param fileName 写入文件地址
+	 * @throws IOException
+	 */
+	public static void getFile(InputStream is,String fileName) throws IOException{
+		BufferedInputStream in=null;
+		BufferedOutputStream out=null;
+		File file = new File(fileName);
+		if (!file.getParentFile().exists()) {
+			file.getParentFile().mkdirs();
+		}
+		in=new BufferedInputStream(is);
+		out=new BufferedOutputStream(new FileOutputStream(fileName));
+		int len=-1;
+		byte[] b=new byte[1024];
+		while((len=in.read(b))!=-1){
+			out.write(b,0,len);
+		}
+		in.close();
+		out.close();
+	}
 }

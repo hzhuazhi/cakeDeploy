@@ -69,4 +69,9 @@ public class Constant {
 	 */
 //    public  static String STORE_ADDRESS="D:/test/";
     public  static String STORE_ADDRESS="/opt/app/tomcat01/webapps/img";
+
+	/**
+	 * 密钥存储路径
+	 */
+	public  static String SECRET_KEY_ADDRESS="/opt/secret/";
 }

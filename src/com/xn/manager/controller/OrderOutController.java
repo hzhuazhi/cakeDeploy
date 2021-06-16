@@ -72,7 +72,6 @@ public class OrderOutController extends BaseController {
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
                 //不是管理员，只能查询自己的数据
 //                model.setAccountNum(account.getAccountNum());
-
                 model.setMerchantId(account.getId());
             }
             dataList = orderOutService.queryByList(model);
@@ -164,14 +163,14 @@ public class OrderOutController extends BaseController {
             OrderOutModel atModel = new OrderOutModel();
             atModel.setId(model.getId());
             OrderOutModel merchantModel  = orderOutService.queryById(atModel);
-            if(merchantModel.getOperateStatus()==2){
-                map.put("type","2");
-                map.put("rs","订单已经在处理中了，请处理其他订单,如果想处理，请点击 强行处理！");
-                HtmlUtil.writerJson(response, map);
-            }
+//            if(merchantModel.getOperateStatus()==2){
+//                map.put("type","2");
+//                map.put("rs","订单已经在处理中了，请处理其他订单,如果想处理，请点击 强行处理！");
+//                HtmlUtil.writerJson(response, map);
+//            }
             OrderOutModel  upOrderOutModel  = new OrderOutModel();
             upOrderOutModel.setId(model.getId());
-            upOrderOutModel.setOperateStatus(2);
+//            upOrderOutModel.setOperateStatus(2);
             orderOutService.update(upOrderOutModel);
             map.put("type","1");
             map.put("rs","/orderout/jumpUpdate.do?op=1&id="+model.getId());
@@ -208,20 +207,20 @@ public class OrderOutController extends BaseController {
             strategyModel.setId(11);
             StrategyModel  strategyModelCond = strategyService.queryByCondition(strategyModel);
 
-            if(bean.getOrderStatus()==4){
-                if(strategyModelCond!=null){ //超时时间
-                    Date afterDate = new Date(new Date().getTime() + strategyModelCond.getStgNumValue()*60*1000);
-                    orderOutModel.setInvalidTime(afterDate);
-                }else{
-                    Date afterDate = new Date(new Date().getTime() + defaultTime*60*1000);
-                    orderOutModel.setInvalidTime(afterDate);
-                }
-                if(pictureAds!=""){
-                    orderOutModel.setPictureAds(pictureAds);
-                }else{
-//                    sendFailureMessage(response, "为成功状态的必须需要上传，转账凭证！");
-                }
-            }
+//            if(bean.getOrderStatus()==4){
+//                if(strategyModelCond!=null){ //超时时间
+//                    Date afterDate = new Date(new Date().getTime() + strategyModelCond.getStgNumValue()*60*1000);
+//                    orderOutModel.setInvalidTime(afterDate);
+//                }else{
+//                    Date afterDate = new Date(new Date().getTime() + defaultTime*60*1000);
+//                    orderOutModel.setInvalidTime(afterDate);
+//                }
+//                if(pictureAds!=""){
+//                    orderOutModel.setPictureAds(pictureAds);
+//                }else{
+////                    sendFailureMessage(response, "为成功状态的必须需要上传，转账凭证！");
+//                }
+//            }
 
             orderOutModel.setFailInfo(bean.getFailInfo());
             orderOutModel.setOrderStatus(bean.getOrderStatus());

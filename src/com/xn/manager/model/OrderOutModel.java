@@ -18,6 +18,7 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private String alias;
+    private String companyName;
 
     /**
      * 订单号
@@ -32,20 +33,11 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private String orderMoney;
-    /**
-     * 账号
-     *
-     * @mbggenerated
-     */
-    private String accountNum;
-
-    /**、
-     * 失败原因
-     */
-    private String failInfo;
+    private Integer curdayStart;
+    private Integer curdayEnd;
 
     /**
-     * 中转站订单号
+     * 下游订单号：渠道订单号
      *
      * @mbggenerated
      */
@@ -64,6 +56,27 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private Integer orderType;
+
+    /**
+     * 手续费
+     *
+     * @mbggenerated
+     */
+    private String serviceCharge;
+
+    /**
+     * 订单处理类型：1我方处理，2第三方处理
+     *
+     * @mbggenerated
+     */
+    private Integer handleType;
+
+    /**
+     * 代付订单出码状态:1初始化（我方处理默认初始化），2出码成功（第三方反馈结果），3出码失败
+     *
+     * @mbggenerated
+     */
+    private Integer outStatus;
 
     /**
      * 失效时间：审核失效时间，超过多久没有点击审核通过则默认审核通过
@@ -92,6 +105,27 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private String inAccountName;
+
+    /**
+     * 收款银行开户的支行
+     *
+     * @mbggenerated
+     */
+    private String inBankSubbranch;
+
+    /**
+     * 收款银行开户人省份
+     *
+     * @mbggenerated
+     */
+    private String inBankProvince;
+
+    /**
+     * 收款银行开户城市
+     *
+     * @mbggenerated
+     */
+    private String inBankCity;
 
     /**
      * 付款银行名称/归属开户行
@@ -157,6 +191,34 @@ public class OrderOutModel extends BasePage {
     private String channelName;
 
     /**
+     * 归属代付资源ID：对应表tb_fr_replace_pay的主键ID
+     *
+     * @mbggenerated
+     */
+    private Long replacePayId;
+
+    /**
+     * 上游订单号：供应商订单号、对接放的订单号
+     *
+     * @mbggenerated
+     */
+    private String supplierTradeNo;
+
+    /**
+     * 交易时间时间戳
+     *
+     * @mbggenerated
+     */
+    private Long tradeTime;
+
+    /**
+     * 上游手续费
+     *
+     * @mbggenerated
+     */
+    private String supplierServiceCharge;
+
+    /**
      * 充值记录银行卡转账图片凭证
      *
      * @mbggenerated
@@ -164,7 +226,14 @@ public class OrderOutModel extends BasePage {
     private String pictureAds;
 
     /**
-     * 审核状态：1初始化，2审核收款失败，3审核收款成功
+     * 失败缘由：卡商转账失败缘由说明
+     *
+     * @mbggenerated
+     */
+    private String failInfo;
+
+    /**
+     * 审核状态：1初始化，2审核收款失败，3系统自动审核，4审核收款成功
      *
      * @mbggenerated
      */
@@ -218,8 +287,6 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private Integer curday;
-    private Integer curdayStart;
-    private Integer curdayEnd;
 
     /**
      * 创建所属小时：24小时制
@@ -351,6 +418,22 @@ public class OrderOutModel extends BasePage {
         this.orderMoney = orderMoney;
     }
 
+    public Integer getCurdayStart() {
+        return curdayStart;
+    }
+
+    public void setCurdayStart(Integer curdayStart) {
+        this.curdayStart = curdayStart;
+    }
+
+    public Integer getCurdayEnd() {
+        return curdayEnd;
+    }
+
+    public void setCurdayEnd(Integer curdayEnd) {
+        this.curdayEnd = curdayEnd;
+    }
+
     public String getOutTradeNo() {
         return outTradeNo;
     }
@@ -359,7 +442,45 @@ public class OrderOutModel extends BasePage {
         this.outTradeNo = outTradeNo;
     }
 
+    public Integer getOrderStatus() {
+        return orderStatus;
+    }
 
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
+    }
+
+    public String getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(String serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public Integer getHandleType() {
+        return handleType;
+    }
+
+    public void setHandleType(Integer handleType) {
+        this.handleType = handleType;
+    }
+
+    public Integer getOutStatus() {
+        return outStatus;
+    }
+
+    public void setOutStatus(Integer outStatus) {
+        this.outStatus = outStatus;
+    }
 
     public Date getInvalidTime() {
         return invalidTime;
@@ -391,6 +512,30 @@ public class OrderOutModel extends BasePage {
 
     public void setInAccountName(String inAccountName) {
         this.inAccountName = inAccountName;
+    }
+
+    public String getInBankSubbranch() {
+        return inBankSubbranch;
+    }
+
+    public void setInBankSubbranch(String inBankSubbranch) {
+        this.inBankSubbranch = inBankSubbranch;
+    }
+
+    public String getInBankProvince() {
+        return inBankProvince;
+    }
+
+    public void setInBankProvince(String inBankProvince) {
+        this.inBankProvince = inBankProvince;
+    }
+
+    public String getInBankCity() {
+        return inBankCity;
+    }
+
+    public void setInBankCity(String inBankCity) {
+        this.inBankCity = inBankCity;
     }
 
     public String getOutBankName() {
@@ -465,6 +610,38 @@ public class OrderOutModel extends BasePage {
         this.channelName = channelName;
     }
 
+    public Long getReplacePayId() {
+        return replacePayId;
+    }
+
+    public void setReplacePayId(Long replacePayId) {
+        this.replacePayId = replacePayId;
+    }
+
+    public String getSupplierTradeNo() {
+        return supplierTradeNo;
+    }
+
+    public void setSupplierTradeNo(String supplierTradeNo) {
+        this.supplierTradeNo = supplierTradeNo;
+    }
+
+    public Long getTradeTime() {
+        return tradeTime;
+    }
+
+    public void setTradeTime(Long tradeTime) {
+        this.tradeTime = tradeTime;
+    }
+
+    public String getSupplierServiceCharge() {
+        return supplierServiceCharge;
+    }
+
+    public void setSupplierServiceCharge(String supplierServiceCharge) {
+        this.supplierServiceCharge = supplierServiceCharge;
+    }
+
     public String getPictureAds() {
         return pictureAds;
     }
@@ -473,7 +650,21 @@ public class OrderOutModel extends BasePage {
         this.pictureAds = pictureAds;
     }
 
+    public String getFailInfo() {
+        return failInfo;
+    }
 
+    public void setFailInfo(String failInfo) {
+        this.failInfo = failInfo;
+    }
+
+    public Integer getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(Integer checkStatus) {
+        this.checkStatus = checkStatus;
+    }
 
     public String getCheckInfo() {
         return checkInfo;
@@ -491,6 +682,21 @@ public class OrderOutModel extends BasePage {
         this.notifyUrl = notifyUrl;
     }
 
+    public Integer getOperateStatus() {
+        return operateStatus;
+    }
+
+    public void setOperateStatus(Integer operateStatus) {
+        this.operateStatus = operateStatus;
+    }
+
+    public Integer getWorkType() {
+        return workType;
+    }
+
+    public void setWorkType(Integer workType) {
+        this.workType = workType;
+    }
 
     public String getDataExplain() {
         return dataExplain;
@@ -516,6 +722,53 @@ public class OrderOutModel extends BasePage {
         this.curday = curday;
     }
 
+    public Integer getCurhour() {
+        return curhour;
+    }
+
+    public void setCurhour(Integer curhour) {
+        this.curhour = curhour;
+    }
+
+    public Integer getCurminute() {
+        return curminute;
+    }
+
+    public void setCurminute(Integer curminute) {
+        this.curminute = curminute;
+    }
+
+    public Integer getRunStatus() {
+        return runStatus;
+    }
+
+    public void setRunStatus(Integer runStatus) {
+        this.runStatus = runStatus;
+    }
+
+    public Integer getRunNum() {
+        return runNum;
+    }
+
+    public void setRunNum(Integer runNum) {
+        this.runNum = runNum;
+    }
+
+    public Integer getSendNum() {
+        return sendNum;
+    }
+
+    public void setSendNum(Integer sendNum) {
+        this.sendNum = sendNum;
+    }
+
+    public Integer getSendStatus() {
+        return sendStatus;
+    }
+
+    public void setSendStatus(Integer sendStatus) {
+        this.sendStatus = sendStatus;
+    }
 
     public Long getCreateUserId() {
         return createUserId;
@@ -573,94 +826,6 @@ public class OrderOutModel extends BasePage {
         this.tsTime = tsTime;
     }
 
-    public Integer getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(Integer orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public Integer getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(Integer orderType) {
-        this.orderType = orderType;
-    }
-
-    public Integer getCheckStatus() {
-        return checkStatus;
-    }
-
-    public void setCheckStatus(Integer checkStatus) {
-        this.checkStatus = checkStatus;
-    }
-
-    public Integer getOperateStatus() {
-        return operateStatus;
-    }
-
-    public void setOperateStatus(Integer operateStatus) {
-        this.operateStatus = operateStatus;
-    }
-
-    public Integer getWorkType() {
-        return workType;
-    }
-
-    public void setWorkType(Integer workType) {
-        this.workType = workType;
-    }
-
-    public Integer getCurhour() {
-        return curhour;
-    }
-
-    public void setCurhour(Integer curhour) {
-        this.curhour = curhour;
-    }
-
-    public Integer getCurminute() {
-        return curminute;
-    }
-
-    public void setCurminute(Integer curminute) {
-        this.curminute = curminute;
-    }
-
-    public Integer getRunStatus() {
-        return runStatus;
-    }
-
-    public void setRunStatus(Integer runStatus) {
-        this.runStatus = runStatus;
-    }
-
-    public Integer getRunNum() {
-        return runNum;
-    }
-
-    public void setRunNum(Integer runNum) {
-        this.runNum = runNum;
-    }
-
-    public Integer getSendNum() {
-        return sendNum;
-    }
-
-    public void setSendNum(Integer sendNum) {
-        this.sendNum = sendNum;
-    }
-
-    public Integer getSendStatus() {
-        return sendStatus;
-    }
-
-    public void setSendStatus(Integer sendStatus) {
-        this.sendStatus = sendStatus;
-    }
-
     public Integer getYn() {
         return yn;
     }
@@ -669,37 +834,11 @@ public class OrderOutModel extends BasePage {
         this.yn = yn;
     }
 
-    public String getFailInfo() {
-        return failInfo;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setFailInfo(String failInfo) {
-        this.failInfo = failInfo;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
-
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
-    }
-
-    public Integer getCurdayStart() {
-        return curdayStart;
-    }
-
-    public void setCurdayStart(Integer curdayStart) {
-        this.curdayStart = curdayStart;
-    }
-
-    public Integer getCurdayEnd() {
-        return curdayEnd;
-    }
-
-    public void setCurdayEnd(Integer curdayEnd) {
-        this.curdayEnd = curdayEnd;
-    }
-
-
 }

@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.ReplacePayDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.ReplacePayModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+        <result column="company_ads" property="companyAds" jdbcType="VARCHAR" />
+        <result column="bank_type_id" property="bankTypeId" jdbcType="BIGINT" />
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+        <result column="merchant_site_id" property="merchantSiteId" jdbcType="BIGINT" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+        <result column="subbranch_name" property="subbranchName" jdbcType="VARCHAR" />
+        <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+        <result column="balance" property="balance" jdbcType="VARCHAR" />
+        <result column="use_balance" property="useBalance" jdbcType="VARCHAR" />
+        <result column="out_interface_ads" property="outInterfaceAds" jdbcType="VARCHAR" />
+        <result column="in_interface_ads" property="inInterfaceAds" jdbcType="VARCHAR" />
+        <result column="balance_interface_ads" property="balanceInterfaceAds" jdbcType="VARCHAR" />
+        <result column="business_num" property="businessNum" jdbcType="VARCHAR" />
+        <result column="platform_business_num" property="platformBusinessNum" jdbcType="VARCHAR" />
+        <result column="account_attribute" property="accountAttribute" jdbcType="VARCHAR" />
+        <result column="account_type" property="accountType" jdbcType="VARCHAR" />
+        <result column="telephone_num" property="telephoneNum" jdbcType="VARCHAR" />
+        <result column="public_key" property="publicKey" jdbcType="VARCHAR" />
+        <result column="public_key_path" property="publicKeyPath" jdbcType="VARCHAR" />
+        <result column="private_key" property="privateKey" jdbcType="VARCHAR" />
+        <result column="private_key_path" property="privateKeyPath" jdbcType="VARCHAR" />
+        <result column="sand_key" property="sandKey" jdbcType="VARCHAR" />
+        <result column="sand_key_path" property="sandKeyPath" jdbcType="VARCHAR" />
+        <result column="version_num" property="versionNum" jdbcType="VARCHAR" />
+        <result column="pay_type" property="payType" jdbcType="BIT" />
+        <result column="gain_data_type" property="gainDataType" jdbcType="BIT" />
+        <result column="gain_data_time_type" property="gainDataTimeType" jdbcType="BIT" />
+        <result column="gain_data_time" property="gainDataTime" jdbcType="VARCHAR" />
+        <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
+        <result column="is_ok" property="isOk" jdbcType="BIT" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="use_status" property="useStatus" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+         a.id, a.alias, a.company_name, a.company_ads, a.bank_type_id, a.merchant_id, a.merchant_site_id,
+        a.bank_name, a.bank_card, a.subbranch_name,a.account_name, a.balance, a.use_balance, a.out_interface_ads,
+        a.in_interface_ads, a.balance_interface_ads, a.business_num, a.platform_business_num, a.account_attribute,
+        a.account_type, a.telephone_num, a.public_key, a.public_key_path, a.private_key, a.private_key_path,
+        a.sand_key, a.sand_key_path, a.version_num, a.pay_type, a.gain_data_type, a.gain_data_time_type,
+        a.gain_data_time, a.data_explain, a.is_ok, a.remark, a.use_status, a.create_time, a.update_time,
+        a.ts_time, a.yn
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="merchantId != 0 and merchantId >0 " >
+                and a.merchant_id = #{merchantId}
+            </if>
+            <if test="merchantSiteId != 0 and merchantSiteId >0 " >
+                and a.merchant_site_id = #{merchantSiteId}
+            </if>
+
+            <if test="companyName != null and companyName != '' " >
+                and a.company_name like CONCAT('%',#{companyName},'%')
+            </if>
+            <if test="accountName != null and accountName != '' " >
+                and a.account_name like CONCAT('%',#{accountName},'%')
+            </if>
+
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="idList != null and idList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+
+
+    <!-- 查询分页列表 -->
+    <select id="queryUpByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.update_time asc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryUqAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.update_time desc
+    </select>
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+    <!-- 根据条件查询记录 -->
+    <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay a left join tb_fr_merchant b on a.merchant_id = b.id
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_replace_pay
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="alias != null" >
+                alias,
+            </if>
+            <if test="companyName != null" >
+                company_name,
+            </if>
+            <if test="companyAds != null" >
+                company_ads,
+            </if>
+            <if test="bankTypeId != null" >
+                bank_type_id,
+            </if>
+            <if test="merchantId != null" >
+                merchant_id,
+            </if>
+            <if test="merchantSiteId != null" >
+                merchant_site_id,
+            </if>
+            <if test="bankName != null" >
+                bank_name,
+            </if>
+            <if test="bankCard != null" >
+                bank_card,
+            </if>
+            <if test="subbranchName != null" >
+                subbranch_name,
+            </if>
+            <if test="accountName != null" >
+                account_name,
+            </if>
+            <if test="balance != null" >
+                balance,
+            </if>
+            <if test="useBalance != null" >
+                use_balance,
+            </if>
+            <if test="outInterfaceAds != null" >
+                out_interface_ads,
+            </if>
+            <if test="inInterfaceAds != null" >
+                in_interface_ads,
+            </if>
+            <if test="balanceInterfaceAds != null" >
+                balance_interface_ads,
+            </if>
+            <if test="businessNum != null" >
+                business_num,
+            </if>
+            <if test="platformBusinessNum != null" >
+                platform_business_num,
+            </if>
+            <if test="accountAttribute != null" >
+                account_attribute,
+            </if>
+            <if test="accountType != null" >
+                account_type,
+            </if>
+            <if test="telephoneNum != null" >
+                telephone_num,
+            </if>
+            <if test="publicKey != null" >
+                public_key,
+            </if>
+            <if test="publicKeyPath != null" >
+                public_key_path,
+            </if>
+            <if test="privateKey != null" >
+                private_key,
+            </if>
+            <if test="privateKeyPath != null" >
+                private_key_path,
+            </if>
+            <if test="sandKey != null" >
+                sand_key,
+            </if>
+            <if test="sandKeyPath != null" >
+                sand_key_path,
+            </if>
+            <if test="versionNum != null" >
+                version_num,
+            </if>
+            <if test="payType != null" >
+                pay_type,
+            </if>
+            <if test="gainDataType != null" >
+                gain_data_type,
+            </if>
+            <if test="gainDataTimeType != null" >
+                gain_data_time_type,
+            </if>
+            <if test="gainDataTime != null" >
+                gain_data_time,
+            </if>
+            <if test="dataExplain != null" >
+                data_explain,
+            </if>
+            <if test="isOk != null" >
+                is_ok,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="useStatus != null" >
+                use_status,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="alias != null" >
+                #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null" >
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyAds != null" >
+                #{companyAds,jdbcType=VARCHAR},
+            </if>
+            <if test="bankTypeId != null" >
+                #{bankTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="merchantSiteId != null" >
+                #{merchantSiteId,jdbcType=BIGINT},
+            </if>
+            <if test="bankName != null" >
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null" >
+                #{bankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="subbranchName != null" >
+                #{subbranchName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null" >
+                #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null" >
+                #{balance,jdbcType=VARCHAR},
+            </if>
+            <if test="useBalance != null" >
+                #{useBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="outInterfaceAds != null" >
+                #{outInterfaceAds,jdbcType=VARCHAR},
+            </if>
+            <if test="inInterfaceAds != null" >
+                #{inInterfaceAds,jdbcType=VARCHAR},
+            </if>
+            <if test="balanceInterfaceAds != null" >
+                #{balanceInterfaceAds,jdbcType=VARCHAR},
+            </if>
+            <if test="businessNum != null" >
+                #{businessNum,jdbcType=VARCHAR},
+            </if>
+            <if test="platformBusinessNum != null" >
+                #{platformBusinessNum,jdbcType=VARCHAR},
+            </if>
+            <if test="accountAttribute != null" >
+                #{accountAttribute,jdbcType=VARCHAR},
+            </if>
+            <if test="accountType != null" >
+                #{accountType,jdbcType=VARCHAR},
+            </if>
+            <if test="telephoneNum != null" >
+                #{telephoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="publicKey != null" >
+                #{publicKey,jdbcType=VARCHAR},
+            </if>
+            <if test="publicKeyPath != null" >
+                #{publicKeyPath,jdbcType=VARCHAR},
+            </if>
+            <if test="privateKey != null" >
+                #{privateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="privateKeyPath != null" >
+                #{privateKeyPath,jdbcType=VARCHAR},
+            </if>
+            <if test="sandKey != null" >
+                #{sandKey,jdbcType=VARCHAR},
+            </if>
+            <if test="sandKeyPath != null" >
+                #{sandKeyPath,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNum != null" >
+                #{versionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null" >
+                #{payType,jdbcType=BIT},
+            </if>
+            <if test="gainDataType != null" >
+                #{gainDataType,jdbcType=BIT},
+            </if>
+            <if test="gainDataTimeType != null" >
+                #{gainDataTimeType,jdbcType=BIT},
+            </if>
+            <if test="gainDataTime != null" >
+                #{gainDataTime,jdbcType=VARCHAR},
+            </if>
+            <if test="dataExplain != null" >
+                #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="isOk != null" >
+                #{isOk,jdbcType=BIT},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != null" >
+                #{useStatus,jdbcType=BIT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_replace_pay a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="alias != null" >
+                alias = #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null" >
+                company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyAds != null" >
+                company_ads = #{companyAds,jdbcType=VARCHAR},
+            </if>
+            <if test="bankTypeId != null" >
+                bank_type_id = #{bankTypeId,jdbcType=BIGINT},
+            </if>
+            <if test="merchantId != null" >
+                merchant_id = #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="merchantSiteId != null" >
+                merchant_site_id = #{merchantSiteId,jdbcType=BIGINT},
+            </if>
+            <if test="bankName != null" >
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null" >
+                bank_card = #{bankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="subbranchName != null" >
+                subbranch_name = #{subbranchName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountName != null" >
+                account_name = #{accountName,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null" >
+                balance = #{balance,jdbcType=VARCHAR},
+            </if>
+            <if test="useBalance != null" >
+                use_balance = #{useBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="outInterfaceAds != null" >
+                out_interface_ads = #{outInterfaceAds,jdbcType=VARCHAR},
+            </if>
+            <if test="inInterfaceAds != null" >
+                in_interface_ads = #{inInterfaceAds,jdbcType=VARCHAR},
+            </if>
+            <if test="balanceInterfaceAds != null" >
+                balance_interface_ads = #{balanceInterfaceAds,jdbcType=VARCHAR},
+            </if>
+            <if test="businessNum != null" >
+                business_num = #{businessNum,jdbcType=VARCHAR},
+            </if>
+            <if test="platformBusinessNum != null" >
+                platform_business_num = #{platformBusinessNum,jdbcType=VARCHAR},
+            </if>
+            <if test="accountAttribute != null" >
+                account_attribute = #{accountAttribute,jdbcType=VARCHAR},
+            </if>
+            <if test="accountType != null" >
+                account_type = #{accountType,jdbcType=VARCHAR},
+            </if>
+            <if test="telephoneNum != null" >
+                telephone_num = #{telephoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="publicKey != null" >
+                public_key = #{publicKey,jdbcType=VARCHAR},
+            </if>
+            <if test="publicKeyPath != null" >
+                public_key_path = #{publicKeyPath,jdbcType=VARCHAR},
+            </if>
+            <if test="privateKey != null" >
+                private_key = #{privateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="privateKeyPath != null" >
+                private_key_path = #{privateKeyPath,jdbcType=VARCHAR},
+            </if>
+            <if test="sandKey != null" >
+                sand_key = #{sandKey,jdbcType=VARCHAR},
+            </if>
+            <if test="sandKeyPath != null" >
+                sand_key_path = #{sandKeyPath,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNum != null" >
+                version_num = #{versionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null" >
+                pay_type = #{payType,jdbcType=BIT},
+            </if>
+            <if test="gainDataType != null" >
+                gain_data_type = #{gainDataType,jdbcType=BIT},
+            </if>
+            <if test="gainDataTimeType != null" >
+                gain_data_time_type = #{gainDataTimeType,jdbcType=BIT},
+            </if>
+            <if test="gainDataTime != null" >
+                gain_data_time = #{gainDataTime,jdbcType=VARCHAR},
+            </if>
+            <if test="dataExplain != null" >
+                data_explain = #{dataExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="isOk != null" >
+                is_ok = #{isOk,jdbcType=BIT},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != null" >
+                use_status = #{useStatus,jdbcType=BIT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_replace_pay a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_replace_pay a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+
+
+
+</mapper>

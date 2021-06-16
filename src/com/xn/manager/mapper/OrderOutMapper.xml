@@ -10,20 +10,32 @@
         <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
         <result column="order_status" property="orderStatus" jdbcType="BIT" />
         <result column="order_type" property="orderType" jdbcType="BIT" />
+        <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR" />
+        <result column="handle_type" property="handleType" jdbcType="BIT" />
+        <result column="out_status" property="outStatus" jdbcType="BIT" />
         <result column="invalid_time" property="invalidTime" jdbcType="TIMESTAMP" />
         <result column="in_bank_card" property="inBankCard" jdbcType="VARCHAR" />
         <result column="in_bank_name" property="inBankName" jdbcType="VARCHAR" />
         <result column="in_account_name" property="inAccountName" jdbcType="VARCHAR" />
+        <result column="in_bank_subbranch" property="inBankSubbranch" jdbcType="VARCHAR" />
+        <result column="in_bank_province" property="inBankProvince" jdbcType="VARCHAR" />
+        <result column="in_bank_city" property="inBankCity" jdbcType="VARCHAR" />
         <result column="out_bank_name" property="outBankName" jdbcType="VARCHAR" />
         <result column="out_bank_card" property="outBankCard" jdbcType="VARCHAR" />
         <result column="out_account_name" property="outAccountName" jdbcType="VARCHAR" />
         <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
         <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
         <result column="merchant_site_id" property="merchantSiteId" jdbcType="BIGINT" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
         <result column="merchant_site_name" property="merchantSiteName" jdbcType="VARCHAR" />
         <result column="channel_id" property="channelId" jdbcType="BIGINT" />
         <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+        <result column="replace_pay_id" property="replacePayId" jdbcType="BIGINT" />
+        <result column="supplier_trade_no" property="supplierTradeNo" jdbcType="VARCHAR" />
+        <result column="trade_time" property="tradeTime" jdbcType="BIGINT" />
+        <result column="supplier_service_charge" property="supplierServiceCharge" jdbcType="VARCHAR" />
         <result column="picture_ads" property="pictureAds" jdbcType="VARCHAR" />
+        <result column="fail_info" property="failInfo" jdbcType="VARCHAR" />
         <result column="check_status" property="checkStatus" jdbcType="BIT" />
         <result column="check_info" property="checkInfo" jdbcType="VARCHAR" />
         <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
@@ -31,7 +43,6 @@
         <result column="work_type" property="workType" jdbcType="BIT" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
-        <result column="fail_info" property="failInfo" jdbcType="VARCHAR" />
         <result column="curday" property="curday" jdbcType="INTEGER" />
         <result column="curhour" property="curhour" jdbcType="BIT" />
         <result column="curminute" property="curminute" jdbcType="BIT" />
@@ -50,13 +61,15 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id, a.alias, a.order_no, a.order_money, a.out_trade_no, a.order_status, a.order_type, a.invalid_time,
-        a.in_bank_card, a.in_bank_name, a.in_account_name, a.out_bank_name, a.out_bank_card, a.out_account_name,
-        a.merchant_id, a.merchant_name, a.merchant_site_id, a.merchant_site_name, a.channel_id, a.channel_name,
-        a.picture_ads, a.check_status, a.check_info, a.notify_url, a.operate_status, a.work_type, a.data_explain,
-        a.remark, a.curday, a.curhour, a.curminute,a.run_status, a.run_num, a.send_num, a.send_status, a.create_user_id,
-        a.create_role_id, a.update_user_id, a.update_role_id, a.create_time, a.update_time, a.ts_time,a.fail_info,
-        a.yn
+         a.id, a.alias, a.order_no, a.order_money, a.out_trade_no, a.order_status, a.order_type, a.service_charge,
+        a.handle_type, a.out_status, a.invalid_time, a.in_bank_card, a.in_bank_name, a.in_account_name,
+        a.in_bank_subbranch, a.in_bank_province, a.in_bank_city, a.out_bank_name, a.out_bank_card,
+        a.out_account_name, a.merchant_id, a.merchant_name, a.merchant_site_id, a.merchant_site_name,
+        a.channel_id, a.channel_name, a.replace_pay_id, a.supplier_trade_no, a.trade_time, a.supplier_service_charge,
+        a.picture_ads, a.fail_info, a.check_status, a.check_info, a.notify_url, a.operate_status, a.work_type,
+        a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_status, a.run_num, a.send_num,
+        a.send_status, a.create_user_id, a.create_role_id, a.update_user_id, a.update_role_id, a.create_time,
+        a.update_time, a.ts_time, a.yn,b.company_name
     </sql>
 
     <!-- 查询条件 -->
@@ -69,15 +82,21 @@
             <if test="orderNo != null and  orderNo != ''" >
                 and a.order_no = #{orderNo}
             </if>
+            <if test="outTradeNo != null and  outTradeNo != ''" >
+                and a.out_trade_no = #{outTradeNo}
+            </if>
+            <if test="supplierTradeNo != null and  supplierTradeNo != ''" >
+                and a.supplier_trade_no = #{supplierTradeNo}
+            </if>
 
             <if test="outBankName != null and  outBankName != ''" >
-                and a.out_bank_name = #{outBankName}
+                and a.in_bank_name = #{outBankName}
             </if>
             <if test="outBankCard != null and  outBankCard != ''" >
-                and a.out_bank_card = #{outBankCard}
+                and a.in_bank_card = #{outBankCard}
             </if>
             <if test="outAccountName != null and  outAccountName != ''" >
-                and a.out_account_name = #{outAccountName}
+                and a.in_account_name = #{outAccountName}
             </if>
             <if test="orderMoney != null and  orderMoney != ''" >
                 and a.order_money = #{orderMoney}
@@ -126,7 +145,10 @@
     <!-- 查询总数-->
     <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
         select count(1)
-        from tb_fr_order_out a
+        from tb_fr_order_out a  left JOIN   tb_fr_replace_pay   b
+
+        on a.replace_pay_id=b.id
+
         <include refid="Example_Where_Clause"/>
     </select>
 
@@ -134,7 +156,10 @@
     <select id="queryByList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order_out a
+        from tb_fr_order_out a  left JOIN   tb_fr_replace_pay   b
+
+        on a.replace_pay_id=b.id
+
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
         limit #{startIndex},#{pageSize}
@@ -144,7 +169,10 @@
     <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order_out a
+        from tb_fr_order_out a left JOIN   tb_fr_replace_pay   b
+
+        on a.replace_pay_id=b.id
+
         <include refid="Example_Where_Clause"/>
         order by a.create_time desc
     </select>
@@ -154,7 +182,10 @@
     <select id="queryById"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order_out a
+        from tb_fr_order_out a  left JOIN   tb_fr_replace_pay   b
+
+        on a.replace_pay_id=b.id
+
         <include refid="Example_Where_Clause_id"/>
     </select>
 
@@ -162,7 +193,10 @@
     <select id="queryByCondition"  resultMap="dataMap" parameterType="Object">
         select
         <include refid="Base_Column_List" />
-        from tb_fr_order_out a
+        from tb_fr_order_out a  left JOIN   tb_fr_replace_pay   b
+
+        on a.replace_pay_id=b.id
+
         <include refid="Example_Where_Clause"/>
         limit 1
     </select>

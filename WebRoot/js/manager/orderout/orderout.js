@@ -13,66 +13,81 @@ var account = {
     },
     //列表显示参数
     list:[
+        {"data":"outTradeNo",},
         {"data":"orderNo",},
+        {"data":"supplierTradeNo",},
+        {"data":"companyName",},
         {"data":"inBankName",},
         {"data":"inBankCard",},
         {"data":"inAccountName",},
-        {"data":"merchantName",},
         {"data":"orderMoney",},
-        {"data":"orderStatus",
+        {"data":"serviceCharge",},
+        {"data":"orderType",
+                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    var html="";
+                    if(oData.orderType==1){
+                        html='<span>初始化</span>';
+                    }else if(oData.orderType==2){
+                        html='<span style="color: #399d19">超时</span>';
+                    }else if(oData.orderType==3){
+                        html='<span style="color: #ffa7d7">质疑</span>';
+                    }else if(oData.orderType==4){
+                        html='<span style="color: #ff301d">成功</span>';
+                    }
+                    $(nTd).html(html);
+                }
+        },
+        {"data":"handleType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
-                if(oData.orderStatus==1){
-                    html='<span>初始化</span>';
-                }else if(oData.orderStatus==2){
-                    html='<span>失败</span>';
-                }else if(oData.orderStatus==3){
-                    html='<span>失败</span>';
-                }else if(oData.orderStatus==4){
-                    html='<span style="color: #bb0000">成功</span>';
+                if(oData.handleType==1){
+                    html='<span>我方处理</span>';
+                }else if(oData.handleType==2){
+                    html='<span style="color: #2f9833">第三方处理</span>';
                 }
                 $(nTd).html(html);
             }
         },
-        {"data":"orderType",
+        {"data":"outStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
-                if(oData.orderType==1){
-                    html='<span>手动转账</span>';
-                }else if(oData.orderType==2){
-                    html='<span>API转账</span>';
+                if(oData.outStatus==1){
+                    html='<span>初始化</span>';
+                }else if(oData.outStatus==2){
+                    html='<span style="color: #2f9833">出码成功</span>';
                 }
                 $(nTd).html(html);
             }
         },
         {"data":"invalidTime",},
-        {"data":"operateStatus",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html="";
-                if(oData.operateStatus==1){
-                    html='<span>初始化</span>';
-                }else if(oData.operateStatus==2){
-                    html='<span style="color: #2f9833">成功</span>';
-                }
-                $(nTd).html(html);
-            }
-        },
         {"data":"failInfo",},
         {"data":"createTime",},
-        {"data":"id",
-            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                var html = '';
+        // {"data":"operateStatus",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html="";
+        //         if(oData.operateStatus==1){
+        //             html='<span>初始化</span>';
+        //         }else if(oData.operateStatus==2){
+        //             html='<span style="color: #2f9833">成功</span>';
+        //         }
+        //         $(nTd).html(html);
+        //     }
+        // },
 
-                if(oData.orderStatus!=4){
-                    html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="javascript:void(0);" onclick="orderHandle('+oData.id+')" > 处理 </a>'
-                    if(oData.operateStatus==2){
-                        html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/orderout/jumpUpdate.do?id='+oData.id+'" > 强行处理 </a>'
-                    }
-                    html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
-                }
-                $(nTd).html(html);
-            }
-        }
+        // {"data":"id",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html = '';
+        //
+        //         if(oData.orderStatus!=4){
+        //             html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="javascript:void(0);" onclick="orderHandle('+oData.id+')" > 处理 </a>'
+        //             if(oData.operateStatus==2){
+        //                 html+= '<a class = "dataTableBtn dataTableDeleteBtn " href="'+ctx+'/orderout/jumpUpdate.do?id='+oData.id+'" > 强行处理 </a>'
+        //             }
+        //             html+=' <a class = "dataTableBtn dataTableResetBtn"  directkey="' + oData.id + '" href = "javascript:void(0);">删除 </a>';
+        //         }
+        //         $(nTd).html(html);
+        //     }
+        // }
 
     ],
     // 查询条件，aoData是必要的。其他的就是对应的实体类字段名，因为条件查询是把数据封装在实体类中的。
@@ -94,6 +109,8 @@ var account = {
         common.showDatas(this.condJsonData,this.list);
         // 条件查询按钮事件
         $('#btnQuery').click(function() {
+            account.condJsonData['outTradeNo'] = $("#outTradeNo").val();
+            account.condJsonData['supplierTradeNo'] = $("#supplierTradeNo").val();
             account.condJsonData['orderNo'] = $("#orderNo").val();
             account.condJsonData['outBankName'] = $("#outBankName").val();
             account.condJsonData['outBankCard'] = $("#outBankCard").val();
@@ -110,6 +127,8 @@ var account = {
         // 重置
         $("#butReset").click(function(){
             account.condJsonData['orderNo'] = "";
+            account.condJsonData['supplierTradeNo'] = "";
+            account.condJsonData['outTradeNo'] = "";
             account.condJsonData['outBankName'] = "";
             account.condJsonData['outBankCard'] = "";
             account.condJsonData['outAccountName'] = "";

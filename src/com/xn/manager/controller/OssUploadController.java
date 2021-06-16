@@ -1,16 +1,23 @@
 package com.xn.manager.controller;
 
 import com.aliyun.oss.OSSClient;
+import com.xn.common.constant.Constant;
 import com.xn.common.controller.BaseController;
+import com.xn.common.util.DateUtil;
 import com.xn.common.util.OssUploadUtil;
+import com.xn.common.util.file.FileUtils;
 import com.xn.manager.model.OssUploadModel;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.InputStream;
+import java.util.Date;
 
 /**
  * @author df
@@ -20,6 +27,7 @@ import java.io.File;
 @Controller
 @RequestMapping("/ossUp")
 public class OssUploadController extends BaseController {
+
 
     private static Logger log=Logger.getLogger(OssUploadController.class);
 
@@ -31,6 +39,23 @@ public class OssUploadController extends BaseController {
             String fileAddress = oss.ossUploadFile(model.getBucketName(), model.getObjectName(), model.getLocalFile());
             sendSuccessMessage(response, "保存成功~", fileAddress);
         }catch(Exception e){
+            sendFailureMessage(response, "请重新登录~");
+        }
+    }
+
+
+
+    @RequestMapping("/uploadLocalFile")
+    public void uploadLocalFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("file") MultipartFile file) throws Exception{
+        try{
+            InputStream  inputStream =  file.getInputStream();
+            String  name =file.getOriginalFilename();
+            String  [] names =name.split("\\.");
+            String  fileName = Constant.SECRET_KEY_ADDRESS+"f"+DateUtil.getDayTime(new Date())+"."+names[1];
+            FileUtils.getFile(inputStream,fileName);
+            sendSuccessMessage(response, "上传成功!",fileName);
+        }catch(Exception e){
+            e.printStackTrace();
             sendFailureMessage(response, "请重新登录~");
         }
     }

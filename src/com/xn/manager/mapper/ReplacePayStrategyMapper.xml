@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xn.manager.dao.ReplacePayStrategyDao">
+    <!-- 属性映射 -->
+    <resultMap id="dataMap" type="com.xn.manager.model.ReplacePayStrategyModel" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="replace_pay_id" property="replacePayId" jdbcType="BIGINT" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+        <result column="priority" property="priority" jdbcType="INTEGER" />
+        <result column="open_time_slot" property="openTimeSlot" jdbcType="VARCHAR" />
+        <result column="out_day_money" property="outDayMoney" jdbcType="VARCHAR" />
+        <result column="out_month_money" property="outMonthMoney" jdbcType="VARCHAR" />
+        <result column="out_day_num" property="outDayNum" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="use_status" property="useStatus" jdbcType="BIT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="ts_time" property="tsTime" jdbcType="TIMESTAMP" />
+        <result column="yn" property="yn" jdbcType="BIT" />
+    </resultMap>
+    <!-- 定义数据库基本列,只适用代替单表的*-->
+    <sql id="Base_Column_List">
+         a.id, a.replace_pay_id, a.alias, a.priority, a.open_time_slot, a.out_day_money, a.out_month_money,
+          a.out_day_num, a.remark, a.use_status, a.create_time, a.update_time, a.ts_time, a.yn,b.company_name
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="companyName != null and companyName != '' " >
+                and b.company_name like CONCAT('%',#{companyName},'%')
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+    <sql id="Example_Where_Clause_Import">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="idList != null and idList.size()>0">
+                and a.id not in
+                <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
+        and a.yn =  0
+    </sql>
+
+
+    <!-- 查询条件_id -->
+    <sql id="Example_Where_Clause_id">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+    <!-- 查询总数-->
+    <select id="queryByCount" resultType="java.lang.Integer"  parameterType="Object">
+        select count(1)
+        from tb_fr_replace_pay_strategy a  left  join   tb_fr_replace_pay  b
+        on   a.replace_pay_id=b.id
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <!-- 查询分页列表 -->
+    <select id="queryByList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay_strategy a  left  join   tb_fr_replace_pay  b
+        on   a.replace_pay_id=b.id
+        <include refid="Example_Where_Clause"/>
+        order by a.create_time desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <!-- 查询列表-无分页-有条件/有条件 -->
+    <select id="queryAllList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay_strategy a  left  join   tb_fr_replace_pay  b
+        on   a.replace_pay_id=b.id
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+
+
+
+    <select id="queryAllListImport" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay_strategy a  left  join   tb_fr_replace_pay  b
+        on   a.replace_pay_id=b.id
+        <include refid="Example_Where_Clause_Import"/>
+        order by a.create_time desc
+    </select>
+
+    <!-- 根据id查询记录 -->
+    <select id="queryById"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_replace_pay_strategy a  left  join   tb_fr_replace_pay  b
+        on   a.replace_pay_id=b.id
+        <include refid="Example_Where_Clause_id"/>
+    </select>
+
+
+
+    <sql id="Base_Column_List_CountInfo">
+       sum(a.money) money,a.bank_id,b.bank_name,b.bank_card,b.account_name,a.curday,b.merchant_id,b.merchant_site_id
+    </sql>
+
+
+    <!-- 查询条件 -->
+    <!--<sql id="Example_Where_Clause_CountInfo">-->
+        <!--where 1=1-->
+        <!--<trim  suffixOverrides="," >-->
+            <!--<if test="id != 0 and id >0 " >-->
+                <!--and a.id = #{id}-->
+            <!--</if>-->
+            <!--<if test="bankCard != null and bankCard != '' " >-->
+                <!--and b.bank_card = #{bankCard}-->
+            <!--</if>-->
+            <!--<if test="accountName != null and accountName != '' " >-->
+                <!--and b.account_name = #{accountName}-->
+            <!--</if>-->
+            <!--<if test="accountId != null and accountId != '' " >-->
+                <!--and b.account_id = #{accountId}-->
+            <!--</if>-->
+            <!--<if test="cardSiteId != null and cardSiteId != '' " >-->
+                <!--and b.card_site_id = #{cardSiteId}-->
+            <!--</if>-->
+            <!--&lt;!&ndash;<if test="curday != 0 and curday >0 " >&ndash;&gt;-->
+                <!--&lt;!&ndash;and a.curday = #{curday}&ndash;&gt;-->
+            <!--&lt;!&ndash;</if>&ndash;&gt;-->
+            <!--and a.yn =  0-->
+        <!--</trim>-->
+    <!--</sql>-->
+    <select id="queryByTsTime"  resultMap="dataMap" parameterType="Object">
+        select
+        a.id, a.replace_pay_id, a.alias, a.priority, a.open_time_slot, a.out_day_money, a.out_month_money,
+        a.out_day_num, a.remark, a.use_status, a.create_time, a.update_time, a.ts_time, a.yn
+        from tb_fr_replace_pay_strategy a
+        <include refid="Example_Where_Clause_id"/>
+        order by  ts_time desc
+        LIMIT 1
+    </select>
+
+
+    <sql id="Having">
+        <trim  suffixOverrides="," >
+            <if test="money != 0 and money >0 " >
+                having  sum(a.money)>= #{money}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 查询汇总数据-->
+    <select id="queryBankCardCountInfo"  resultMap="dataMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List_CountInfo" />
+        from tb_fr_replace_pay_strategy a  left  join   tb_fr_replace_pay  b
+        on   a.replace_pay_id=b.id
+        LEFT JOIN  tb_fr_merchant  c
+        on  b.merchant_id = c.id
+        <include refid="Example_Where_Clause_CountInfo"/>
+        group by
+        a.curday desc,
+        b.bank_name,
+        b.bank_card,
+        b.account_name
+        <include refid="Having"/>
+    </select>
+
+
+
+
+
+
+
+
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause_CountInfo">
+        where 1=1
+        <trim  suffixOverrides="," >
+            <if test="id != 0 and id >0 " >
+                and a.id = #{id}
+            </if>
+            <if test="bankName != null and bankName != '' " >
+                and b.bank_name = #{bankName}
+            </if>
+            <if test="bankCard != null and bankCard != '' " >
+                and b.bank_card = #{bankCard}
+            </if>
+            <if test="accountName != null and accountName != '' " >
+                and b.account_name = #{accountName}
+            </if>
+            <if test="merchantId != null and merchantId != '' " >
+                and b.merchant_id = #{merchantId}
+            </if>
+            <if test="merchantSiteId != null and merchantSiteId != '' " >
+                and b.merchant_site_id = #{merchantSiteId}
+            </if>
+            <if test="curday != 0 and curday >0 " >
+                and a.curday = #{curday}
+            </if>
+            <if test="createTime != null and createTime != '' " >
+                and a.create_time &gt;= #{createTime}
+            </if>
+            <if test="beginTime != null and beginTime != '' " >
+                and a.create_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != '' " >
+                and a.create_time &lt;= #{endTime}
+            </if>
+            <if test="accountNum != null and accountNum != '' " >
+                and c.account_num = #{accountNum}
+            </if>
+            and a.yn =  0
+        </trim>
+    </sql>
+
+
+
+    <!-- 添加记录 -->
+    <insert id="add" parameterType="Object" >
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() as id
+        </selectKey>
+        insert into tb_fr_replace_pay_strategy
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="replacePayId != null" >
+                replace_pay_id,
+            </if>
+            <if test="alias != null" >
+                alias,
+            </if>
+            <if test="priority != null" >
+                priority,
+            </if>
+            <if test="openTimeSlot != null" >
+                open_time_slot,
+            </if>
+            <if test="outDayMoney != null" >
+                out_day_money,
+            </if>
+            <if test="outMonthMoney != null" >
+                out_month_money,
+            </if>
+            <if test="outDayNum != null" >
+                out_day_num,
+            </if>
+            <if test="remark != null" >
+                remark,
+            </if>
+            <if test="useStatus != null" >
+                use_status,
+            </if>
+            create_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="replacePayId != null" >
+                #{replacePayId,jdbcType=BIGINT},
+            </if>
+            <if test="alias != null" >
+                #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="priority != null" >
+                #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="openTimeSlot != null" >
+                #{openTimeSlot,jdbcType=VARCHAR},
+            </if>
+            <if test="outDayMoney != null" >
+                #{outDayMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="outMonthMoney != null" >
+                #{outMonthMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="outDayNum != null" >
+                #{outDayNum,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != null" >
+                #{useStatus,jdbcType=BIT},
+            </if>
+            <![CDATA[  NOW(), ]]>
+        </trim>
+    </insert>
+
+
+    <!-- 更新记录 -->
+    <update id="update" parameterType="Object">
+        UPDATE tb_fr_replace_pay_strategy a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="replacePayId != null" >
+                replace_pay_id = #{replacePayId,jdbcType=BIGINT},
+            </if>
+            <if test="alias != null" >
+                alias = #{alias,jdbcType=VARCHAR},
+            </if>
+            <if test="priority != null" >
+                priority = #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="openTimeSlot != null" >
+                open_time_slot = #{openTimeSlot,jdbcType=VARCHAR},
+            </if>
+            <if test="outDayMoney != null" >
+                out_day_money = #{outDayMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="outMonthMoney != null" >
+                out_month_money = #{outMonthMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="outDayNum != null" >
+                out_day_num = #{outDayNum,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="useStatus != null" >
+                use_status = #{useStatus,jdbcType=BIT},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+
+    <!-- 主要作用1.逻辑删除，2更新状态 -->
+    <update id="manyOperation" parameterType="Object">
+        update tb_fr_replace_pay_strategy a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isEnable != 0 and isEnable >0 " >
+                a.is_enable=#{isEnable},
+            </if>
+            a.yn=#{yn},
+            a.update_time=NOW()
+        </trim>
+        <include refid="Example_Where_Clause_id"/>
+    </update>
+
+    <!--逻辑删除数据 -->
+    <update id="delete" parameterType="java.lang.Long">
+        UPDATE tb_fr_replace_pay_strategy a set a.yn = 1,
+        a.update_time = now()
+        where 1=1
+        and a.id =#{id}
+        and a.yn=0
+    </update>
+
+</mapper>

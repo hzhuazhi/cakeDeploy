@@ -11,9 +11,17 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl">
+                <div class = "condQueryLabelDiv">渠道订单号	：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="outTradeNo" name ="outTradeNo">
+                </div>
                 <div class = "condQueryLabelDiv">订单号	：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="orderNo" name ="orderNo">
+                </div>
+                <div class = "condQueryLabelDiv">三方订单号	：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="supplierTradeNo" name ="supplierTradeNo">
                 </div>
                 <div class = "condQueryLabelDiv">付款银行名称：</div>
                 <div class="formCtrlDiv">
@@ -24,20 +32,21 @@
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="outBankCard" name ="outBankCard">
                 </div>
-
                 <div class = "condQueryLabelDiv">付款开户名：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="outAccountName" name ="outAccountName">
                 </div>
 
-                <div class = "condQueryLabelDiv">订单金额：</div>
-                <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="orderMoney" name ="orderMoney">
-                </div>
 
             </div>
 
             <div class = "condQueryCtrl">
+
+
+                <div class = "condQueryLabelDiv">订单金额：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="orderMoney" name ="orderMoney">
+                </div>
                 <div class = "condQueryLabelDiv">订单状态：</div>
                 <div class="formCtrlDiv">
                      <select name="orderStatus" id="orderStatus">
@@ -91,19 +100,22 @@
     <table class="datatable tables">
         <thead>
         <tr>
+            <th width="150">渠道订单号</th>
             <th width="150">订单号</th>
+            <th width="150">三方订单号</th>
+            <th width="150">公司名字</th>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
             <th width="150">付款开户名</th>
-            <th width="150">卡商名字</th>
             <th width="150">订单金额</th>
-            <th width="150">订单状态</th>
+            <th width="150">手续费</th>
             <th width="150">订单类型</th>
+            <th width="150">订单处理类型</th>
+            <th width="150">代付订单出码状态</th>
             <th width="150">失效时间</th>
-            <th width="150">操作状态</th>
-            <th width="150">数据说明</th>
+            <th width="150">失败缘由</th>
             <th width="150">创建日期</th>
-            <th width="380">操作</th>
+            <%--<th width="380">操作</th>--%>
         </tr>
         </thead>
         <tbody>
