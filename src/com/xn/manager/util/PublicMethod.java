@@ -16,10 +16,7 @@ import java.io.FileReader;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author df
@@ -145,19 +142,27 @@ public class PublicMethod{
      * @Author: yoko
      * @Date 2021/7/4 15:15
     */
-    public static List<OrderOutModel> getOrderOutByExcelMoneyList(List<OrderOutModel> orderOutList, String excelMoney){
+    public static Map<String, Object> getOrderOutByExcelMoneyList(List<OrderOutModel> orderOutList, String excelMoney){
+        Map<String, Object> map = new HashMap<>();
         List<OrderOutModel> resList = new ArrayList<>();
         String totalMoney = "0.00";
+        String totalOrderSumMoney = "0.00";
         for (OrderOutModel orderOutModel : orderOutList){
+            totalOrderSumMoney = totalMoney;
             totalMoney = StringUtil.getBigDecimalAdd(totalMoney, orderOutModel.getOrderMoney());
             boolean flag = StringUtil.getBigDecimalSubtract(excelMoney, totalMoney);
             if (flag){
+                totalOrderSumMoney = totalMoney;
                 resList.add(orderOutModel);
             }else {
                 break;
             }
         }
-        return resList;
+        if (resList != null && resList.size() > 0){
+            map.put("orderOutList", resList);
+            map.put("totalOrderSumMoney", totalOrderSumMoney);
+        }
+        return map;
     }
 
 
@@ -171,11 +176,32 @@ public class PublicMethod{
     public static List<ReplacePayGainResultModel> assembleReplacePayGainResultByExcel(List<OrderOutExcelInModel> list){
         List<ReplacePayGainResultModel> resList = new ArrayList<>();
         for (OrderOutExcelInModel orderOutExcelInModel : list){
-            if (!StringUtils.isBlank(orderOutExcelInModel.附言) && !StringUtils.isBlank(orderOutExcelInModel.结果)){
+            if (!StringUtils.isBlank(orderOutExcelInModel.备注) && !StringUtils.isBlank(orderOutExcelInModel.订单状态)){
                 ReplacePayGainResultModel replacePayGainResultModel = new ReplacePayGainResultModel();
-                replacePayGainResultModel.setOrderNo(orderOutExcelInModel.附言);
-                if (orderOutExcelInModel.结果.equals("成功")){
+                replacePayGainResultModel.setOrderNo(orderOutExcelInModel.备注);
+                if (orderOutExcelInModel.订单状态.equals("成功")){
                     replacePayGainResultModel.setTradeStatus(4);
+                }else{
+                    replacePayGainResultModel.setTradeStatus(2);
+                }
+                if (!StringUtils.isBlank(orderOutExcelInModel.杉德订单号)){
+                    replacePayGainResultModel.setSupplierTradeNo(orderOutExcelInModel.杉德订单号);
+                }
+                if (!StringUtils.isBlank(orderOutExcelInModel.手续费)){
+                    replacePayGainResultModel.setTranFee(orderOutExcelInModel.手续费);
+                }
+                String remark = "";
+                if (!StringUtils.isBlank(orderOutExcelInModel.付款方账号名称)){
+                    remark += orderOutExcelInModel.付款方账号名称 + "#";
+                }
+                if (!StringUtils.isBlank(orderOutExcelInModel.收款方账户)){
+                    remark += orderOutExcelInModel.收款方账户 + "#";
+                }
+                if (!StringUtils.isBlank(orderOutExcelInModel.失败原因)){
+                    remark += orderOutExcelInModel.失败原因;
+                }
+                if (!StringUtils.isBlank(remark)){
+                    replacePayGainResultModel.setRemark(remark);
                 }
                 replacePayGainResultModel.setCurday(DateUtil.getDayNumber(new Date()));
                 replacePayGainResultModel.setCurhour(DateUtil.getHour(new Date()));
@@ -241,9 +267,17 @@ public class PublicMethod{
         orderOutList.add(orderOutModel4);
         orderOutList.add(orderOutModel5);
         orderOutList.add(orderOutModel6);
-        List<OrderOutModel> resList = PublicMethod.getOrderOutByExcelMoneyList(orderOutList, "10000.00");
+
+        Map<String, Object> map = PublicMethod.getOrderOutByExcelMoneyList(orderOutList, "100.00");
+        List<OrderOutModel> resList = new ArrayList<>();
+        String totalOrderSumMoney = "";
+        if (!map.isEmpty()){
+            resList = (List<OrderOutModel>) map.get("orderOutList");
+            totalOrderSumMoney = map.get("totalOrderSumMoney").toString();
+        }
         for (OrderOutModel orderOutModel : resList){
             log.info("id:" + orderOutModel.getId() + ", orderMoney:" + orderOutModel.getOrderMoney());
         }
+        log.info("totalOrderSumMoney:" + totalOrderSumMoney);
     }
 }

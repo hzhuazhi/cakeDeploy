@@ -26,13 +26,13 @@ var account = {
         {"data":"orderStatus",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     var html="";
-                    if(oData.orderType==1){
+                    if(oData.orderStatus==1){
                         html='<span>初始化</span>';
-                    }else if(oData.orderType==2){
+                    }else if(oData.orderStatus==2){
                         html='<span style="color: #399d19">超时</span>';
-                    }else if(oData.orderType==3){
+                    }else if(oData.orderStatus==3){
                         html='<span style="color: #ffa7d7">质疑</span>';
-                    }else if(oData.orderType==4){
+                    }else if(oData.orderStatus==4){
                         html='<span style="color: #ff301d">成功</span>';
                     }
                     $(nTd).html(html);
@@ -153,6 +153,7 @@ var account = {
             account.condJsonData['orderStatus'] = $("#orderStatus").val();
             account.condJsonData['orderType'] = $("#orderType").val();
             account.condJsonData['operateStatus'] = $("#operateStatus").val();
+            account.condJsonData['isExcel'] = $("#isExcel").val();
             account.condJsonData['curdayStart'] = $("#curdayStart").val();
             account.condJsonData['curdayEnd'] = $("#curdayEnd").val();
             account.condJsonData['excelNum'] = $("#excelNum").val();
@@ -172,6 +173,7 @@ var account = {
             account.condJsonData['orderStatus'] = "0";
             account.condJsonData['orderType'] = "0";
             account.condJsonData['operateStatus'] = "0";
+            account.condJsonData['isExcel'] = "0";
             account.condJsonData['curdayStart'] = "0";
             account.condJsonData['curdayEnd'] = "0";
             account.condJsonData['excelNum'] = "0";
@@ -184,6 +186,7 @@ var account = {
             $("#orderStatus").val("0");
             $("#orderType").val("0");
             $("#operateStatus").val("0");
+            $("#isExcel").val("0");
             $("#curdayStart").val("0");
             $("#curdayEnd").val("0");
             $("#excelNum").val("0");

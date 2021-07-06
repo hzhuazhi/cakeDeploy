@@ -259,4 +259,73 @@ public class ExcelUtil {
     public static boolean isIE(HttpServletRequest request){
         return request.getHeader("USER-AGENT").toLowerCase().indexOf("msie")>0?true:false;
     }
+
+
+
+
+    /**
+     * @Title: importDataFromExcelBySpecial
+     * @Description: 将sheet中的数据保存到list中，
+     * 1、调用此方法时，vo的属性个数必须和excel文件每行数据的列数相同且一一对应，vo的所有属性都为String
+     * 2、在action调用此方法时，需声明
+     *     private File excelFile;上传的文件
+     *     private String excelFileName;原始文件的文件名
+     * 3、页面的file控件name需对应File的文件名
+     * #这里是经过特殊处理，比如导入的文件从第几行开始读取
+     * @param @param vo javaBean
+     * @param @param is 输入流
+     * @param @param excelFileName
+     * @param @return
+     * @return List<Object>
+     * @throws
+     */
+    public static List<Object> importDataFromExcelBySpecial(Object vo,InputStream is,String excelFileName){
+        List<Object> list = new ArrayList<>();
+        try {
+            //创建工作簿
+            Workbook workbook = createWorkbook(is, excelFileName);
+            //创建工作表sheet
+            Sheet sheet = getSheet(workbook, 0);
+            //获取sheet中数据的行数
+            int rows = sheet.getPhysicalNumberOfRows();
+            //获取表头单元格个数
+            int cells = sheet.getRow(3).getPhysicalNumberOfCells();
+            //利用反射，给JavaBean的属性进行赋值
+            Field[] fields = vo.getClass().getDeclaredFields();
+            for (int i = 4; i < rows; i++) {//第一行为标题栏，从第二行开始取数据
+                Row row = sheet.getRow(i);
+                int index = 0;
+                while (index < cells) {
+                    Cell cell = row.getCell(index);
+                    if (null == cell) {
+                        cell = row.createCell(index);
+                    }
+                    cell.setCellType(Cell.CELL_TYPE_STRING);
+                    String value = null == cell.getStringCellValue()?"":cell.getStringCellValue();
+
+                    Field field = fields[index];
+                    String fieldName = field.getName();
+                    String methodName = "set"+fieldName.substring(0,1).toUpperCase()+fieldName.substring(1);
+                    Method setMethod = vo.getClass().getMethod(methodName, new Class[]{String.class});
+                    setMethod.invoke(vo, new Object[]{value});
+                    index++;
+                }
+                if (isHasValues(vo)) {//判断对象属性是否有值
+                    list.add(vo);
+                    vo = vo.getClass().getConstructor(new Class[]{}).newInstance(new Object[]{});//重新创建一个vo对象
+                }
+
+            }
+        } catch (Exception e) {
+            logger.error(e);
+        }finally{
+            try {
+                is.close();//关闭流
+            } catch (Exception e2) {
+                logger.error(e2);
+            }
+        }
+        return list;
+
+    }
 }

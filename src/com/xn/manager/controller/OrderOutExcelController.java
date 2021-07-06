@@ -62,14 +62,16 @@ public class OrderOutExcelController extends BaseController {
                 sendFailureMessage(response, "请选择文件上传!");
             }
 
-            List<Object> list =  ExcelUtil.importDataFromExcel(new OrderOutExcelInModel(),files.getInputStream(),files.getOriginalFilename());
+            List<Object> list =  ExcelUtil.importDataFromExcelBySpecial(new OrderOutExcelInModel(),files.getInputStream(),files.getOriginalFilename());
             if(CollectionUtils.isEmpty(list)){
                 sendFailureMessage(response, "列表数据为空!");
             }
             List<OrderOutExcelInModel> importList = BeanUtils.copyList(list, OrderOutExcelInModel.class);
             for (OrderOutExcelInModel orderOutExcelInModel : importList){
-                log.info("序号：" + orderOutExcelInModel.序号 + ", 收款方姓名：" + orderOutExcelInModel.收款方姓名 + ", 收款方银行卡号" + orderOutExcelInModel.收款方银行卡号
-                 + ", 金额：" + orderOutExcelInModel.金额 + ", 附言：" + orderOutExcelInModel.附言 + "收款人手机号：" +orderOutExcelInModel.收款人手机号 + ", 结果：" + orderOutExcelInModel.结果);
+                log.info("创建时间：" + orderOutExcelInModel.创建时间 + ", 客户订单号：" + orderOutExcelInModel.客户订单号 + ", 客户交易名称" + orderOutExcelInModel.客户交易名称
+                        + ", 交易类型：" + orderOutExcelInModel.交易类型 + ", 交易金额：" + orderOutExcelInModel.交易金额 + "付款方账号：" +orderOutExcelInModel.付款方账号 + ", 付款方账号名称：" + orderOutExcelInModel.付款方账号名称
+                        + ", 收款方账户：" + orderOutExcelInModel.收款方账户 + ", 收款方名称：" + orderOutExcelInModel.收款方名称 + "手续费承担方：" +orderOutExcelInModel.手续费承担方
+                        + ", 备注：" + orderOutExcelInModel.备注 + ", 订单状态：" + orderOutExcelInModel.订单状态 + ", 杉德订单号：" + orderOutExcelInModel.杉德订单号 + ", 失败原因：" + orderOutExcelInModel.失败原因);
             }
             List<ReplacePayGainResultModel> replacePayGainResultList = PublicMethod.assembleReplacePayGainResultByExcel(importList);
             if (replacePayGainResultList != null && replacePayGainResultList.size() > 0){
