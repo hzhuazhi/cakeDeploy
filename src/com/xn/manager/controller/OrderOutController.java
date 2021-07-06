@@ -2,15 +2,14 @@ package com.xn.manager.controller;
 
 import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
-import com.xn.common.util.DateUtil;
-import com.xn.common.util.HtmlUtil;
-import com.xn.common.util.OssUploadUtil;
+import com.xn.common.util.*;
 import com.xn.manager.model.MerchantModel;
 import com.xn.manager.model.MerchantRechargeModel;
 import com.xn.manager.model.OrderOutModel;
 import com.xn.manager.model.StrategyModel;
 import com.xn.manager.service.OrderOutService;
 import com.xn.manager.service.StrategyService;
+import com.xn.manager.util.PublicMethod;
 import com.xn.system.entity.Account;
 import com.xn.system.model.AccountModel;
 import org.apache.commons.lang.StringUtils;
@@ -261,5 +260,103 @@ public class OrderOutController extends BaseController {
             sendFailureMessage(response, "登录超时,请重新登录在操作!");
         }
     }
+
+
+
+
+
+    /**
+     * 按照Excel报表导出数据
+     */
+    @RequestMapping("/exportData")
+    public void exportData(HttpServletRequest request, HttpServletResponse response, OrderOutModel model) throws Exception {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.ROLE_SYS){
+                model.setMerchantId(account.getId());
+            }
+            if (model.getCurdayStart()== null ||  model.getCurdayStart() ==0 || model.getCurdayStart()== null || model.getCurdayEnd() == 0){
+                model.setCurdayStart(DateUtil.getDayNumber(new Date()));
+                model.setCurdayEnd(DateUtil.getDayNumber(new Date()));
+            }
+            if (model.getExcelNum() == null || model.getExcelNum() == 0){
+                // 前端没有填写导出的订单条数，则走策略默认的导出条数
+                StrategyModel strategyModel = new StrategyModel();
+                strategyModel.setId(31);
+                StrategyModel excelNumStrategyModel = strategyService.queryByCondition(strategyModel);
+                model.setExcelNum(excelNumStrategyModel.getStgNumValue());
+            }
+
+            if (StringUtils.isBlank(model.getExcelMoney())){
+                // 前端没有填写导出的订单总金额，则走策略默认的导出总金额
+                StrategyModel strategyModel = new StrategyModel();
+                strategyModel.setId(32);
+                StrategyModel excelMoneyStrategyModel = strategyService.queryByCondition(strategyModel);
+                model.setExcelMoney(excelMoneyStrategyModel.getStgValue());
+            }
+
+            List<OrderOutModel> dataList = new ArrayList();
+            dataList = orderOutService.queryOrderOutByExcelList(model);
+            // 根据订单集合， 筛选出导出金额范围内的代付订单
+            dataList = PublicMethod.getOrderOutByExcelMoneyList(dataList, model.getExcelMoney());
+
+            List<OrderOutModel> excelList = new ArrayList<>();
+            // 根据筛选出来的订单修改订单的导出状态
+            for (OrderOutModel orderOutModel : dataList){
+                OrderOutModel updateBean = new OrderOutModel();
+                updateBean.setId(orderOutModel.getId());
+                updateBean.setIsExcel(2);
+                int num = orderOutService.updateIsExcel(updateBean);
+                if (num > 0){
+                    excelList.add(orderOutModel);
+                }
+            }
+
+            // 正式执行导出
+            exportData(request,response,excelList);
+        }
+
+    }
+
+
+    /**
+     * 实际导出Excel
+     * @param request
+     * @param response
+     * @param dataList
+     */
+    public void exportData(HttpServletRequest request, HttpServletResponse response, List<OrderOutModel> dataList) {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            // 导出数据
+            String[] titles = new String[9];
+            String[] titleCode = new String[9];
+            String filename = "批量代付";
+            titles = new String[]{"序号", "收款方姓名", "收款方银行卡号", "金额", "附言", "收款人手机号"};
+            titleCode = new String[]{"id", "inAccountName", "inBankCard", "orderMoney", "orderNo", "remark"};
+            List<Map<String,Object>> paramList = new ArrayList<>();
+            for(OrderOutModel paramO : dataList){
+                Map<String,Object> map = BeanUtils.transBeanToMap(paramO);
+                paramList.add(map);
+            }
+            ExportData.exportExcel(paramList, titles, titleCode, filename, response);
+        }
+    }
+
+
+    /**
+     * 修改导出状态
+     */
+    @RequestMapping("/updateIsExcel")
+    public void updateIsExcel(HttpServletRequest request, HttpServletResponse response, OrderOutModel bean) throws Exception {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            orderOutService.updateIsExcel(bean);
+            sendSuccessMessage(response, "状态更新成功");
+        }else{
+            sendFailureMessage(response, "登录超时,请重新登录在操作!");
+        }
+    }
+
 
 }

@@ -9,7 +9,8 @@ var account = {
         update_url : ctx+ "/orderout/update.do",
         queryId_url: ctx+ "/orderout/getId.do",
         delete_url: ctx+ "/orderout/delete.do",
-        manyOperation_url: ctx+ "/orderout/manyOperation.do"
+        manyOperation_url: ctx+ "/orderout/updateIsExcel.do",
+        exportData_url : ctx +  "/orderout/exportData.do"
     },
     //列表显示参数
     list:[
@@ -22,7 +23,7 @@ var account = {
         {"data":"inAccountName",},
         {"data":"orderMoney",},
         {"data":"serviceCharge",},
-        {"data":"orderType",
+        {"data":"orderStatus",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     var html="";
                     if(oData.orderType==1){
@@ -48,20 +49,53 @@ var account = {
                 $(nTd).html(html);
             }
         },
-        {"data":"outStatus",
+        // {"data":"outStatus",
+        //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //         var html="";
+        //         if(oData.outStatus==1){
+        //             html='<span>初始化</span>';
+        //         }else if(oData.outStatus==2){
+        //             html='<span style="color: #2f9833">出码成功</span>';
+        //         }
+        //         $(nTd).html(html);
+        //     }
+        // },
+        {"data":"invalidTime",},
+        // {"data":"failInfo",},
+        {"data":"createTime",},
+
+
+        {"data":"isExcel",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
-                if(oData.outStatus==1){
-                    html='<span>初始化</span>';
-                }else if(oData.outStatus==2){
-                    html='<span style="color: #2f9833">出码成功</span>';
+                if(oData.isExcel==1){
+                    html='<span>未导出</span>';
+                }else if(oData.isExcel==2){
+                    html='<span><font color="red">已导出</font></span>';
                 }
                 $(nTd).html(html);
             }
         },
-        {"data":"invalidTime",},
-        {"data":"failInfo",},
-        {"data":"createTime",},
+
+
+
+        {"data":"id",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                var isEnableHtml = '';
+                if (oData.isExcel == 1){
+                    isEnableHtml = '<a class = "dataTableBtn dataTableExcelBtn"  directkey="'+oData.id+'"  directValue="2" href = "javascript:void(0);">已导出 </a>';
+                }else if(oData.isExcel == 2){
+                    isEnableHtml = '<a class = "dataTableBtn dataTableExcelBtn"  directkey="'+oData.id+'"  directValue="1" href = "javascript:void(0);">未导出</a>';
+                }
+                html = html + isEnableHtml;
+                $(nTd).html(html);
+            }
+        }
+
+
+
+
         // {"data":"operateStatus",
         //     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
         //         var html="";
@@ -112,15 +146,17 @@ var account = {
             account.condJsonData['outTradeNo'] = $("#outTradeNo").val();
             account.condJsonData['supplierTradeNo'] = $("#supplierTradeNo").val();
             account.condJsonData['orderNo'] = $("#orderNo").val();
-            account.condJsonData['outBankName'] = $("#outBankName").val();
-            account.condJsonData['outBankCard'] = $("#outBankCard").val();
-            account.condJsonData['outAccountName'] = $("#outAccountName").val();
+            account.condJsonData['inBankName'] = $("#inBankName").val();
+            account.condJsonData['inBankCard'] = $("#inBankCard").val();
+            account.condJsonData['inAccountName'] = $("#inAccountName").val();
             account.condJsonData['orderMoney'] = $("#orderMoney").val();
             account.condJsonData['orderStatus'] = $("#orderStatus").val();
             account.condJsonData['orderType'] = $("#orderType").val();
             account.condJsonData['operateStatus'] = $("#operateStatus").val();
             account.condJsonData['curdayStart'] = $("#curdayStart").val();
             account.condJsonData['curdayEnd'] = $("#curdayEnd").val();
+            account.condJsonData['excelNum'] = $("#excelNum").val();
+            account.condJsonData['excelMoney'] = $("#excelMoney").val();
             common.showDatas(account.condJsonData,account.list);
         });
 
@@ -129,25 +165,29 @@ var account = {
             account.condJsonData['orderNo'] = "";
             account.condJsonData['supplierTradeNo'] = "";
             account.condJsonData['outTradeNo'] = "";
-            account.condJsonData['outBankName'] = "";
-            account.condJsonData['outBankCard'] = "";
-            account.condJsonData['outAccountName'] = "";
+            account.condJsonData['inBankName'] = "";
+            account.condJsonData['inBankCard'] = "";
+            account.condJsonData['inAccountName'] = "";
             account.condJsonData['orderMoney'] = "";
             account.condJsonData['orderStatus'] = "0";
             account.condJsonData['orderType'] = "0";
             account.condJsonData['operateStatus'] = "0";
             account.condJsonData['curdayStart'] = "0";
             account.condJsonData['curdayEnd'] = "0";
+            account.condJsonData['excelNum'] = "0";
+            account.condJsonData['excelMoney'] = "";
             $("#orderNo").val("");
-            $("#outBankName").val("");
-            $("#outBankCard").val("");
-            $("#outAccountName").val("");
+            $("#inBankName").val("");
+            $("#inBankCard").val("");
+            $("#inAccountName").val("");
             $("#orderMoney").val("");
             $("#orderStatus").val("0");
             $("#orderType").val("0");
             $("#operateStatus").val("0");
             $("#curdayStart").val("0");
             $("#curdayEnd").val("0");
+            $("#excelNum").val("0");
+            $("#excelMoney").val("");
             common.showDatas(account.condJsonData,account.list);
         });
 
@@ -172,6 +212,26 @@ var account = {
             }
             common.manyOperation(data);
         });
+
+
+        // 数据按照Excel格式导出
+        $("#butExcelExport").click(function () {
+            common.dataExportExcel($("#condForm"));
+        });
+
+
+        //导出状态修改
+        $(".dataTableExcelBtn").live("click",function(){
+            var id = $(this).attr('directkey');
+            var isExcel = $(this).attr('directValue');
+            var data = {
+                id:id,
+                isExcel:isExcel
+            }
+            common.manyOperationIsExcel(data);
+        });
+
+
     },
 
 }

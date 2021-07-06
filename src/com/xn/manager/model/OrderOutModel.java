@@ -261,6 +261,11 @@ public class OrderOutModel extends BasePage {
     private Integer operateStatus;
 
     /**
+     * 是否被导出过:1初始化未被导出，2已被导出过
+     */
+    private Integer isExcel;
+
+    /**
      * 补充数据的类型：1初始化，2补充数据失败（其它原因等..），3补充数据成功
      *
      * @mbggenerated
@@ -385,6 +390,21 @@ public class OrderOutModel extends BasePage {
      * @mbggenerated
      */
     private Integer yn;
+
+    /**
+     * 要导出数据的条数
+     */
+    private Integer excelNum;
+
+    /**
+     * 要导出的订单的金额不能超过多少金额
+     */
+    private String excelMoney;
+
+    /**
+     * 失效时间SQL查询
+     */
+    private String invalidTimeStr;
 
     public Long getId() {
         return id;
@@ -840,5 +860,37 @@ public class OrderOutModel extends BasePage {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public Integer getIsExcel() {
+        return isExcel;
+    }
+
+    public void setIsExcel(Integer isExcel) {
+        this.isExcel = isExcel;
+    }
+
+    public Integer getExcelNum() {
+        return excelNum;
+    }
+
+    public void setExcelNum(Integer excelNum) {
+        this.excelNum = excelNum;
+    }
+
+    public String getExcelMoney() {
+        return excelMoney;
+    }
+
+    public void setExcelMoney(String excelMoney) {
+        this.excelMoney = excelMoney;
+    }
+
+    public String getInvalidTimeStr() {
+        return invalidTimeStr;
+    }
+
+    public void setInvalidTimeStr(String invalidTimeStr) {
+        this.invalidTimeStr = invalidTimeStr;
     }
 }

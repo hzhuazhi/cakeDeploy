@@ -25,20 +25,21 @@
                 </div>
                 <div class = "condQueryLabelDiv">付款银行名称：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="outBankName" name ="outBankName">
+                    <input type ="text" class ="inputCommonSty" id="inBankName" name ="inBankName">
                 </div>
 
                 <div class = "condQueryLabelDiv">付款银行卡账号：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="outBankCard" name ="outBankCard">
+                    <input type ="text" class ="inputCommonSty" id="intBankCard" name ="inBankCard">
                 </div>
                 <div class = "condQueryLabelDiv">付款开户名：</div>
                 <div class="formCtrlDiv">
-                    <input type ="text" class ="inputCommonSty" id="outAccountName" name ="outAccountName">
+                    <input type ="text" class ="inputCommonSty" id="inAccountName" name ="inAccountName">
                 </div>
 
 
             </div>
+
 
             <div class = "condQueryCtrl">
 
@@ -49,13 +50,13 @@
                 </div>
                 <div class = "condQueryLabelDiv">订单状态：</div>
                 <div class="formCtrlDiv">
-                     <select name="orderStatus" id="orderStatus">
-                         <option value="0">===请选择===</option>
-                         <option value="1">初始化</option>
-                         <option value="2">超时</option>
-                         <option value="3">质疑</option>
-                         <option value="4">成功</option>
-                     </select>
+                    <select name="orderStatus" id="orderStatus">
+                        <option value="0">===请选择===</option>
+                        <option value="1">初始化</option>
+                        <option value="2">超时</option>
+                        <option value="3">质疑</option>
+                        <option value="4">成功</option>
+                    </select>
                 </div>
 
                 <div class = "condQueryLabelDiv">订单类型：</div>
@@ -67,12 +68,21 @@
                     </select>
                 </div>
 
-                <div class = "condQueryLabelDiv">操作状态：</div>
+                <%--<div class = "condQueryLabelDiv">操作状态：</div>--%>
+                <%--<div class="formCtrlDiv">--%>
+                    <%--<select name="operateStatus" id="operateStatus">--%>
+                        <%--<option value="0">===请选择===</option>--%>
+                        <%--<option value="1">初始化</option>--%>
+                        <%--<option value="2">锁定</option>--%>
+                    <%--</select>--%>
+                <%--</div>--%>
+
+                <div class = "condQueryLabelDiv">导出状态：</div>
                 <div class="formCtrlDiv">
-                    <select name="operateStatus" id="operateStatus">
+                    <select name="isExcel" id="isExcel">
                         <option value="0">===请选择===</option>
-                        <option value="1">初始化</option>
-                        <option value="2">锁定</option>
+                        <option value="1">未导出</option>
+                        <option value="2">已导出</option>
                     </select>
                 </div>
 
@@ -92,6 +102,27 @@
                     <input type = "button" id = "butReset" class = "buttonClass imginput" value = "重置" />
                 </div>
             </div>
+
+
+            <div class = "condQueryCtrl">
+
+
+                <div class = "condQueryLabelDiv">导出订单条数：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="excelNum" name ="excelNum">
+                </div>
+
+                <div class = "condQueryLabelDiv">导出订单总金额：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="excelMoney" name ="excelMoney">
+                </div>
+
+                <div class="searchdiv">
+                    <input type = "button" id = "butExcelExport" class = "buttonClass imginput" value = "Excel导出" />
+                </div>
+            </div>
+
+
         </form>
 
 
@@ -109,13 +140,14 @@
             <th width="150">付款开户名</th>
             <th width="150">订单金额</th>
             <th width="150">手续费</th>
-            <th width="150">订单类型</th>
+            <th width="150">订单状态</th>
             <th width="150">订单处理类型</th>
-            <th width="150">代付订单出码状态</th>
+            <%--<th width="150">代付订单出码状态</th>--%>
             <th width="150">失效时间</th>
-            <th width="150">失败缘由</th>
+            <%--<th width="150">失败缘由</th>--%>
             <th width="150">创建日期</th>
-            <%--<th width="380">操作</th>--%>
+            <th width="150">导出状态</th>
+            <th width="380">操作</th>
         </tr>
         </thead>
         <tbody>

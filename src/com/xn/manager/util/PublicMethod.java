@@ -1,8 +1,12 @@
 package com.xn.manager.util;
 
 
+import com.xn.common.util.DateUtil;
 import com.xn.common.util.StringUtil;
 import com.xn.manager.model.AdminWithdrawModel;
+import com.xn.manager.model.OrderOutModel;
+import com.xn.manager.model.excel.OrderOutExcelInModel;
+import com.xn.manager.model.replacepay.ReplacePayGainResultModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -12,6 +16,9 @@ import java.io.FileReader;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -130,6 +137,56 @@ public class PublicMethod{
     }
 
 
+    /**
+     * @Description: 根据导出金额来筛选要导出的代付订单集合
+     * @param orderOutList
+     * @param excelMoney
+     * @return
+     * @Author: yoko
+     * @Date 2021/7/4 15:15
+    */
+    public static List<OrderOutModel> getOrderOutByExcelMoneyList(List<OrderOutModel> orderOutList, String excelMoney){
+        List<OrderOutModel> resList = new ArrayList<>();
+        String totalMoney = "0.00";
+        for (OrderOutModel orderOutModel : orderOutList){
+            totalMoney = StringUtil.getBigDecimalAdd(totalMoney, orderOutModel.getOrderMoney());
+            boolean flag = StringUtil.getBigDecimalSubtract(excelMoney, totalMoney);
+            if (flag){
+                resList.add(orderOutModel);
+            }else {
+                break;
+            }
+        }
+        return resList;
+    }
+
+
+    /**
+     * @Description: 代付的导入结果进行组装转换
+     * @param list - 导入结果集合
+     * @return
+     * @Author: yoko
+     * @Date 2021/7/4 18:05
+    */
+    public static List<ReplacePayGainResultModel> assembleReplacePayGainResultByExcel(List<OrderOutExcelInModel> list){
+        List<ReplacePayGainResultModel> resList = new ArrayList<>();
+        for (OrderOutExcelInModel orderOutExcelInModel : list){
+            if (!StringUtils.isBlank(orderOutExcelInModel.附言) && !StringUtils.isBlank(orderOutExcelInModel.结果)){
+                ReplacePayGainResultModel replacePayGainResultModel = new ReplacePayGainResultModel();
+                replacePayGainResultModel.setOrderNo(orderOutExcelInModel.附言);
+                if (orderOutExcelInModel.结果.equals("成功")){
+                    replacePayGainResultModel.setTradeStatus(4);
+                }
+                replacePayGainResultModel.setCurday(DateUtil.getDayNumber(new Date()));
+                replacePayGainResultModel.setCurhour(DateUtil.getHour(new Date()));
+                replacePayGainResultModel.setCurminute(DateUtil.getCurminute(new Date()));
+                resList.add(replacePayGainResultModel);
+            }
+        }
+        return resList;
+    }
+
+
 
 
 
@@ -139,18 +196,54 @@ public class PublicMethod{
 //        String  str1 ="您尾号7032卡11月2日00:24工商银行收入(支付宝)1999.99元，余)19.99元，余额1,132.22元，对方户名：李冠朝";
 //        System.out.println(str1.split("元").length);
 
-        BufferedReader in = new BufferedReader(new FileReader("D:\\yhk4.txt"));
-        String str;
-        int  i=0;
-        while ((str = in.readLine()) != null) {
-            String []  dd=str.split("\\)");
-            if(dd.length>=3){
-                System.out.println(i+"==========="+str);
-            }
-            i++;
-
-        }
-        System.out.println(str);
+//        BufferedReader in = new BufferedReader(new FileReader("D:\\yhk4.txt"));
+//        String str;
+//        int  i=0;
+//        while ((str = in.readLine()) != null) {
+//            String []  dd=str.split("\\)");
+//            if(dd.length>=3){
+//                System.out.println(i+"==========="+str);
+//            }
+//            i++;
+//
+//        }
+//        System.out.println(str);
 //        List<Long> idList = list.stream().map(ChannelModel::getId).collect(Collectors.toList());// 获取某集合的某属性的集合
+
+        List<OrderOutModel> orderOutList = new ArrayList<>();
+        OrderOutModel orderOutModel1 = new OrderOutModel();
+        orderOutModel1.setId(1L);
+        orderOutModel1.setOrderMoney("1000.00");
+
+        OrderOutModel orderOutModel2 = new OrderOutModel();
+        orderOutModel2.setId(2L);
+        orderOutModel2.setOrderMoney("2000.00");
+
+        OrderOutModel orderOutModel3 = new OrderOutModel();
+        orderOutModel3.setId(3L);
+        orderOutModel3.setOrderMoney("3000.00");
+
+        OrderOutModel orderOutModel4 = new OrderOutModel();
+        orderOutModel4.setId(4L);
+        orderOutModel4.setOrderMoney("4000.00");
+
+        OrderOutModel orderOutModel5 = new OrderOutModel();
+        orderOutModel5.setId(5L);
+        orderOutModel5.setOrderMoney("5000.00");
+
+        OrderOutModel orderOutModel6 = new OrderOutModel();
+        orderOutModel6.setId(6L);
+        orderOutModel6.setOrderMoney("6000.00");
+
+        orderOutList.add(orderOutModel1);
+        orderOutList.add(orderOutModel2);
+        orderOutList.add(orderOutModel3);
+        orderOutList.add(orderOutModel4);
+        orderOutList.add(orderOutModel5);
+        orderOutList.add(orderOutModel6);
+        List<OrderOutModel> resList = PublicMethod.getOrderOutByExcelMoneyList(orderOutList, "10000.00");
+        for (OrderOutModel orderOutModel : resList){
+            log.info("id:" + orderOutModel.getId() + ", orderMoney:" + orderOutModel.getOrderMoney());
+        }
     }
 }

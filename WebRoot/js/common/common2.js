@@ -119,6 +119,35 @@ var common = {
 
     },
 
+
+
+    //导出状态更改
+    manyOperationIsExcel: function(data){
+        var showMsg = '';
+        if (data.isExcel == 1){
+            if(!confirm("确认要修改成未导出吗？")){
+                return;
+            }
+            showMsg = '修改成未导出成功!';
+        }else if(data.isExcel == 2){
+            if(!confirm("确认要修改成已导出吗？")){
+                return;
+            }
+            showMsg = '修改成已导出成功!';
+        }
+        this.ajax(this.url.manyOperation_url,data,function(data){
+            if (data.success) {
+                promptMessage (showMsg,'success',false);
+                common.goList();
+            } else {
+                art.alert(data.msg);
+            }
+        });
+
+    },
+
+
+
     //重发
     cf: function(data){
         var showMsg = '';

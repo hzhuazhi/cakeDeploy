@@ -40,6 +40,7 @@
         <result column="check_info" property="checkInfo" jdbcType="VARCHAR" />
         <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
         <result column="operate_status" property="operateStatus" jdbcType="BIT" />
+        <result column="is_excel" property="isExcel" jdbcType="BIT" />
         <result column="work_type" property="workType" jdbcType="BIT" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -66,7 +67,7 @@
         a.in_bank_subbranch, a.in_bank_province, a.in_bank_city, a.out_bank_name, a.out_bank_card,
         a.out_account_name, a.merchant_id, a.merchant_name, a.merchant_site_id, a.merchant_site_name,
         a.channel_id, a.channel_name, a.replace_pay_id, a.supplier_trade_no, a.trade_time, a.supplier_service_charge,
-        a.picture_ads, a.fail_info, a.check_status, a.check_info, a.notify_url, a.operate_status, a.work_type,
+        a.picture_ads, a.fail_info, a.check_status, a.check_info, a.notify_url, a.operate_status, a.is_excel, a.work_type,
         a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_status, a.run_num, a.send_num,
         a.send_status, a.create_user_id, a.create_role_id, a.update_user_id, a.update_role_id, a.create_time,
         a.update_time, a.ts_time, a.yn,b.company_name
@@ -89,14 +90,14 @@
                 and a.supplier_trade_no = #{supplierTradeNo}
             </if>
 
-            <if test="outBankName != null and  outBankName != ''" >
-                and a.in_bank_name = #{outBankName}
+            <if test="inBankName != null and  inBankName != ''" >
+                and a.in_bank_name = #{inBankName}
             </if>
-            <if test="outBankCard != null and  outBankCard != ''" >
-                and a.in_bank_card = #{outBankCard}
+            <if test="inBankCard != null and  inBankCard != ''" >
+                and a.in_bank_card = #{inBankCard}
             </if>
-            <if test="outAccountName != null and  outAccountName != ''" >
-                and a.in_account_name = #{outAccountName}
+            <if test="inAccountName != null and  inAccountName != ''" >
+                and a.in_account_name = #{inAccountName}
             </if>
             <if test="orderMoney != null and  orderMoney != ''" >
                 and a.order_money = #{orderMoney}
@@ -112,6 +113,9 @@
             </if>
             <if test="operateStatus != 0 and operateStatus >0 " >
                 and a.operate_status = #{operateStatus}
+            </if>
+            <if test="isExcel != 0 and isExcel >0 " >
+                and a.is_excel = #{isExcel}
             </if>
 
             <if test="curday != 0 and curday >0 " >
@@ -349,5 +353,69 @@
         and a.id =#{id}
         and a.yn=0
     </update>
+
+
+    <!-- 修改代付订单的导出状态 -->
+    <update id="updateIsExcel" parameterType="Object">
+        update tb_fr_order_out a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isExcel != 0 and isExcel >0 " >
+                a.is_excel=#{isExcel},
+            </if>
+        </trim>
+        where 1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+
+    <!-- 查询导出的代付订单集合 -->
+    <select id="queryOrderOutByExcelList" resultMap="dataMap"  parameterType="Object">
+        select
+        <include refid="Base_Column_List" />
+        from tb_fr_order_out a left join tb_fr_replace_pay b on a.replace_pay_id=b.id
+        where 1=1
+        <if test="curday != 0 and curday >0 " >
+            and a.curday = #{curday}
+        </if>
+        <if test="curdayStart != 0 and curdayStart >0 and curdayEnd != 0 and curdayEnd >0 " >
+            and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
+        </if>
+        and a.is_excel = 1
+        and a.invalid_time > now()
+        and a.order_status = 1
+
+        <if test="id != 0 and id >0 " >
+            and a.id = #{id}
+        </if>
+        <if test="merchantId != 0 and merchantId >0 " >
+            and a.merchant_id = #{merchantId}
+        </if>
+        <if test="orderNo != null and  orderNo != ''" >
+            and a.order_no = #{orderNo}
+        </if>
+        <if test="outTradeNo != null and  outTradeNo != ''" >
+            and a.out_trade_no = #{outTradeNo}
+        </if>
+        <if test="supplierTradeNo != null and  supplierTradeNo != ''" >
+            and a.supplier_trade_no = #{supplierTradeNo}
+        </if>
+
+        <if test="inBankName != null and  inBankName != ''" >
+            and a.in_bank_name = #{inBankName}
+        </if>
+        <if test="inBankCard != null and  inBankCard != ''" >
+            and a.in_bank_card = #{inBankCard}
+        </if>
+        <if test="inAccountName != null and  inAccountName != ''" >
+            and a.in_account_name = #{inAccountName}
+        </if>
+        <if test="orderMoney != null and  orderMoney != ''" >
+            and a.order_money = #{orderMoney}
+        </if>
+        order by a.id asc
+        limit #{excelNum}
+    </select>
 
 </mapper>
