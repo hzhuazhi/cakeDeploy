@@ -86,6 +86,11 @@
                     </select>
                 </div>
 
+                <div class = "condQueryLabelDiv">批次号：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="batchNum" name ="batchNum">
+                </div>
+
                 <div class = "condQueryLabelDiv">开始日期：</div>
                 <div class="formCtrlDiv">
                     <input type="text" class ="inputCommonSty" name="curdayStart" id="curdayStart" size="10" readonly="readonly" onClick="WdatePicker({dateFmt:'yyyyMMdd'})" value="${model.curdayStart}"/>
@@ -105,7 +110,6 @@
 
 
             <div class = "condQueryCtrl">
-
 
                 <div class = "condQueryLabelDiv">导出订单条数：</div>
                 <div class="formCtrlDiv">
@@ -134,18 +138,19 @@
             <th width="150">渠道订单号</th>
             <th width="150">订单号</th>
             <th width="150">三方订单号</th>
-            <th width="150">公司名字</th>
+            <%--<th width="150">公司名字</th>--%>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
             <th width="150">付款开户名</th>
             <th width="150">订单金额</th>
-            <th width="150">手续费</th>
+            <%--<th width="150">手续费</th>--%>
             <th width="150">订单状态</th>
             <th width="150">订单处理类型</th>
             <%--<th width="150">代付订单出码状态</th>--%>
             <th width="150">失效时间</th>
             <%--<th width="150">失败缘由</th>--%>
             <th width="150">创建日期</th>
+            <th width="150">批次号</th>
             <th width="150">导出状态</th>
             <th width="380">操作</th>
         </tr>

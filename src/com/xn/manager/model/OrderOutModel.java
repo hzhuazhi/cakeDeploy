@@ -266,6 +266,11 @@ public class OrderOutModel extends BasePage {
     private Integer isExcel;
 
     /**
+     * 批次号
+     */
+    private String batchNum;
+
+    /**
      * 补充数据的类型：1初始化，2补充数据失败（其它原因等..），3补充数据成功
      *
      * @mbggenerated
@@ -892,5 +897,13 @@ public class OrderOutModel extends BasePage {
 
     public void setInvalidTimeStr(String invalidTimeStr) {
         this.invalidTimeStr = invalidTimeStr;
+    }
+
+    public String getBatchNum() {
+        return batchNum;
+    }
+
+    public void setBatchNum(String batchNum) {
+        this.batchNum = batchNum;
     }
 }

@@ -41,6 +41,7 @@
         <result column="notify_url" property="notifyUrl" jdbcType="VARCHAR" />
         <result column="operate_status" property="operateStatus" jdbcType="BIT" />
         <result column="is_excel" property="isExcel" jdbcType="BIT" />
+        <result column="batch_num" property="batchNum" jdbcType="VARCHAR" />
         <result column="work_type" property="workType" jdbcType="BIT" />
         <result column="data_explain" property="dataExplain" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -67,7 +68,7 @@
         a.in_bank_subbranch, a.in_bank_province, a.in_bank_city, a.out_bank_name, a.out_bank_card,
         a.out_account_name, a.merchant_id, a.merchant_name, a.merchant_site_id, a.merchant_site_name,
         a.channel_id, a.channel_name, a.replace_pay_id, a.supplier_trade_no, a.trade_time, a.supplier_service_charge,
-        a.picture_ads, a.fail_info, a.check_status, a.check_info, a.notify_url, a.operate_status, a.is_excel, a.work_type,
+        a.picture_ads, a.fail_info, a.check_status, a.check_info, a.notify_url, a.operate_status, a.is_excel, a.batch_num, a.work_type,
         a.data_explain, a.remark, a.curday, a.curhour, a.curminute, a.run_status, a.run_num, a.send_num,
         a.send_status, a.create_user_id, a.create_role_id, a.update_user_id, a.update_role_id, a.create_time,
         a.update_time, a.ts_time, a.yn,b.company_name
@@ -117,7 +118,9 @@
             <if test="isExcel != 0 and isExcel >0 " >
                 and a.is_excel = #{isExcel}
             </if>
-
+            <if test="batchNum != null and  batchNum != ''" >
+                and a.batch_num = #{batchNum}
+            </if>
             <if test="curday != 0 and curday >0 " >
                 and a.curday = #{curday}
             </if>
@@ -362,6 +365,10 @@
             <if test="isExcel != 0 and isExcel >0 " >
                 a.is_excel=#{isExcel},
             </if>
+            <if test="batchNum != null and  batchNum != ''" >
+                a.batch_num = #{batchNum},
+            </if>
+
         </trim>
         where 1=1
         and a.id = #{id}

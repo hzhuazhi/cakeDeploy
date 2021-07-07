@@ -17,12 +17,12 @@ var account = {
         {"data":"outTradeNo",},
         {"data":"orderNo",},
         {"data":"supplierTradeNo",},
-        {"data":"companyName",},
+        // {"data":"companyName",},
         {"data":"inBankName",},
         {"data":"inBankCard",},
         {"data":"inAccountName",},
         {"data":"orderMoney",},
-        {"data":"serviceCharge",},
+        // {"data":"serviceCharge",},
         {"data":"orderStatus",
                 "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     var html="";
@@ -64,7 +64,7 @@ var account = {
         // {"data":"failInfo",},
         {"data":"createTime",},
 
-
+        {"data":"batchNum",},
         {"data":"isExcel",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
@@ -154,6 +154,7 @@ var account = {
             account.condJsonData['orderType'] = $("#orderType").val();
             account.condJsonData['operateStatus'] = $("#operateStatus").val();
             account.condJsonData['isExcel'] = $("#isExcel").val();
+            account.condJsonData['batchNum'] = $("#batchNum").val();
             account.condJsonData['curdayStart'] = $("#curdayStart").val();
             account.condJsonData['curdayEnd'] = $("#curdayEnd").val();
             account.condJsonData['excelNum'] = $("#excelNum").val();
@@ -174,6 +175,7 @@ var account = {
             account.condJsonData['orderType'] = "0";
             account.condJsonData['operateStatus'] = "0";
             account.condJsonData['isExcel'] = "0";
+            account.condJsonData['batchNum'] = "";
             account.condJsonData['curdayStart'] = "0";
             account.condJsonData['curdayEnd'] = "0";
             account.condJsonData['excelNum'] = "0";
@@ -187,6 +189,7 @@ var account = {
             $("#orderType").val("0");
             $("#operateStatus").val("0");
             $("#isExcel").val("0");
+            $("#batchNum").val("");
             $("#curdayStart").val("0");
             $("#curdayEnd").val("0");
             $("#excelNum").val("0");

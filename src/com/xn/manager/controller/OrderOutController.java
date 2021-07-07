@@ -307,10 +307,12 @@ public class OrderOutController extends BaseController {
             }
             List<OrderOutModel> excelList = new ArrayList<>();
             // 根据筛选出来的订单修改订单的导出状态
+            String batchNum = "DF_" + DateUtil.getNowLongTime();
             for (OrderOutModel orderOutModel : orderOutList){
                 OrderOutModel updateBean = new OrderOutModel();
                 updateBean.setId(orderOutModel.getId());
                 updateBean.setIsExcel(2);
+                updateBean.setBatchNum(batchNum);
                 int num = orderOutService.updateIsExcel(updateBean);
                 if (num > 0){
                     excelList.add(orderOutModel);
@@ -318,7 +320,7 @@ public class OrderOutController extends BaseController {
             }
 
             // 正式执行导出
-            exportData(request ,response, excelList, totalOrderSumMoney);
+            exportData(request ,response, excelList, batchNum, totalOrderSumMoney);
         }
 
     }
@@ -330,13 +332,13 @@ public class OrderOutController extends BaseController {
      * @param response
      * @param dataList
      */
-    public void exportData(HttpServletRequest request, HttpServletResponse response, List<OrderOutModel> dataList, String totalOrderSumMoney) throws Exception{
+    public void exportData(HttpServletRequest request, HttpServletResponse response, List<OrderOutModel> dataList, String batchNum, String totalOrderSumMoney) throws Exception{
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             // 导出数据
             String[] titles = new String[9];
             String[] titleCode = new String[9];
-            String filename = "DF_" + DateUtil.getNowLongTime() + "_" + dataList.size() + "_" + totalOrderSumMoney;
+            String filename = batchNum + "_" + dataList.size() + "_" + totalOrderSumMoney;
             titles = new String[]{"序号（选填）", "收款方姓名（必填）", "收款方银行卡号（必填）", "金额（必填，单位：元）", "附言（选填）", "收款人手机号（选填）"};
             titleCode = new String[]{"id", "inAccountName", "inBankCard", "orderMoney", "orderNo", "remark"};
             List<Map<String,Object>> paramList = new ArrayList<>();
