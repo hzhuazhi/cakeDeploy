@@ -45,6 +45,7 @@
             <%--</c:if>--%>
             <div class="h_item " id="div_withdraw" style="font-size: 20px;color: #110302;" onclick="queryWithdraw()"><strong id="spaymentnum">未处理下发条数:0</strong></div>
             <div class="h_item " id="div_bank" style="font-size: 20px;color: #110302;" onclick="queryBank()"><strong id="banknum">需要换卡条数:0</strong></div>
+            <div class="h_item " id="div_orderout" style="font-size: 20px;color: #110302;" onclick="queryOrderOut()"><strong id="orderout">需要代付条数:0</strong></div>
         </div>
     </div>
 

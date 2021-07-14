@@ -47,6 +47,10 @@ public class AbnormalModel {
      */
     public Integer   paymentNum;
     /***
+     * 未代付打款数量
+     */
+    public Integer   orderOutNum;
+    /***
      * 未处理打款信息
      */
     public String   paymentInfo;
@@ -129,5 +133,13 @@ public class AbnormalModel {
 
     public void setMerchantReplenishNum(Integer merchantReplenishNum) {
         this.merchantReplenishNum = merchantReplenishNum;
+    }
+
+    public Integer getOrderOutNum() {
+        return orderOutNum;
+    }
+
+    public void setOrderOutNum(Integer orderOutNum) {
+        this.orderOutNum = orderOutNum;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,6 +35,9 @@ public class AbnormalController extends BaseController {
 
     @Autowired
     private BankService<BankModel> bankService;
+
+    @Autowired
+    private OrderOutService<OrderOutModel> orderOutService;
 
     @Autowired
     private BankShortMsgService<BankShortMsgModel> bankShortMsgService;
@@ -59,6 +63,7 @@ public class AbnormalController extends BaseController {
         AbnormalModel abnormalModel = new AbnormalModel();
         MobileCardModel  mobileCardModel = new MobileCardModel(); //手机监听
         WithdrawModel    withdrawModel =new  WithdrawModel();   //下发信息
+        OrderOutModel    orderOutModel =new  OrderOutModel();   //下发信息
         BankModel    bankModel =new  BankModel();   //需要换的银行卡信息
 
         MerchantReplenishModel  merchantReplenishModel = new  MerchantReplenishModel();// 补单信息
@@ -72,11 +77,17 @@ public class AbnormalController extends BaseController {
         bankModel.setStatusThree(3);
         bankModel.setChangeTime(DateUtil.getNowPlusTime());
         bankModel.setUseStatus(2);
+        orderOutModel.setCurday(Integer.parseInt(DateUtil.getNowShortDate()));
+//        orderOutModel.setIsExcel(1);
+//        orderOutModel.setOrderStatus(1);
+//        orderOutModel.setOrderType(1);
+//        orderOutModel.setInvalidTime(new Date());
 
         List<BankCollectionModel> dataList = new ArrayList<BankCollectionModel>();
         List<WithdrawModel> withdrawModelList  = new ArrayList<WithdrawModel>();
         List<MerchantReplenishModel> merchantReplenishlList  = new ArrayList<MerchantReplenishModel>();
         List<BankModel> bankList  = new ArrayList<BankModel>();
+        List<OrderOutModel> orderOutList  = new ArrayList<OrderOutModel>();
         Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
         if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
             if (account.getRoleId() != ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ONE){
@@ -84,16 +95,18 @@ public class AbnormalController extends BaseController {
                 withdrawModel.setMerchantId(account.getId());
                 merchantReplenishModel.setMerchantId(account.getId());
                 bankModel.setMerchantId(account.getId());
+                orderOutModel.setMerchantId(account.getId());
             }
 //            merchantReplenishlList = modelMerchantReplenishService.queryAllList(merchantReplenishModel);
             mobileCardModelList  = mobileCardService.queryAllList(mobileCardModel);
             withdrawModelList = withdrawService.queryAllList(withdrawModel);
             bankList = bankService.queryUqAllList(bankModel);
-
+            orderOutList = orderOutService.queryOrderOutByExcelList(orderOutModel);
             abnormalModel.setPhoneNum(mobileCardModelList.size());
             abnormalModel.setWithdrawNum(withdrawModelList.size());
 //            abnormalModel.setMerchantReplenishNum(merchantReplenishlList.size());
             abnormalModel.setBankNum(bankList.size());
+            abnormalModel.setOrderOutNum(orderOutList.size());
         }
         HtmlUtil.writerJson(response, abnormalModel);
     }

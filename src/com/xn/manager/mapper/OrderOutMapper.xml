@@ -127,6 +127,10 @@
             <if test="curdayStart != 0 and curdayStart >0 and curdayEnd != 0 and curdayEnd >0 " >
                 and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
             </if>
+
+            <if test="invalidTime != null and invalidTime != '' " >
+                and a.invalid_time >= #{invalidTime}
+            </if>
             and a.yn =  0
         </trim>
     </sql>
@@ -422,7 +426,10 @@
             and a.order_money = #{orderMoney}
         </if>
         order by a.id asc
-        limit #{excelNum}
+        <if test="excelNum != 0 and excelNum >0 " >
+            limit #{excelNum}
+        </if>
+
     </select>
 
 </mapper>

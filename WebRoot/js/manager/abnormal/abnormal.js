@@ -52,10 +52,17 @@ function  queryList(){
                 $('#div_bank').attr("class","h_item h_item1");
             }
 
+            if(data.orderOutNum==0){
+                $('#div_orderout').attr("class","h_item");
+            }else if(data.orderOutNum!=0){
+                $('#div_orderout').attr("class","h_item h_item1");
+            }
+
             $("#sphone").text("手机号异常数:"+data.phoneNum);
             // $("#sbank").text("需要补单数据:"+data.merchantReplenishNum);
             $("#spaymentnum").text("未处理下发条数:"+data.withdrawNum);
             $("#banknum").text("需要换卡条数:"+data.bankNum);
+            $("#orderout").text("需要代付条数:"+data.orderOutNum);
 
             if(data.phoneNum!=0||data.bankNum!=0||data.withdrawNum!=0){
                 audioPlay();
@@ -169,6 +176,10 @@ function  queryWithdraw(){
     })
 }
 
+
+function queryOrderOut(){
+    window.location.href =ctx+ '/jsp/manager/orderout/orderoutIndex.jsp';
+}
 
 function queryBank(){
     var condJsonData={
