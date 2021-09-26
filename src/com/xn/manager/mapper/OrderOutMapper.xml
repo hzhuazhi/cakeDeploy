@@ -128,9 +128,9 @@
                 and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
             </if>
 
-            <if test="invalidTime != null and invalidTime != '' " >
-                and a.invalid_time >= #{invalidTime}
-            </if>
+            <!--<if test="invalidTime != null and invalidTime != '' " >-->
+                <!--and a.invalid_time >= #{invalidTime}-->
+            <!--</if>-->
             and a.yn =  0
         </trim>
     </sql>
