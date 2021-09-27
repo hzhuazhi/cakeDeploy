@@ -10,8 +10,45 @@ var account = {
         queryId_url: ctx+ "/orderout/getId.do",
         delete_url: ctx+ "/orderout/delete.do",
         manyOperation_url: ctx+ "/orderout/updateIsExcel.do",
-        exportData_url : ctx +  "/orderout/exportData.do"
+        exportData_url : ctx +  "/orderout/exportData.do",
+        check_url: ctx+ "/orderout/check.do"
     },
+
+
+    //添加修改验证参数
+    validate:{
+        submitHandler : function() {
+            var id = $("#show input[type='hidden']").val();
+            var url = "";
+            if(id){
+                url = account.url.check_url;
+            }
+
+            var formData = $("#newFirstStoreForm").serialize();
+            $.ajax({
+                url : url,
+                type : 'post',
+                dataType : 'json',
+                data :formData,
+                success : function(data) {
+                    if(data.success){
+                        promptMessage ('保存成功！','success',true);
+                        common.goList();
+                    }else{
+                        promptMessage(data.msg, 'warning', false);
+                    }
+
+                },
+                error : function(data) {
+                    art.alert(data.info);
+                }
+            });
+            return false;
+            //阻止表单提交
+        }
+    },
+
+
     //列表显示参数
     list:[
         {"data":"outTradeNo",},
@@ -82,13 +119,18 @@ var account = {
         {"data":"id",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html = '';
-                var isEnableHtml = '';
                 if (oData.isExcel == 1){
-                    isEnableHtml = '<a class = "dataTableBtn dataTableExcelBtn"  directkey="'+oData.id+'"  directValue="2" href = "javascript:void(0);">已导出 </a>';
+                    html += '<a class = "dataTableBtn dataTableExcelBtn"  directkey="'+oData.id+'"  directValue="2" href = "javascript:void(0);">已导出 </a>';
                 }else if(oData.isExcel == 2){
-                    isEnableHtml = '<a class = "dataTableBtn dataTableExcelBtn"  directkey="'+oData.id+'"  directValue="1" href = "javascript:void(0);">未导出</a>';
+                    html += '<a class = "dataTableBtn dataTableExcelBtn"  directkey="'+oData.id+'"  directValue="1" href = "javascript:void(0);">未导出</a>';
                 }
-                html = html + isEnableHtml;
+                
+                if (oData.orderStatus == 1){
+                    html += '<a class = "dataTableBtn dataTableResetBtn" id = "edit" directkey="' + oData.id + '" href = "javascript:void(0);"> 未审核 </a>';
+                } else {
+                    html += '已审核';
+                }
+                
                 $(nTd).html(html);
             }
         }
@@ -198,15 +240,15 @@ var account = {
         });
 
 
-        //删除
-        $(".dataTableResetBtn").live("click",function(){
-            var id = $(this).attr('directkey');
-            var data = {
-                id:id,
-                yn:'1'
-            }
-            common.updateStatus(data);
-        });
+        // //删除
+        // $(".dataTableResetBtn").live("click",function(){
+        //     var id = $(this).attr('directkey');
+        //     var data = {
+        //         id:id,
+        //         yn:'1'
+        //     }
+        //     common.updateStatus(data);
+        // });
 
         //启用/禁用
         $(".dataTableEnableBtn").live("click",function(){
@@ -235,6 +277,44 @@ var account = {
                 isExcel:isExcel
             }
             common.manyOperationIsExcel(data);
+        });
+
+
+
+        //审核
+        $("#edit").live("click",function(){
+            var id = $(this).attr('directkey');
+            $.ajax({url : ctx+ "/orderout/getId.do",
+                type : 'post',
+                dataType : 'json',
+                data :{
+                    id:id
+                },
+                success : function(data) {
+                    if (data.success) {
+                        var m = data.data;
+                        id = m.id;
+                        common.addInit(account.validate);
+                        $("#id").val(id);
+                        $("#divOutTradeNo").val(m.outTradeNo);
+                        $("#divOrderNo").val(m.orderNo);
+                        $("#divInBankName").val(m.inBankName);
+                        $("#divInBankCard").val(m.inBankCard);
+                        $("#divInAccountName").val(m.inAccountName);
+                        $("#divOrderMoney").val(m.orderMoney);
+                        $("#divInvalidTime").val(m.invalidTime);
+                        $("#divCreateTime").val(m.createTime);
+                        $("#divBatchNum").val(m.batchNum);
+
+                        openDialog("show","");
+                    } else {
+                        art.alert(data.msg);
+                    }
+                },
+                error : function(data) {
+                    art.alert(data.info);
+                }
+            });
         });
 
 

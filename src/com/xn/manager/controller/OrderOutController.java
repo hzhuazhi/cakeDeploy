@@ -366,4 +366,73 @@ public class OrderOutController extends BaseController {
     }
 
 
+
+    /**
+     * @Description: 获取代付订单详情
+     * @param id
+     * @return
+     * @author yoko
+     * @date 2020/10/16 16:02
+     */
+    @RequestMapping("/getId")
+    public void getId(Long id, HttpServletResponse response) throws Exception {
+        OrderOutModel query = new OrderOutModel();
+        query.setId(id);
+        OrderOutModel bean = orderOutService.queryById(query);
+        if (bean == null) {
+            sendFailureMessage(response, "没有找到对应的记录!");
+            return;
+        }
+        sendSuccessMessage(response, "", bean);
+    }
+
+
+
+    /**
+     * 审核代付订单
+     */
+    @RequestMapping("/check")
+    public void check(HttpServletRequest request, HttpServletResponse response, OrderOutModel bean) throws Exception {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            if (bean.getCheckOrderStatus() == 0){
+                sendFailureMessage(response, "请选择订单状态!");
+                return;
+            }
+
+
+            if (bean.getCheckOrderStatus() == 1){
+                sendFailureMessage(response, "选择初始化订单状态无效,请选择其它提现状态!");
+                return;
+            }
+
+            // 根据ID查询订单信息
+            OrderOutModel orderOutQuery = new OrderOutModel();
+            orderOutQuery.setId(bean.getId());
+            OrderOutModel orderOutModel = orderOutService.queryByCondition(orderOutQuery);
+
+            String invalidTime = DateUtil.getPlusTime(orderOutModel.getInvalidTime());
+            boolean flag = DateUtil.compareTime(DateUtil.getNowPlusTime(), invalidTime);
+            if (!flag){
+                sendFailureMessage(response, "超时订单不允许进行审核操作!");
+                return;
+            }
+
+            OrderOutModel update = new OrderOutModel();
+            update.setId(bean.getId());
+            update.setOrderStatus(bean.getCheckOrderStatus());
+            if (!StringUtils.isBlank(bean.getRemark())){
+                update.setRemark(bean.getRemark());
+            }
+            // 更新订单状态
+            orderOutService.updateOrderStatus(update);
+            sendSuccessMessage(response, "保存成功~");
+        }else {
+            sendFailureMessage(response, "登录超时,请重新登录在操作!");
+            return;
+        }
+
+    }
+
+
 }

@@ -135,9 +135,9 @@
     <table class="datatable tables">
         <thead>
         <tr>
-            <th width="150">渠道订单号</th>
+            <th width="130">渠道订单号</th>
             <th width="150">订单号</th>
-            <th width="150">三方订单号</th>
+            <th width="120">三方订单号</th>
             <%--<th width="150">公司名字</th>--%>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
@@ -159,8 +159,175 @@
         </tbody>
     </table>
 </div>
+
+
+
+
+<div id="show" style="display:none;width:500px;">
+    <div class="formHeadDiv">
+        <h2>
+            <span><font color="red">代付审核</font></span>
+        </h2>
+    </div>
+    <div class="formContentDiv" style="padding-right:0px">
+        <form id="newFirstStoreForm">
+            <input type="hidden" id="id" name="id" />
+            <dl>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        渠道订单号
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divOutTradeNo" name="divOutTradeNo" disabled="disabled"/>
+                    </div>
+                </dd>
+
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        订单号
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divOrderNo" name="divOrderNo" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        付款银行名称
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divInBankName" name="divInBankName" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        付款银行卡账号
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divInBankCard" name="divInBankCard" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        付款开户名
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divInAccountName" name="divInAccountName" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        订单金额
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divOrderMoney" name="divOrderMoney" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        失效时间
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divInvalidTime" name="divInvalidTime" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        创建时间
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divCreateTime" name="divCreateTime" disabled="disabled"/>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        批次号
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <input type="text" style="width: 200px;box-sizing: border-box" class="formInput"
+                               id="divBatchNum" name="divBatchNum" disabled="disabled"/>
+                    </div>
+                </dd>
+
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        <font color="red">*</font>订单状态
+                    </div>
+                    <div class="formCtrlDiv">
+                        <select class="formInput" name="checkOrderStatus" id="checkOrderStatus">
+                            <option value="0">==请选择==</option>
+                            <option value="1">初始化</option>
+                            <option value="2">超时/失败</option>
+                            <option value="4">成功</option>
+                        </select>
+                    </div>
+                </dd>
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv" style="width: 100px;">
+                        备注
+                    </div>
+                    <div class="formCtrlDiv" style="width: 200px;margin-left: 10px;">
+                        <%--<input type="text" style="width: 200px;box-sizing: border-box" class="formInput"--%>
+                        <%--id="remark" name="remark"/>--%>
+                        <textarea id="remark" name="remark" cols="40" rows="5"></textarea>
+                    </div>
+                </dd>
+
+
+
+                <dd style="border-top: none;">
+                    <div class="formTextDiv"></div>
+                    <%--<div class="formCtrlDiv">
+                        -------------------------------------------------------------------------------
+                    </div>--%>
+                </dd>
+                <dd style=" height: 60px; line-height: 58px;">
+                    <div class="formCtrlDiv">
+							<span style="margin-left: 100px;">
+								<input type="submit" style="background-color: #767DC3" class="formBtn" value="保　存" />
+								<%--<input type="reset"  style="background-color: #42425E" class="formBtn" value="重　置" />--%>
+								<input type="reset" onClick="javascript :closeDialog('show')" style="background-color: #767DC3" class="formBtn" value=" 返 回 " />
+							</span>
+                    </div>
+                </dd>
+            </dl>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/common/common2.js'></script>
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/manager/orderout/orderout.js'>
 </script>
 </body>
 </html>
+<style>
+    .formContentDiv form .formCtrlDiv {
+        margin-left: 10px;
+    }
+</style>

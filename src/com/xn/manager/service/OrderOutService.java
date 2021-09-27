@@ -30,4 +30,13 @@ public interface OrderOutService<T> extends BaseService<T> {
      * @Date 2021/7/3 18:02
     */
     public List<OrderOutModel> queryOrderOutByExcelList(OrderOutModel model);
+
+    /**
+     * @Description: 更新订单状态
+     * @param model
+     * @return
+     * @Author: yoko
+     * @Date 2021/9/27 15:08
+    */
+    public int updateOrderStatus(OrderOutModel model);
 }

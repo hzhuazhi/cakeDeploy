@@ -411,6 +411,11 @@ public class OrderOutModel extends BasePage {
      */
     private String invalidTimeStr;
 
+    /**
+     * 审核的订单状态
+     */
+    private int checkOrderStatus;
+
     public Long getId() {
         return id;
     }
@@ -905,5 +910,13 @@ public class OrderOutModel extends BasePage {
 
     public void setBatchNum(String batchNum) {
         this.batchNum = batchNum;
+    }
+
+    public int getCheckOrderStatus() {
+        return checkOrderStatus;
+    }
+
+    public void setCheckOrderStatus(int checkOrderStatus) {
+        this.checkOrderStatus = checkOrderStatus;
     }
 }

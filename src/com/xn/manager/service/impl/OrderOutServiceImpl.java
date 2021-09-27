@@ -38,4 +38,9 @@ public class OrderOutServiceImpl<T> extends BaseServiceImpl<T> implements OrderO
     public List<OrderOutModel> queryOrderOutByExcelList(OrderOutModel model) {
         return orderOutDao.queryOrderOutByExcelList(model);
     }
+
+    @Override
+    public int updateOrderStatus(OrderOutModel model) {
+        return orderOutDao.updateOrderStatus(model);
+    }
 }

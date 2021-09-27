@@ -146,9 +146,9 @@
             <if test="id != 0 and id >0 " >
                 and a.id = #{id}
             </if>
-            <if test="accountNum  != null and  accountNum != '' " >
-                and b.account_num = #{accountNum}
-            </if>
+            <!--<if test="accountNum  != null and  accountNum != '' " >-->
+                <!--and b.account_num = #{accountNum}-->
+            <!--</if>-->
             and a.yn =  0
         </trim>
     </sql>
@@ -431,5 +431,24 @@
         </if>
 
     </select>
+
+
+
+    <!-- 更新订单状态 -->
+    <update id="updateOrderStatus" parameterType="Object">
+        UPDATE tb_fr_order_out a
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderStatus != 0 and orderStatus >0 " >
+                order_status = #{orderStatus,jdbcType=BIT},
+            </if>
+            <if test="remark != null and  remark != ''" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            a.update_time = NOW(),
+        </trim>
+        where  1=1
+        and a.id = #{id}
+        and a.yn = 0
+    </update>
 
 </mapper>

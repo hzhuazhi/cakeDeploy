@@ -2739,9 +2739,48 @@ public class DateUtil {
 		return num;
 	}
 
-	public static void main(String[] args) {
+
+	/**
+	 * @Description: 两时间比较大小
+	 * <p>
+	 *     时间1小于时间2则返回true
+	 * </p>
+	 * @param time1 - 时间1
+	 * @param time2 - 时间2
+	 * @return
+	 * @Author: yoko
+	 * @Date 2021/9/27 14:31
+	*/
+	public static boolean compareTime(String time1,String time2) throws ParseException
+	{
+		//如果想比较日期则写成"yyyy-MM-dd"就可以了
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		//将字符串形式的时间转化为Date类型的时间
+		Date a=sdf.parse(time1);
+		Date b=sdf.parse(time2);
+		//Date类的一个方法，如果a早于b返回true，否则返回false
+		if(a.before(b))
+			return true;
+		else
+			return false;
+		/*
+		 * 如果你不喜欢用上面这个太流氓的方法，也可以根据将Date转换成毫秒
+		if(a.getTime()-b.getTime()<0)
+			return true;
+		else
+			return false;
+		*/
+	}
+
+
+
+	public static void main(String[] args) throws Exception{
 		int num = getTomorrowMinute();
 		System.out.println(num);
+		String tm1 = "2021-09-27 14:33:02";
+		String tm2 = "2021-09-27 14:33:03";
+		boolean flag = compareTime(tm1, tm2);
+		System.out.println("flag:" + flag);
 	}
 
 }
