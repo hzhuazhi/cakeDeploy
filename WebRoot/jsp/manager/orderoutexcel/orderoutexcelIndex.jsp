@@ -19,7 +19,7 @@
 <body>
 <div class="col_main">
     <div class="formHeadDiv">
-        <h2>代付结果Excel导入</h2>
+        <h2><font color="red">代付结果Excel导入</font></h2>
     </div>
     <div class="formContentDiv">
         <form id="addSupplierForm" method="POST" enctype="multipart/form-data"
@@ -40,16 +40,126 @@
 
                 <li>
                     <div class="" style="margin-bottom: 20px; margin-top: 20px;margin-left:200px;">
-                        <input type="submit" class="buttonClass imginput" value="导入" /> <span>
+                        <input type="submit" class="buttonClass imginput" value="导入" />
                     </div>
                 </li>
             </ul>
         </form>
     </div>
 </div>
+
+
+
+
+
+<div class="col_main">
+    <div class="formHeadDiv">
+        <h2><font color="red">代付结果批次号录入</font></h2>
+    </div>
+    <div class="formContentDiv">
+        <form id="newSupplierForm" >
+            <ul>
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require"><font color="red">*</font>批次号：</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <input type="text" class="formInput" id="batchNum" name="batchNum"	maxlength="240" />
+                    </div>
+                </li>
+
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require"><font color="red">*</font>订单状态：</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <select name="checkOrderStatus" id="checkOrderStatus">
+                            <option value="">===请选择===</option>
+                            <option value="1">初始化</option>
+                            <option value="2">超时/失败</option>
+                            <option value="4">成功</option>
+                        </select>
+                    </div>
+                </li>
+
+
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require">订单号：</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <textarea id="orderNo" name="orderNo" cols="40" rows="5"></textarea>
+                        <dd>
+                            <font color="red">多个订单号以英文逗号分割；根据订单状态来判断，如这里面有订单号，则相反的修改状态：例如：状态为成功：里面的订单号则会被修改成失败</font>
+                        </dd>
+                    </div>
+                </li>
+
+
+                <li>
+                    <div class="" style="margin-bottom: 20px; margin-top: 20px;margin-left:200px;">
+                        <input type="submit" class="buttonClass imginput" value="提交" />
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+
+
+
+
 <script type='text/javascript' charset="utf-8" src='${ctxData}js/common/common2.js'></script>
 <script type="text/javascript">
+    $(function(){
+        // 在键盘按下并释放及提交后验证提交表单
+        $("#newSupplierForm").validate({
+            rules:{
+                batchNum:{
+                    required:true,
+                    maxlength:50
+                },
+                checkOrderStatus:{
+                    required:true
+                }
+            },
+            messages: {
+                batchNum:{
+                    required : "批次号不能为空!",
+                    maxlength : "批次号最多是50个字符!"
+                },
+                checkOrderStatus:{
+                    required : "请选择订单状态!"
+                }
+            },
 
+            submitHandler : function() {
+                var formData = $("#newSupplierForm").serialize();
+                $.ajax({
+                    url : ctx+ "/orderoutexcel/check.do",
+                    type : 'post',
+                    dataType : 'json',
+                    data :formData,
+                    success : function(data) {
+                        if (data.success) {
+                            alert("审核成功！！！");
+                            window.location.href = ctx + "/jsp/manager/orderoutexcel/orderoutexcelIndex.jsp";
+                        } else {
+                            art.alert(data.msg);
+                        }
+                    },
+                    error : function(data) {
+                        art.alert(data.info);
+                    }
+                });
+                return false;
+                //阻止表单提交
+            }
+        });
+    });
 </script>
 </body>
 </html>

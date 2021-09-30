@@ -213,6 +213,49 @@ public class PublicMethod{
     }
 
 
+    /**
+     * @Description: 组装审核的订单查询条件
+     * @param batchNum - 批次号
+     * @param orderStatus - 订单状态
+     * @param checkOrderStatus - 审核的订单状态
+     * @param type - SQL查询类型：1表示in的查询条件，2表示not in的查询条件
+     * @param strArr - 订单集合数组
+     * @return com.xn.manager.model.OrderOutModel
+     * @Author: yoko
+     * @Date 2021/9/30 14:59
+     */
+    public static OrderOutModel assembleOrderOutQuery(String batchNum, int orderStatus, int checkOrderStatus, int type, String[] strArr){
+        OrderOutModel resBean = new OrderOutModel();
+        if (!StringUtils.isBlank(batchNum)){
+            resBean.setBatchNum(batchNum);
+        }
+        if (orderStatus > 0){
+            resBean.setOrderStatus(orderStatus);
+        }
+        if (checkOrderStatus > 0){
+            resBean.setCheckOrderStatus(checkOrderStatus);
+        }
+        if (type > 0){
+            if (strArr != null){
+                List<String> strList = new ArrayList<>();
+                for (String str : strArr){
+                    strList.add(str);
+                }
+
+                if (type == 1){
+                    // in的查询条件
+                    resBean.setOrderList(strList);
+                }else if (type == 2){
+                    // not in的查询条件
+                    resBean.setNotOrderList(strList);
+                }
+            }
+        }
+        return resBean;
+
+    }
+
+
 
 
 

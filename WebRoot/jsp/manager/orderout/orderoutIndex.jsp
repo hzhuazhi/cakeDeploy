@@ -11,6 +11,12 @@
     <div class = "condQueryDiv">
         <form id = "condForm">
             <div class = "condQueryCtrl">
+
+                <div class = "condQueryLabelDiv">渠道：</div>
+                <div class="formCtrlDiv">
+                    <input type ="text" class ="inputCommonSty" id="channelName" name ="channelName">
+                </div>
+
                 <div class = "condQueryLabelDiv">渠道订单号	：</div>
                 <div class="formCtrlDiv">
                     <input type ="text" class ="inputCommonSty" id="outTradeNo" name ="outTradeNo">
@@ -135,6 +141,7 @@
     <table class="datatable tables">
         <thead>
         <tr>
+            <th width="130">渠道</th>
             <th width="130">渠道订单号</th>
             <th width="150">订单号</th>
             <th width="120">三方订单号</th>

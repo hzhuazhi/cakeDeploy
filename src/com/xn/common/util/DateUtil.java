@@ -2754,7 +2754,8 @@ public class DateUtil {
 	public static boolean compareTime(String time1,String time2) throws ParseException
 	{
 		//如果想比较日期则写成"yyyy-MM-dd"就可以了
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 		//将字符串形式的时间转化为Date类型的时间
 		Date a=sdf.parse(time1);
 		Date b=sdf.parse(time2);
@@ -2763,13 +2764,12 @@ public class DateUtil {
 			return true;
 		else
 			return false;
-		/*
-		 * 如果你不喜欢用上面这个太流氓的方法，也可以根据将Date转换成毫秒
-		if(a.getTime()-b.getTime()<0)
-			return true;
-		else
-			return false;
-		*/
+
+		// 如果你不喜欢用上面这个太流氓的方法，也可以根据将Date转换成毫秒
+//		if(a.getTime()-b.getTime()<0)
+//			return true;
+//		else
+//			return false;
 	}
 
 
@@ -2777,8 +2777,8 @@ public class DateUtil {
 	public static void main(String[] args) throws Exception{
 		int num = getTomorrowMinute();
 		System.out.println(num);
-		String tm1 = "2021-09-27 14:33:02";
-		String tm2 = "2021-09-27 14:33:03";
+		String tm1 = "2021-09-30 11:57:59";
+		String tm2 = "2021-09-30 12:07:58";
 		boolean flag = compareTime(tm1, tm2);
 		System.out.println("flag:" + flag);
 	}

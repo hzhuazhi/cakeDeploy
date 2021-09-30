@@ -407,16 +407,16 @@ public class OrderOutController extends BaseController {
             }
 
             // 根据ID查询订单信息
-            OrderOutModel orderOutQuery = new OrderOutModel();
-            orderOutQuery.setId(bean.getId());
-            OrderOutModel orderOutModel = orderOutService.queryByCondition(orderOutQuery);
+//            OrderOutModel orderOutQuery = new OrderOutModel();
+//            orderOutQuery.setId(bean.getId());
+//            OrderOutModel orderOutModel = orderOutService.queryByCondition(orderOutQuery);
 
-            String invalidTime = DateUtil.getPlusTime(orderOutModel.getInvalidTime());
-            boolean flag = DateUtil.compareTime(DateUtil.getNowPlusTime(), invalidTime);
-            if (!flag){
-                sendFailureMessage(response, "超时订单不允许进行审核操作!");
-                return;
-            }
+//            String invalidTime = DateUtil.getPlusTime(orderOutModel.getInvalidTime());
+//            boolean flag = DateUtil.compareTime(DateUtil.getNowPlusTime(), invalidTime);
+//            if (!flag){
+//                sendFailureMessage(response, "超时订单不允许进行审核操作!");
+//                return;
+//            }
 
             OrderOutModel update = new OrderOutModel();
             update.setId(bean.getId());
@@ -433,6 +433,7 @@ public class OrderOutController extends BaseController {
         }
 
     }
+
 
 
 }

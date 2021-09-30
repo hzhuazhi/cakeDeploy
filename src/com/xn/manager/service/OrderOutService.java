@@ -39,4 +39,23 @@ public interface OrderOutService<T> extends BaseService<T> {
      * @Date 2021/9/27 15:08
     */
     public int updateOrderStatus(OrderOutModel model);
+
+
+    /**
+     * @Description: 根据批次号更新订单状态
+     * @param model
+     * @return
+     * @Author: yoko
+     * @Date 2021/9/30 16:30
+    */
+    public int updateOrderStatusByBatchNum(OrderOutModel model);
+
+    /**
+     * @Description: 根据订单号更新订单状态
+     * @param model
+     * @return
+     * @Author: yoko
+     * @Date 2021/9/30 16:31
+    */
+    public int updateOrderStatusByOrderNo(OrderOutModel model);
 }

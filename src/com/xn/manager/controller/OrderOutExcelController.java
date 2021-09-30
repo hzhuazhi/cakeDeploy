@@ -4,8 +4,10 @@ import com.xn.common.constant.ManagerConstant;
 import com.xn.common.controller.BaseController;
 import com.xn.common.util.BeanUtils;
 import com.xn.common.util.ExcelUtil;
+import com.xn.manager.model.OrderOutModel;
 import com.xn.manager.model.excel.OrderOutExcelInModel;
 import com.xn.manager.model.replacepay.ReplacePayGainResultModel;
+import com.xn.manager.service.OrderOutService;
 import com.xn.manager.service.ReplacePayGainResultService;
 import com.xn.manager.util.PublicMethod;
 import com.xn.system.entity.Account;
@@ -38,6 +40,9 @@ public class OrderOutExcelController extends BaseController {
 
     @Autowired
     private ReplacePayGainResultService<ReplacePayGainResultModel> replacePayGainResultService;
+
+    @Autowired
+    private OrderOutService<OrderOutModel> orderOutService;
 
 
     /**
@@ -86,6 +91,77 @@ public class OrderOutExcelController extends BaseController {
 
         }else {
             sendFailureMessage(response, "登录超时,请重新登录在操作!");
+        }
+    }
+
+
+
+    /**
+     * 数据审核-根据批次号审核
+     */
+    @RequestMapping("/check")
+    public void add(HttpServletRequest request, HttpServletResponse response, OrderOutModel bean) throws Exception {
+        Account account = (Account) WebUtils.getSessionAttribute(request, ManagerConstant.PUBLIC_CONSTANT.ACCOUNT);
+        if(account !=null && account.getId() > ManagerConstant.PUBLIC_CONSTANT.SIZE_VALUE_ZERO){
+            if (StringUtils.isBlank(bean.getBatchNum())){
+                sendFailureMessage(response,"请填写批次号!");
+                return;
+            }
+            if (bean.getCheckOrderStatus() == 0){
+                sendFailureMessage(response,"请填写订单状态!");
+                return;
+            }
+            if (bean.getCheckOrderStatus() == 1){
+                sendFailureMessage(response,"请填写其它订单状态,初始化订单状态无效!");
+                return;
+            }
+
+            // 根据批次号查询是否有这个批次的数据
+            String [] orderNoArr = null;
+            if (!StringUtils.isBlank(bean.getOrderNo())){
+                orderNoArr = bean.getOrderNo().split(",");
+            }
+            OrderOutModel orderOutQuery = PublicMethod.assembleOrderOutQuery(bean.getBatchNum(),1,0,2, orderNoArr);
+            List<OrderOutModel> orderOutList = orderOutService.queryAllList(orderOutQuery);
+            if (orderOutList == null || orderOutList.size() == 0){
+                sendFailureMessage(response,"此批次没有可审核的单子,请核实批次号是否正确,以及批次号中是否已经没有初始化的订单了,因为只允许审核初始化的单子!");
+                return;
+            }
+
+            if (orderNoArr != null){
+                // 根据订单号查询订单数据信息
+                OrderOutModel orderOutByOrderNoQuery = PublicMethod.assembleOrderOutQuery(null,1,0,1, orderNoArr);
+                List<OrderOutModel> orderDataList = orderOutService.queryAllList(orderOutByOrderNoQuery);
+                if (orderDataList == null || orderDataList.size() == 0){
+                    sendFailureMessage(response,"请核实订单号是否正确,以及订单号是否已经没有初始化的订单了,因为只允许审核初始化的单子!");
+                    return;
+                }
+            }
+
+            // 根据批次更新订单状态
+            OrderOutModel orderOutBatchNumUpdate = PublicMethod.assembleOrderOutQuery(bean.getBatchNum(),1,bean.getCheckOrderStatus(),2, orderNoArr);
+            orderOutService.updateOrderStatusByBatchNum(orderOutBatchNumUpdate);
+
+
+            if (orderNoArr != null){
+                // 根据订单更新订单状态
+                int checkOrderStatusByOrderNo = 0;
+                if (bean.getCheckOrderStatus() == 2){
+                    checkOrderStatusByOrderNo = 4;
+                }
+                if (bean.getCheckOrderStatus() == 4){
+                    checkOrderStatusByOrderNo = 2;
+                }
+                OrderOutModel orderOutOrderNoUpdate = PublicMethod.assembleOrderOutQuery(null,1,checkOrderStatusByOrderNo,1, orderNoArr);
+                orderOutService.updateOrderStatusByOrderNo(orderOutOrderNoUpdate);
+            }
+
+            sendSuccessMessage(response, "更新成功~");
+            return;
+
+        }else {
+            sendFailureMessage(response,"登录超时,请重新登录在操作!");
+            return;
         }
     }
 

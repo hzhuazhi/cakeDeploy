@@ -43,4 +43,14 @@ public class OrderOutServiceImpl<T> extends BaseServiceImpl<T> implements OrderO
     public int updateOrderStatus(OrderOutModel model) {
         return orderOutDao.updateOrderStatus(model);
     }
+
+    @Override
+    public int updateOrderStatusByBatchNum(OrderOutModel model) {
+        return orderOutDao.updateOrderStatusByBatchNum(model);
+    }
+
+    @Override
+    public int updateOrderStatusByOrderNo(OrderOutModel model) {
+        return orderOutDao.updateOrderStatusByOrderNo(model);
+    }
 }

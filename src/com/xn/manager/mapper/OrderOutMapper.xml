@@ -121,6 +121,9 @@
             <if test="batchNum != null and  batchNum != ''" >
                 and a.batch_num = #{batchNum}
             </if>
+            <if test="channelName != null and  channelName != ''" >
+                and a.channel_name = #{channelName}
+            </if>
             <if test="curday != 0 and curday >0 " >
                 and a.curday = #{curday}
             </if>
@@ -131,6 +134,20 @@
             <!--<if test="invalidTime != null and invalidTime != '' " >-->
                 <!--and a.invalid_time >= #{invalidTime}-->
             <!--</if>-->
+
+            <if test="orderList != null and orderList.size()>0">
+                and a.order_no in
+                <foreach item="item" index="index" collection="orderList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="notOrderList != null and notOrderList.size()>0">
+                and a.order_no not in
+                <foreach item="item" index="index" collection="notOrderList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
             and a.yn =  0
         </trim>
     </sql>
@@ -394,7 +411,7 @@
             and a.curday >= #{curdayStart} and a.curday &lt;= #{curdayEnd}
         </if>
         and a.is_excel = 1
-        and a.invalid_time > now()
+        <!--and a.invalid_time > now()-->
         and a.order_status = 1
 
         <if test="id != 0 and id >0 " >
@@ -439,15 +456,53 @@
         UPDATE tb_fr_order_out a
         <trim prefix="set" suffixOverrides=",">
             <if test="orderStatus != 0 and orderStatus >0 " >
-                order_status = #{orderStatus,jdbcType=BIT},
+                a.order_status = #{orderStatus,jdbcType=BIT},
             </if>
             <if test="remark != null and  remark != ''" >
-                remark = #{remark,jdbcType=VARCHAR},
+                a.remark = #{remark,jdbcType=VARCHAR},
             </if>
             a.update_time = NOW(),
         </trim>
         where  1=1
         and a.id = #{id}
+        and a.yn = 0
+    </update>
+
+
+
+    <!-- 根据批次号更新订单状态 -->
+    <update id="updateOrderStatusByBatchNum" parameterType="Object">
+        UPDATE tb_fr_order_out a
+        <trim prefix="set" suffixOverrides=",">
+            a.order_status = #{checkOrderStatus},
+            a.update_time = NOW(),
+        </trim>
+        where  1=1
+        and a.batch_num = #{batchNum}
+        <if test="notOrderList != null and notOrderList.size()>0">
+            and a.order_no not in
+            <foreach item="item" index="index" collection="notOrderList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and a.order_status = #{orderStatus}
+        and a.yn = 0
+    </update>
+
+
+    <!-- 根据订单号更新订单状态 -->
+    <update id="updateOrderStatusByOrderNo" parameterType="Object">
+        UPDATE tb_fr_order_out a
+        <trim prefix="set" suffixOverrides=",">
+            a.order_status = #{checkOrderStatus},
+            a.update_time = NOW(),
+        </trim>
+        where  1=1
+            and a.order_no in
+            <foreach item="item" index="index" collection="orderList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        and a.order_status = #{orderStatus}
         and a.yn = 0
     </update>
 

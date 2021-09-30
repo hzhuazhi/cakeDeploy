@@ -3,6 +3,7 @@ package com.xn.manager.model;
 import com.xn.common.page.BasePage;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderOutModel extends BasePage {
     /**
@@ -415,6 +416,16 @@ public class OrderOutModel extends BasePage {
      * 审核的订单状态
      */
     private int checkOrderStatus;
+
+    /**
+     * SQL-条件
+     */
+    private List<String> orderList;
+
+    /**
+     * SQL-条件
+     */
+    private List<String> notOrderList;
 
     public Long getId() {
         return id;
@@ -918,5 +929,21 @@ public class OrderOutModel extends BasePage {
 
     public void setCheckOrderStatus(int checkOrderStatus) {
         this.checkOrderStatus = checkOrderStatus;
+    }
+
+    public List<String> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<String> orderList) {
+        this.orderList = orderList;
+    }
+
+    public List<String> getNotOrderList() {
+        return notOrderList;
+    }
+
+    public void setNotOrderList(List<String> notOrderList) {
+        this.notOrderList = notOrderList;
     }
 }
