@@ -63,7 +63,7 @@ public class Constant {
 	/**
 	 * 存放文件路径地址
 	 */
-    public  static String FOREIGN_ADDRESS="http://155.235.245.43:8002/img/";
+    public  static String FOREIGN_ADDRESS="http://206.119.81.145:8002/img/";
 	/**
 	 * 本地存放地址
 	 */

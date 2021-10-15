@@ -11,7 +11,7 @@ var account = {
         delete_url: ctx+ "/bank/delete.do",
         manyOperation_url: ctx+ "/bank/manyOperation.do",
         // exportData_url : ctx +  "/bank/exportData.do"
-        exportData_url : "http://155.235.245.43:8002/template/bank_template.xls"
+        exportData_url : "http://206.119.81.145:8002/template/bank_template.xls"
     },
     //列表显示参数
     list:[

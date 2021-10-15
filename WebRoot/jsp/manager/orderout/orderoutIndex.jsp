@@ -144,7 +144,7 @@
             <th width="130">渠道</th>
             <th width="130">渠道订单号</th>
             <th width="150">订单号</th>
-            <th width="120">三方订单号</th>
+            <%--<th width="120">三方订单号</th>--%>
             <%--<th width="150">公司名字</th>--%>
             <th width="150">付款银行名称</th>
             <th width="150">付款银行卡账号</th>
@@ -152,9 +152,9 @@
             <th width="150">订单金额</th>
             <%--<th width="150">手续费</th>--%>
             <th width="150">订单状态</th>
-            <th width="150">订单处理类型</th>
+            <th width="150">订单类型</th>
             <%--<th width="150">代付订单出码状态</th>--%>
-            <th width="150">失效时间</th>
+            <%--<th width="150">失效时间</th>--%>
             <%--<th width="150">失败缘由</th>--%>
             <th width="150">创建日期</th>
             <th width="150">批次号</th>

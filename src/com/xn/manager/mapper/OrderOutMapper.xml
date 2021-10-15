@@ -413,7 +413,7 @@
         and a.is_excel = 1
         <!--and a.invalid_time > now()-->
         and a.order_status = 1
-
+        and a.order_type = 1
         <if test="id != 0 and id >0 " >
             and a.id = #{id}
         </if>

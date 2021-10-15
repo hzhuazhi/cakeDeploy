@@ -54,7 +54,7 @@ var account = {
         {"data":"channelName",},
         {"data":"outTradeNo",},
         {"data":"orderNo",},
-        {"data":"supplierTradeNo",},
+        // {"data":"supplierTradeNo",},
         // {"data":"companyName",},
         {"data":"inBankName",},
         {"data":"inBankCard",},
@@ -76,13 +76,13 @@ var account = {
                     $(nTd).html(html);
                 }
         },
-        {"data":"handleType",
+        {"data":"orderType",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                 var html="";
-                if(oData.handleType==1){
-                    html='<span>我方处理</span>';
-                }else if(oData.handleType==2){
-                    html='<span style="color: #2f9833">第三方处理</span>';
+                if(oData.orderType==1){
+                    html='<span>手动转账</span>';
+                }else if(oData.orderType==2){
+                    html='<span style="color: #2f9833">API转账</span>';
                 }
                 $(nTd).html(html);
             }
@@ -98,7 +98,7 @@ var account = {
         //         $(nTd).html(html);
         //     }
         // },
-        {"data":"invalidTime",},
+        // {"data":"invalidTime",},
         // {"data":"failInfo",},
         {"data":"createTime",},
 
