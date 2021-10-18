@@ -43,6 +43,19 @@ var account = {
         {"data":"outMoneyRange",},
         {"data":"invalidTimeNum",},
         {"data":"moneyLockTime",},
+        {"data":"replacePayType",
+            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                var html = '';
+                if(oData.replacePayType==1){
+                    html+= '<span style="color: #2f9833">手动转账</span>';
+                }else if(oData.replacePayType==2){
+                    html+= '<span style="color: #ff3710">API转账</span>';
+                }else{
+                    html+= '无';
+                }
+                $(nTd).html(html);
+            }
+        },
         {"data":"remark",},
         {"data":"useStatus",
             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

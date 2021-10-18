@@ -108,6 +108,21 @@
                     </div>
                 </li>
 
+
+                <li style="border-top: none;">
+                    <div class="formTextDiv">
+                        <span class="require">代付方式</span>
+                    </div>
+                    <div class="formCtrlDiv">
+                        <select id="replacePayType" name="replacePayType">
+                            <option value="0" selected="selected">===请选择===</option>
+                            <option value="1">手动转账</option>
+                            <option value="2">API转账</option>
+                        </select>
+                    </div>
+                </li>
+
+
                 <li style="border-top: none;">
                     <div class="formTextDiv">
                         <span class="require" >备注</span>

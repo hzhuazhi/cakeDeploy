@@ -72,6 +72,7 @@
             <th width="150">代付金额范围</th>
             <th width="150">订单支付时间</th>
             <th width="150">银行卡锁定时间</th>
+            <th width="150">代付方式</th>
             <th width="150">备注</th>
             <th width="150">使用状态</th>
             <th width="150">创建时间</th>

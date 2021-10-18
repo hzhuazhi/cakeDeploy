@@ -13,6 +13,7 @@
         <result column="out_money_range" property="outMoneyRange" jdbcType="VARCHAR" />
         <result column="money_lock_time" property="moneyLockTime" jdbcType="BIT" />
         <result column="invalid_time_num" property="invalidTimeNum" jdbcType="BIT" />
+        <result column="replace_pay_type" property="replacePayType" jdbcType="BIT" />
 
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="use_status" property="useStatus" jdbcType="BIT" />
@@ -24,7 +25,7 @@
     </resultMap>
     <!-- 定义数据库基本列,只适用代替单表的*-->
     <sql id="Base_Column_List">
-        a.id,a.alias,a.secret_key,a.bank_binding_type,a.channel_type,a.in_money_range,a.out_money_range,a.money_lock_time,a.invalid_time_num,
+        a.id,a.alias,a.secret_key,a.bank_binding_type,a.channel_type,a.in_money_range,a.out_money_range,a.money_lock_time,a.invalid_time_num,a.replace_pay_type,
         a.remark,a.use_status,
         a.create_time,a.update_time,a.yn
     </sql>
@@ -147,6 +148,9 @@
             <if test="invalidTimeNum != null" >
                 invalid_time_num,
             </if>
+            <if test="replacePayType != null" >
+                replace_pay_type,
+            </if>
             <if test="remark != null" >
                 remark,
             </if>
@@ -184,6 +188,9 @@
             <if test="invalidTimeNum != null" >
                 #{invalidTimeNum,jdbcType=BIT},
             </if>
+            <if test="replacePayType != null" >
+                #{replacePayType,jdbcType=BIT},
+            </if>
             <if test="remark != null" >
                 #{remark,jdbcType=VARCHAR},
             </if>
@@ -216,6 +223,7 @@
                 out_money_range = #{outMoneyRange,jdbcType=VARCHAR},
                 money_lock_time = #{moneyLockTime,jdbcType=BIT},
                 invalid_time_num = #{invalidTimeNum,jdbcType=BIT},
+                replace_pay_type = #{replacePayType,jdbcType=BIT},
             <if test="remark != null" >
                 remark = #{remark,jdbcType=VARCHAR},
             </if>

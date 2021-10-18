@@ -59,6 +59,11 @@ public class ChannelModel extends BasePage {
     private Integer invalidTimeNum;
 
     /**
+     * 代付方式：0初始化，1手动转账，2API转账
+     */
+    private Integer replacePayType;
+
+    /**
      * 备注
      *
      * @mbggenerated
@@ -234,5 +239,13 @@ public class ChannelModel extends BasePage {
 
     public void setInvalidTimeNum(Integer invalidTimeNum) {
         this.invalidTimeNum = invalidTimeNum;
+    }
+
+    public Integer getReplacePayType() {
+        return replacePayType;
+    }
+
+    public void setReplacePayType(Integer replacePayType) {
+        this.replacePayType = replacePayType;
     }
 }

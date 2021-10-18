@@ -133,6 +133,32 @@
                         </div>
                     </li>
 
+
+                    <li style="border-top: none;">
+                        <div class="formTextDiv">
+                            <span class="require" >代付方式</span>
+                        </div>
+                        <div class="formCtrlDiv">
+                            <select id="replacePayType" name="replacePayType">
+                                <option value="0">===请选择===</option>
+                                <c:if test="${dl.replacePayType == 0}">
+                                    <option value="1" >手动转账</option>
+                                    <option value="2" >API转账</option>
+                                </c:if>
+                                <c:if test="${dl.replacePayType == 1}">
+                                    <option value="1" selected="selected">手动转账</option>
+                                    <option value="2">API转账</option>
+                                </c:if>
+                                <c:if test="${dl.replacePayType == 2}">
+                                    <option value="1" >手动转账</option>
+                                    <option value="2" selected="selected">API转账</option>
+                                </c:if>
+                            </select>
+                        </div>
+                    </li>
+
+
+
                     <li style="border-top: none;">
                         <div class="formTextDiv">
                             <span class="require" >备注</span>
