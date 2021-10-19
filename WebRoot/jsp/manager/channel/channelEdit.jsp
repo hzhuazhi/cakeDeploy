@@ -142,16 +142,16 @@
                             <select id="replacePayType" name="replacePayType">
                                 <option value="0">===请选择===</option>
                                 <c:if test="${dl.replacePayType == 0}">
-                                    <option value="1" >手动转账</option>
-                                    <option value="2" >API转账</option>
+                                    <option value="1" >直接转账</option>
+                                    <option value="2" >预备转账</option>
                                 </c:if>
                                 <c:if test="${dl.replacePayType == 1}">
-                                    <option value="1" selected="selected">手动转账</option>
-                                    <option value="2">API转账</option>
+                                    <option value="1" selected="selected">直接转账</option>
+                                    <option value="2">预备转账</option>
                                 </c:if>
                                 <c:if test="${dl.replacePayType == 2}">
-                                    <option value="1" >手动转账</option>
-                                    <option value="2" selected="selected">API转账</option>
+                                    <option value="1" >直接转账</option>
+                                    <option value="2" selected="selected">预备转账</option>
                                 </c:if>
                             </select>
                         </div>

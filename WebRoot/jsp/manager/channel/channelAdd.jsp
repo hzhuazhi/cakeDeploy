@@ -116,8 +116,8 @@
                     <div class="formCtrlDiv">
                         <select id="replacePayType" name="replacePayType">
                             <option value="0" selected="selected">===请选择===</option>
-                            <option value="1">手动转账</option>
-                            <option value="2">API转账</option>
+                            <option value="1">直接转账</option>
+                            <option value="2">预备转账</option>
                         </select>
                     </div>
                 </li>
